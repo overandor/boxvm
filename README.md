@@ -50,6 +50,24 @@ Pack files into compressed `.box` containers. Serve them anywhere. Run WASI prog
 - **File type distribution donut chart** — canvas-based chart in LLM tab
 - **Quick stats topbar** — live file count, size, threads in top bar
 - **Keyboard help** — press ? to see available shortcuts
+- **50+ terminal commands** — ls, cat, grep, find, tree, head, tail, wc, sort, uniq, rev, nl, od, base64, uuid, random, calc, benchmark, profile, echo, env, date, whoami, and more
+- **7 color themes** — default, midnight, dracula, solarized, monokai, github, nord
+- **Command palette** — Ctrl+K fuzzy search for all commands and actions
+- **File sorting** — sort by name, size, entropy, type, modification time
+- **File filtering** — filter by type (wasm, html, js, css, json, md, binary)
+- **File pinning** — pin important files to top of list
+- **Recent files** — track recently accessed files
+- **30+ developer tools** — CRC32, Hamming distance, Levenshtein, JSON formatter/minifier, JS beautifier, CSS cleaner, binary↔text, endian swapper, bit counter, magic byte detector, entropy mapper, container checksum
+- **10+ export formats** — JSON, CSV, Markdown, HTML, YAML, XML, LaTeX, SQL, JSONL, Properties, INI, TOML, Dot graph
+- **10+ security scans** — hash all files, secret scanning, MIME checks, null byte detection, entropy flags, path traversal detection, BOM checks, control char scans, long line detection, Unicode audits, whitespace audit, comment extraction
+- **10+ visualizations** — entropy distributions, correlation matrices, radar charts, diversity indices, scatter plots, box plots, percentile analysis, Z-score outliers, Shannon diversity, Simpson index
+- **Collaboration features** — activity timeline, file annotations, container health metrics, risk assessment, sharing menu
+- **Settings panel** — toggles for line numbers, auto-verify, animations, terminal font size slider
+- **Notification dots** — visual indicators on tabs with content
+- **Collapsible sections** — click headers to collapse/expand analysis sections
+- **Terminal info bar** — live file count, command count, session duration
+- **Extended keyboard shortcuts** — Ctrl+Shift+E export, Ctrl+Shift+S security scan, Ctrl+Shift+R report, Ctrl+Shift+T theme
+- **Resizable panels** — drag handles to resize sidebar and right panel
 
 ## Quick Start
 
@@ -138,6 +156,7 @@ For each entry:
 - [x] v0.5 — Landing page + developer portal + ML/RL/LLM features
 - [x] v0.6 — GitHub Pages deployment + demo container generator
 - [x] v0.7 — Upload/inspect/export + hex inspector + compression predictor
+- [x] v0.7.1 — 300+ portal features (50+ terminal commands, 30+ dev tools, 10+ export formats, 10+ security scans, 10+ visualizations, 7 themes, command palette, collaboration)
 - [ ] v0.8 — WASI threads (SharedArrayBuffer, parallel execution)
 - [ ] v0.9 — Agent framework (in-container SDK, IPC, sub-containers)
 - [ ] v1.0 — Production (TLS, auth, IndexedDB, checkpointing, benchmarks)

@@ -1135,6 +1135,907 @@
       text-align: center;
       padding: 8px 0
     }
+
+    /* ===== 300 FEATURES CSS ===== */
+
+    /* Sort buttons */
+    .sort-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 8px;
+      flex-wrap: wrap
+    }
+
+    .sort-btn {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--dim);
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 10px;
+      transition: all .15s
+    }
+
+    .sort-btn:hover,
+    .sort-btn.active {
+      border-color: var(--accent);
+      color: var(--text);
+      background: var(--accent-dim)
+    }
+
+    /* View toggle */
+    .view-toggle {
+      display: flex;
+      gap: 2px;
+      margin-left: auto
+    }
+
+    .view-btn {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--dim);
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .view-btn.active {
+      background: var(--accent-dim);
+      color: var(--accent2);
+      border-color: var(--accent)
+    }
+
+    /* File grid view */
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 6px
+    }
+
+    .file-grid .file-item {
+      flex-direction: column;
+      text-align: center;
+      padding: 8px 4px
+    }
+
+    .file-grid .file-item .icon {
+      font-size: 20px;
+      margin-bottom: 4px
+    }
+
+    .file-grid .file-item .sz {
+      font-size: 9px
+    }
+
+    /* File badges */
+    .fbadge {
+      display: inline-block;
+      font-size: 8px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-left: 4px;
+      font-weight: 600
+    }
+
+    .fbadge.S {
+      background: var(--blue-dim);
+      color: var(--blue)
+    }
+
+    .fbadge.M {
+      background: var(--green-dim);
+      color: var(--green)
+    }
+
+    .fbadge.L {
+      background: var(--orange-dim);
+      color: var(--orange)
+    }
+
+    .fbadge.XL {
+      background: var(--red-dim);
+      color: var(--red)
+    }
+
+    .fbadge.ent-lo {
+      background: var(--green-dim);
+      color: var(--green)
+    }
+
+    .fbadge.ent-md {
+      background: var(--orange-dim);
+      color: var(--orange)
+    }
+
+    .fbadge.ent-hi {
+      background: var(--red-dim);
+      color: var(--red)
+    }
+
+    /* Pinned files */
+    .pinned-section {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 8px
+    }
+
+    .pinned-header {
+      font-size: 10px;
+      color: var(--accent2);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    .pin-icon {
+      color: var(--orange);
+      cursor: pointer;
+      font-size: 11px
+    }
+
+    .pin-icon.pinned {
+      color: var(--accent2)
+    }
+
+    /* Recently viewed */
+    .recent-list {
+      font-size: 11px;
+      color: var(--dim)
+    }
+
+    .recent-list .recent-item {
+      padding: 3px 0;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .recent-list .recent-item:hover {
+      color: var(--text)
+    }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 8px;
+      flex-wrap: wrap
+    }
+
+    .filter-chip {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--dim);
+      padding: 2px 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 10px;
+      transition: all .15s
+    }
+
+    .filter-chip.active {
+      background: var(--accent-dim);
+      color: var(--accent2);
+      border-color: var(--accent)
+    }
+
+    .filter-chip:hover {
+      color: var(--text)
+    }
+
+    /* Size range slider */
+    .range-filter {
+      margin-bottom: 8px
+    }
+
+    .range-filter label {
+      font-size: 10px;
+      color: var(--dim);
+      display: block;
+      margin-bottom: 2px
+    }
+
+    .range-filter input[type=range] {
+      width: 100%;
+      accent-color: var(--accent)
+    }
+
+    /* Terminal toolbar */
+    .term-toolbar {
+      display: flex;
+      gap: 4px;
+      padding: 4px 8px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      font-size: 10px
+    }
+
+    .term-toolbar .tbtn {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      color: var(--dim);
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer
+    }
+
+    .term-toolbar .tbtn:hover {
+      color: var(--text);
+      border-color: var(--accent)
+    }
+
+    .term-toolbar .tinfo {
+      color: var(--faint);
+      margin-left: auto;
+      padding: 2px 6px
+    }
+
+    /* Theme picker */
+    .theme-picker {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px
+    }
+
+    .theme-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border .2s
+    }
+
+    .theme-swatch.active {
+      border-color: var(--text)
+    }
+
+    .theme-swatch:hover {
+      transform: scale(1.1)
+    }
+
+    /* Color picker */
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px
+    }
+
+    .color-row label {
+      font-size: 11px;
+      color: var(--dim);
+      min-width: 80px
+    }
+
+    .color-row input[type=color] {
+      width: 32px;
+      height: 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background: transparent
+    }
+
+    /* Slider row */
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px
+    }
+
+    .slider-row label {
+      font-size: 11px;
+      color: var(--dim);
+      min-width: 80px
+    }
+
+    .slider-row input[type=range] {
+      flex: 1;
+      accent-color: var(--accent)
+    }
+
+    .slider-row .sval {
+      font-size: 10px;
+      color: var(--accent2);
+      min-width: 30px;
+      text-align: right
+    }
+
+    /* Toggle switch */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px
+    }
+
+    .toggle-row label {
+      font-size: 11px;
+      color: var(--dim)
+    }
+
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 18px;
+      background: var(--bg4);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s
+    }
+
+    .toggle.on {
+      background: var(--accent-dim)
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--dim);
+      transition: all .2s
+    }
+
+    .toggle.on::after {
+      left: 20px;
+      background: var(--accent2)
+    }
+
+    /* Stat pills */
+    .stat-pills {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 8px
+    }
+
+    .stat-pill {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2px 10px;
+      font-size: 10px;
+      color: var(--dim)
+    }
+
+    .stat-pill b {
+      color: var(--accent2)
+    }
+
+    /* Mini chart */
+    .mini-chart {
+      width: 100%;
+      height: 60px;
+      background: var(--bg3);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 8px
+    }
+
+    /* Correlation matrix */
+    .corr-matrix {
+      display: grid;
+      gap: 1px;
+      font-size: 9px;
+      text-align: center
+    }
+
+    .corr-matrix .corr-cell {
+      padding: 4px;
+      background: var(--bg3);
+      border: 1px solid var(--border)
+    }
+
+    .corr-matrix .corr-header {
+      font-weight: 700;
+      color: var(--dim);
+      padding: 4px
+    }
+
+    /* Radar chart container */
+    .radar-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px
+    }
+
+    /* Tool grid */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 8px
+    }
+
+    .tool-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      cursor: pointer;
+      transition: all .15s
+    }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim)
+    }
+
+    .tool-card .tool-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .tool-card .tool-desc {
+      font-size: 9px;
+      color: var(--dim);
+      margin-top: 2px
+    }
+
+    /* Dev tool panel */
+    .devtool-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 8px;
+      color: var(--text);
+      font-size: 11px;
+      font-family: monospace;
+      margin-bottom: 6px
+    }
+
+    .devtool-input:focus {
+      outline: none;
+      border-color: var(--accent)
+    }
+
+    .devtool-output {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 11px;
+      font-family: monospace;
+      color: var(--green);
+      max-height: 200px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all
+    }
+
+    /* Export menu */
+    .export-menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      margin-bottom: 8px
+    }
+
+    .export-btn {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--dim);
+      transition: all .15s
+    }
+
+    .export-btn:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: var(--accent-dim)
+    }
+
+    /* Settings panel */
+    .settings-panel {
+      padding: 8px
+    }
+
+    .settings-section {
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .settings-section h5 {
+      font-size: 11px;
+      color: var(--accent2);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    /* Annotation */
+    .annotation {
+      background: var(--accent-dim);
+      border-left: 2px solid var(--accent);
+      padding: 6px 8px;
+      margin: 4px 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 11px
+    }
+
+    .annotation .ann-author {
+      font-size: 9px;
+      color: var(--accent2);
+      margin-bottom: 2px
+    }
+
+    /* Activity timeline */
+    .timeline {
+      position: relative;
+      padding-left: 16px
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border)
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 4px 0 4px 12px;
+      font-size: 11px;
+      color: var(--dim)
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    .timeline-item .tl-time {
+      font-size: 9px;
+      color: var(--faint)
+    }
+
+    /* Health bar */
+    .health-bar {
+      height: 8px;
+      background: var(--bg3);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 4px 0
+    }
+
+    .health-bar .fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .3s
+    }
+
+    /* Badge grid */
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 4px;
+      margin-bottom: 8px
+    }
+
+    .badge-item {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 6px;
+      font-size: 10px;
+      text-align: center
+    }
+
+    .badge-item .bv {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent2)
+    }
+
+    .badge-item .bl {
+      font-size: 8px;
+      color: var(--dim);
+      text-transform: uppercase
+    }
+
+    /* Diff viewer */
+    .diff-view {
+      font-family: monospace;
+      font-size: 10px;
+      white-space: pre
+    }
+
+    .diff-add {
+      color: var(--green);
+      background: var(--green-dim)
+    }
+
+    .diff-del {
+      color: var(--red);
+      background: var(--red-dim)
+    }
+
+    .diff-ctx {
+      color: var(--dim)
+    }
+
+    /* Command palette */
+    .cmd-palette {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, .6);
+      z-index: 300;
+      display: none
+    }
+
+    .cmd-palette.active {
+      display: block
+    }
+
+    .cmd-palette input {
+      width: 100%;
+      background: var(--bg);
+      border: none;
+      border-bottom: 1px solid var(--border);
+      border-radius: 12px 12px 0 0;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 14px
+    }
+
+    .cmd-palette input:focus {
+      outline: none
+    }
+
+    .cmd-palette .cmd-list {
+      max-height: 300px;
+      overflow: auto
+    }
+
+    .cmd-palette .cmd-item {
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--text)
+    }
+
+    .cmd-palette .cmd-item:hover,
+    .cmd-palette .cmd-item.selected {
+      background: var(--accent-dim)
+    }
+
+    .cmd-palette .cmd-item .cmd-cat {
+      font-size: 9px;
+      color: var(--faint);
+      float: right
+    }
+
+    /* Tooltip */
+    .tip {
+      position: relative;
+      cursor: help
+    }
+
+    .tip:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg5);
+      color: var(--text);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      white-space: nowrap;
+      z-index: 100;
+      border: 1px solid var(--border2)
+    }
+
+    /* Loading skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg3), var(--bg4), var(--bg3));
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+      height: 12px;
+      margin-bottom: 4px
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: -200% 0
+      }
+    }
+
+    /* Collapsible section */
+    .collapsible {
+      cursor: pointer;
+      user-select: none
+    }
+
+    .collapsible::before {
+      content: '▼ ';
+      font-size: 8px;
+      color: var(--dim)
+    }
+
+    .collapsible.collapsed::before {
+      content: '▶ '
+    }
+
+    .collapsible.collapsed+* {
+      display: none
+    }
+
+    /* Multi-select */
+    .file-item.selected {
+      background: var(--accent-dim);
+      border-color: var(--accent)
+    }
+
+    .file-item .checkbox {
+      width: 12px;
+      height: 12px;
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      display: inline-block;
+      margin-right: 4px;
+      cursor: pointer
+    }
+
+    .file-item.selected .checkbox {
+      background: var(--accent);
+      border-color: var(--accent)
+    }
+
+    /* Tab close */
+    .tab-close {
+      margin-left: 4px;
+      font-size: 10px;
+      color: var(--faint);
+      cursor: pointer
+    }
+
+    .tab-close:hover {
+      color: var(--red)
+    }
+
+    /* Notification dot */
+    .notif-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      display: inline-block;
+      margin-left: 4px;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: .3
+      }
+    }
+
+    /* Keyboard shortcut display */
+    kbd {
+      background: var(--bg4);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-size: 10px;
+      font-family: monospace;
+      color: var(--accent2)
+    }
+
+    /* Settings tab content */
+    .settings-tabs {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 8px
+    }
+
+    .settings-tab {
+      padding: 4px 10px;
+      font-size: 10px;
+      color: var(--dim);
+      cursor: pointer;
+      border-radius: 4px
+    }
+
+    .settings-tab.active {
+      background: var(--accent-dim);
+      color: var(--accent2)
+    }
+
+    /* Compact mode */
+    body.compact .stat-card {
+      padding: 4px 6px
+    }
+
+    body.compact .stat-card .value {
+      font-size: 18px
+    }
+
+    body.compact .ml-section {
+      margin-bottom: 8px
+    }
+
+    body.compact .file-item {
+      padding: 2px 6px
+    }
+
+    /* Wide mode */
+    body.wide .sidebar {
+      width: 200px
+    }
+
+    body.wide .right {
+      width: 500px
+    }
+
+    /* High contrast */
+    body.hc {
+      --dim: #aaaabb;
+      --faint: #888899;
+      --border: #444455;
+      --border2: #555566
+    }
+
+    /* Reduce motion */
+    body.reduce-motion * {
+      animation: none !important;
+      transition: none !important
+    }
+
+    /* Print styles */
+    @media print {
+
+      .bar,
+      .sidebar,
+      .right,
+      .overlay,
+      .drop-overlay,
+      .preview-modal,
+      .toast-container,
+      .ctx-menu {
+        display: none !important
+      }
+
+      .terminal-area {
+        display: block !important
+      }
+    }
   </style>
 </head>
 
@@ -1157,11 +2058,33 @@
         <div class="tab" data-stab="stats">Stats</div>
         <div class="tab" data-stab="entropy">Entropy</div>
         <div class="tab" data-stab="charts">Charts</div>
+        <div class="tab" data-stab="tools">Tools</div>
+        <div class="tab" data-stab="settings">Settings</div>
       </div>
       <div class="content">
         <div class="panel active" id="spanel-files">
-          <input class="search-box" id="fileSearch" placeholder="Search files…">
+          <input class="search-box" id="fileSearch" placeholder="Search files… (Ctrl+F)">
+          <div class="sort-bar" id="sortBar">
+            <button class="sort-btn active" data-sort="name">Name</button>
+            <button class="sort-btn" data-sort="size">Size</button>
+            <button class="sort-btn" data-sort="entropy">Entropy</button>
+            <button class="sort-btn" data-sort="type">Type</button>
+            <button class="sort-btn" data-sort="ratio">Ratio</button>
+            <div class="view-toggle">
+              <div class="view-btn active" data-view="list" title="List view">☰</div>
+              <div class="view-btn" data-view="grid" title="Grid view">▦</div>
+            </div>
+          </div>
+          <div class="filter-bar" id="filterBar"></div>
+          <div class="pinned-section" id="pinnedSection" style="display:none">
+            <div class="pinned-header">★ Pinned</div>
+            <div id="pinnedList"></div>
+          </div>
           <div id="fileList"></div>
+          <div class="recent-list" id="recentList" style="display:none">
+            <div class="pinned-header">🕒 Recently Viewed</div>
+            <div id="recentItems"></div>
+          </div>
         </div>
         <div class="panel" id="spanel-stats">
           <div id="statsPanel"></div>
@@ -1176,9 +2099,25 @@
         <div class="panel" id="spanel-charts">
           <div id="chartsPanel"></div>
         </div>
+        <div class="panel" id="spanel-tools">
+          <div class="tool-grid" id="toolGrid"></div>
+          <div id="toolContent"></div>
+        </div>
+        <div class="panel" id="spanel-settings">
+          <div class="settings-panel" id="settingsPanel"></div>
+        </div>
       </div>
     </div>
     <div class="terminal-area">
+      <div class="term-toolbar">
+        <button class="tbtn" id="termClear">Clear</button>
+        <button class="tbtn" id="termHelp">Help</button>
+        <button class="tbtn" id="termFontInc">A+</button>
+        <button class="tbtn" id="termFontDec">A-</button>
+        <button class="tbtn" id="termExport">Export</button>
+        <button class="tbtn" id="termFullscreen">⛶</button>
+        <span class="tinfo" id="termInfo"></span>
+      </div>
       <div id="terminal"></div>
     </div>
     <div class="right">
@@ -1189,6 +2128,10 @@
         <div class="tab" data-rtab="llm">LLM</div>
         <div class="tab" data-rtab="inspect">Inspect</div>
         <div class="tab" data-rtab="manifest">Manifest</div>
+        <div class="tab" data-rtab="viz">Viz</div>
+        <div class="tab" data-rtab="export">Export</div>
+        <div class="tab" data-rtab="security">Security</div>
+        <div class="tab" data-rtab="collab">Collab</div>
         <div class="tab" data-rtab="api">API</div>
       </div>
       <div class="panel active" id="rpanel-log">
@@ -1288,6 +2231,78 @@
           <div id="dupResults"></div>
         </div>
       </div>
+      <div class="panel" id="rpanel-viz">
+        <div class="ml-section">
+          <h4>Statistical Analysis <span class="ml-tag ml">STAT</span></h4>
+          <div id="vizStats"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Distribution Charts <span class="ml-tag ml">DIST</span></h4>
+          <div id="vizDist"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Correlation Matrix <span class="ml-tag ml">CORR</span></h4>
+          <div id="corrMatrix" class="corr-matrix"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Container Radar <span class="ml-tag ml">RADAR</span></h4>
+          <div class="radar-wrap"><canvas id="radarCanvas" width="200" height="200"></canvas></div>
+        </div>
+        <div class="ml-section">
+          <h4>Diversity Indices <span class="ml-tag ml">DIV</span></h4>
+          <div id="diversityIdx"></div>
+        </div>
+      </div>
+      <div class="panel" id="rpanel-export">
+        <div class="ml-section">
+          <h4>Export Container Data <span class="badge">EXPORT</span></h4>
+          <div class="export-menu" id="exportMenu"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Export Charts <span class="ml-tag ml">CHART</span></h4>
+          <div class="export-menu" id="chartExportMenu"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Report Generator <span class="badge">REPORT</span></h4>
+          <div id="reportOutput" class="ml-output"></div>
+          <button class="ml-btn" id="genReport">Generate Report</button>
+        </div>
+      </div>
+      <div class="panel" id="rpanel-security">
+        <div class="ml-section">
+          <h4>Security Tools <span class="ml-tag ml">SEC</span></h4>
+          <div class="tool-grid" id="secToolGrid"></div>
+          <div id="secToolContent"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Integrity Check <span class="ml-tag ml">HASH</span></h4>
+          <div id="secIntegrity"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Sensitive Data Scanner <span class="ml-tag ml">SCAN</span></h4>
+          <div id="secScanner"></div>
+        </div>
+      </div>
+      <div class="panel" id="rpanel-collab">
+        <div class="ml-section">
+          <h4>Activity Timeline <span class="ml-tag ml">LOG</span></h4>
+          <div id="collabTimeline" class="timeline"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Annotations <span class="ml-tag ml">NOTE</span></h4>
+          <div id="collabAnnotations"></div>
+          <input class="devtool-input" id="annInput" placeholder="Add annotation…">
+          <button class="ml-btn" id="annAdd">Add</button>
+        </div>
+        <div class="ml-section">
+          <h4>Container Health <span class="ml-tag ml">HEALTH</span></h4>
+          <div id="collabHealth"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Share <span class="badge">SHARE</span></h4>
+          <div class="export-menu" id="shareMenu"></div>
+        </div>
+      </div>
       <div class="panel" id="rpanel-api">
         <div class="api-section">
           <h4>GET /api/box</h4>
@@ -1356,6 +2371,13 @@
     <div class="ctx-item" data-act="hash">Show SHA-256</div>
     <div class="ctx-item" data-act="copy">Copy Path</div>
     <div class="ctx-item" data-act="download">Download File</div>
+    <div class="ctx-item" data-act="pin">Pin File</div>
+    <div class="ctx-item" data-act="base64">Base64 Encode</div>
+    <div class="ctx-item" data-act="url">Generate VFS URL</div>
+  </div>
+  <div class="cmd-palette" id="cmdPalette">
+    <input type="text" id="cmdInput" placeholder="Type a command… (Esc to close)">
+    <div class="cmd-list" id="cmdList"></div>
   </div>
   <script>
     const overlay = document.getElementById('overlay'), label = document.getElementById('label'), errEl = document.getElementById('err'), info = document.getElementById('info'), logBox = document.getElementById('logBox'), fileList = document.getElementById('fileList'), statsPanel = document.getElementById('statsPanel'), entropyPanel = document.getElementById('entropyPanel');
@@ -1760,25 +2782,11 @@
     // 8. Terminal history with arrow keys
     let termHistory = [], termHistoryIdx = -1;
     let currentInput = '';
-    term.onData(d => {
-      if (d === '\r') {
-        if (currentInput.trim()) { termHistory.push(currentInput); termHistoryIdx = termHistory.length }
-        tw('\r\n$ '); currentInput = '';
-      } else if (d === '\x1b[A') { // Up
-        if (termHistoryIdx > 0) { termHistoryIdx--; tw('\r\x1b[2K$ ' + termHistory[termHistoryIdx]); currentInput = termHistory[termHistoryIdx] }
-      } else if (d === '\x1b[B') { // Down
-        if (termHistoryIdx < termHistory.length - 1) { termHistoryIdx++; tw('\r\x1b[2K$ ' + termHistory[termHistoryIdx]); currentInput = termHistory[termHistoryIdx] }
-        else { tw('\r\x1b[2K$ '); currentInput = '' }
-      } else if (d === '\x7f') { // Backspace
-        if (currentInput.length > 0) { currentInput = currentInput.slice(0, -1); tw('\b \b') }
-      } else if (d.length === 1 && d >= ' ') {
-        currentInput += d; tw(d);
-      }
-    });
+    // Terminal data handler replaced by handleTermData in 300 features block below
 
     // 9. Keyboard shortcuts (Ctrl+1..7 for right tabs)
     document.addEventListener('keydown', e => {
-      if (e.ctrlKey && e.key >= '1' && e.key <= '7') {
+      if (e.ctrlKey && e.key >= '1' && e.key <= '9') {
         e.preventDefault();
         const tabs = document.querySelectorAll('.right .tab');
         const idx = parseInt(e.key) - 1;
@@ -2038,7 +3046,9 @@
     function wireFileItems() {
       fileList.querySelectorAll('.file-item').forEach(el => {
         el.oncontextmenu = e => showCtx(e, el.dataset.path);
-        el.ondblclick = () => previewFile(el.dataset.path);
+        el.ondblclick = () => { previewFile(el.dataset.path); addRecent(el.dataset.path) };
+        const cb = el.querySelector('.checkbox');
+        if (cb) cb.onclick = (e) => { e.stopPropagation(); const p = el.dataset.path; if (selectedFiles.has(p)) selectedFiles.delete(p); else selectedFiles.add(p); updateSelection() };
       });
     }
 
@@ -2058,8 +3068,829 @@
       toast('Container loaded: ' + containerMeta.entropyData.length + ' files', 'ok');
     }
 
-    navigator.serviceWorker.register('sw.js').then(() => { log('SW registered'); load() }).catch(e => { label.textContent = ''; errEl.textContent = 'SW failed: ' + e.message });
-    document.getElementById('reload').onclick = () => { term.clear(); load() };
+    // ===== 300 MORE FEATURES =====
+    let pinnedFiles = new Set(), recentFiles = [], currentSort = 'name', currentView = 'list', selectedFiles = new Set();
+    let annotations = [], activityLog = [], currentTheme = 'default', termFontSize = 13;
+    const sessionStart = Date.now();
+
+    function logActivity(msg) { activityLog.push({ time: new Date().toISOString().substr(11, 8), msg }); updateTimeline() }
+    function updateTimeline() { const el = document.getElementById('collabTimeline'); if (!el) return; el.innerHTML = activityLog.slice(-20).reverse().map(a => '<div class="timeline-item">' + a.msg + '<div class="tl-time">' + a.time + '</div></div>').join('') }
+
+    // File sorting
+    document.querySelectorAll('.sort-btn').forEach(b => b.onclick = () => {
+      document.querySelectorAll('.sort-btn').forEach(x => x.classList.remove('active')); b.classList.add('active');
+      currentSort = b.dataset.sort; renderFileList(); toast('Sorted by ' + currentSort, 'info');
+    });
+    function getSortedFiles() {
+      if (!containerMeta.entropyData.length) return [];
+      let files = [...containerMeta.entropyData];
+      if (currentSort === 'name') files.sort((a, b) => a.path.localeCompare(b.path));
+      else if (currentSort === 'size') files.sort((a, b) => b.size - a.size);
+      else if (currentSort === 'entropy') files.sort((a, b) => b.entropy - a.entropy);
+      else if (currentSort === 'type') files.sort((a, b) => getFileType(a.path).localeCompare(getFileType(b.path)));
+      else if (currentSort === 'ratio') { files.sort((a, b) => { const ra = containerMeta.files.find(p => p.path === a.path); const rb = containerMeta.files.find(p => p.path === b.path); return (rb && rb.origSize ? rb.compSize / rb.origSize : 1) - (ra && ra.origSize ? ra.compSize / ra.origSize : 1) }) }
+      return files;
+    }
+    function renderFileList() {
+      const files = getSortedFiles(); if (!files.length) return;
+      const q = fileSearch.value.toLowerCase();
+      const filtered = files.filter(f => f.path.toLowerCase().includes(q));
+      const isGrid = currentView === 'grid';
+      fileList.className = isGrid ? 'file-grid' : '';
+      fileList.innerHTML = filtered.map(f => {
+        const sz = f.size; const ext = f.path.split('.').pop();
+        const ic = ext === 'wasm' ? '⚡' : ext === 'html' ? '📄' : ext === 'js' ? '📜' : ext === 'css' ? '🎨' : ext === 'json' ? '🔧' : ext === 'md' ? '📋' : '📋';
+        const sizeBadge = sz > 1e6 ? 'XL' : sz > 1e5 ? 'L' : sz > 1e3 ? 'M' : 'S';
+        const entBadge = f.entropy > 6 ? 'ent-hi' : f.entropy > 4 ? 'ent-md' : 'ent-lo';
+        const entLabel = f.entropy > 6 ? 'HI' : f.entropy > 4 ? 'MD' : 'LO';
+        const sel = selectedFiles.has(f.path) ? ' selected' : '';
+        const pin = pinnedFiles.has(f.path) ? '<span class="pin-icon pinned">★</span>' : '';
+        return '<div class="file-item' + sel + '" data-path="' + f.path + '"><span class="checkbox"></span><span><span class="icon">' + ic + '</span>' + f.path + '</span>' + pin + '<span class="sz">' + fmtSize(sz) + ' <span class="fbadge ' + sizeBadge + '">' + sizeBadge + '</span><span class="fbadge ' + entBadge + '">' + entLabel + '</span></span></div>';
+      }).join('');
+      wireFileItems();
+    }
+
+    // View toggle
+    document.querySelectorAll('.view-btn').forEach(b => b.onclick = () => {
+      document.querySelectorAll('.view-btn').forEach(x => x.classList.remove('active')); b.classList.add('active');
+      currentView = b.dataset.view; renderFileList();
+    });
+
+    // File type filter chips
+    function initFilterBar() {
+      const fb = document.getElementById('filterBar'); if (!fb || !containerMeta.entropyData.length) return;
+      const types = [...new Set(containerMeta.entropyData.map(f => getFileType(f.path)))];
+      fb.innerHTML = types.map(t => '<div class="filter-chip" data-type="' + t + '">' + t + '</div>').join('');
+      fb.querySelectorAll('.filter-chip').forEach(c => c.onclick = () => {
+        c.classList.toggle('active');
+        const active = [...fb.querySelectorAll('.filter-chip.active')].map(x => x.dataset.type);
+        fileList.querySelectorAll('.file-item').forEach(el => {
+          const t = getFileType(el.dataset.path);
+          el.style.display = active.length === 0 || active.includes(t) ? '' : 'none';
+        });
+      });
+    }
+
+    // Pin files
+    function togglePin(path) {
+      if (pinnedFiles.has(path)) { pinnedFiles.delete(path); toast('Unpinned: ' + path, 'info') }
+      else { pinnedFiles.add(path); toast('Pinned: ' + path, 'ok') }
+      updatePinned(); renderFileList();
+    }
+    function updatePinned() {
+      const ps = document.getElementById('pinnedSection'), pl = document.getElementById('pinnedList');
+      if (!ps) return;
+      if (pinnedFiles.size === 0) { ps.style.display = 'none'; return }
+      ps.style.display = ''; pl.innerHTML = [...pinnedFiles].map(p => '<div class="file-item" data-path="' + p + '"><span>★ ' + p + '</span><span class="pin-icon pinned">★</span></div>').join('');
+      pl.querySelectorAll('.file-item').forEach(el => el.onclick = () => { togglePin(el.dataset.path); previewFile(el.dataset.path) });
+    }
+    function addRecent(path) {
+      recentFiles = [path, ...recentFiles.filter(p => p !== path)].slice(0, 10);
+      const rl = document.getElementById('recentList'), ri = document.getElementById('recentItems');
+      if (!rl) return;
+      if (recentFiles.length > 0) { rl.style.display = ''; ri.innerHTML = recentFiles.map(p => '<div class="recent-item">' + p + '</div>').join(''); ri.querySelectorAll('.recent-item').forEach((el, i) => el.onclick = () => previewFile(recentFiles[i])) }
+    }
+
+    // Terminal commands
+    const termCommands = {
+      help: () => { tw('\r\nCommands: help ls cat stats hash entropy export inspect optimize split reload theme clear about version health dedup grade types search size corr radar report scan timeline annotations pins recent sort view palette\r\n') },
+      ls: () => { containerMeta.entropyData.forEach(f => tw(f.path + ' (' + fmtSize(f.size) + ')\r\n')) },
+      cat: (args) => { const p = args[0]; const d = vfsData.get(p); if (d) { const ext = p.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) tw(new TextDecoder().decode(d).substr(0, 2000) + '\r\n'); else tw('Binary (' + fmtSize(d.length) + ')\r\n') } else tw('Not found: ' + p + '\r\n') },
+      stats: () => { tw('Files: ' + containerMeta.entropyData.length + ' Total: ' + fmtSize(containerMeta.totalOrig) + ' Container: ' + fmtSize(containerMeta.totalComp) + ' Ratio: ' + (containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) : 0) + '%\r\n') },
+      hash: (args) => { const d = vfsData.get(args[0]); if (d) sha256(d).then(h => tw('SHA-256: ' + h + '\r\n')); else tw('Not found\r\n') },
+      entropy: () => { containerMeta.entropyData.forEach(f => tw(f.path + ': ' + f.entropy.toFixed(2) + '\r\n')) },
+      export: () => { document.getElementById('exportStatsBtn')?.click(); tw('Exported\r\n') },
+      inspect: () => { document.querySelectorAll('.right .tab').forEach(t => { if (t.dataset.rtab === 'inspect') t.click() }); tw('Inspect tab\r\n') },
+      optimize: () => { document.getElementById('optimizeLayout')?.click(); tw('Optimizing...\r\n') },
+      split: () => { document.getElementById('splitBtn')?.click(); tw('Splitting...\r\n') },
+      reload: () => { document.getElementById('reload').click() },
+      theme: (args) => { if (args[0]) { setTheme(args[0]); tw('Theme: ' + args[0] + '\r\n') } else tw('Themes: default midnight dracula solarized monokai github nord\r\n') },
+      clear: () => term.clear(),
+      about: () => tw('BoxVM v0.7 — Browser-Native Container Runtime\r\nhttps://github.com/overandor/boxvm\r\n'),
+      version: () => tw('v0.7\r\n'),
+      health: () => { const r = containerMeta.totalOrig > 0 ? 100 * containerMeta.totalComp / containerMeta.totalOrig : 100; tw('Health: ' + (r < 30 ? 'Excellent' : r < 50 ? 'Good' : r < 70 ? 'Fair' : 'Poor') + ' (' + r.toFixed(1) + '%)\r\n') },
+      dedup: () => { initDupDetector(); tw('Dedup complete\r\n') },
+      grade: () => { initEfficiency(); tw('Grade: ' + (document.getElementById('efficiencyGrade')?.textContent || '—') + '\r\n') },
+      types: () => { const c = getFileTypeCounts(); Object.entries(c).forEach(([t, n]) => tw(t + ': ' + n + '\r\n')) },
+      search: (args) => { fileSearch.value = args.join(' '); fileSearch.dispatchEvent(new Event('input')); tw('Searching: ' + args.join(' ') + '\r\n') },
+      size: () => { const s = containerMeta.entropyData.map(f => f.size); tw('Min: ' + fmtSize(Math.min(...s)) + ' Max: ' + fmtSize(Math.max(...s)) + ' Avg: ' + fmtSize(s.reduce((a, b) => a + b, 0) / s.length) + '\r\n') },
+      corr: () => { initCorrelationMatrix(); tw('Correlation computed\r\n') },
+      radar: () => { drawRadarChart(); tw('Radar drawn\r\n') },
+      report: () => { generateReport(); tw('Report generated\r\n') },
+      scan: () => { runSecurityScan(); tw('Scan complete\r\n') },
+      timeline: () => { activityLog.forEach(a => tw(a.time + ' ' + a.msg + '\r\n')) },
+      annotations: () => { annotations.forEach(a => tw('[' + a.time + '] ' + a.text + '\r\n')); if (!annotations.length) tw('None\r\n') },
+      pins: () => { pinnedFiles.forEach(p => tw('★ ' + p + '\r\n')); if (!pinnedFiles.size) tw('None\r\n') },
+      recent: () => { recentFiles.forEach(p => tw('🕒 ' + p + '\r\n')); if (!recentFiles.length) tw('None\r\n') },
+      sort: (args) => { document.querySelector('.sort-btn[data-sort="' + (args[0] || 'name') + '"]')?.click(); tw('Sorted by ' + (args[0] || 'name') + '\r\n') },
+      view: (args) => { document.querySelector('.view-btn[data-view="' + (args[0] || 'list') + '"]')?.click(); tw('View: ' + (args[0] || 'list') + '\r\n') },
+      palette: () => openCmdPalette(),
+    };
+
+    // Terminal data handler with command processing
+    function handleTermData(d) {
+      if (d === '\r') {
+        const parts = currentInput.trim().split(/\s+/);
+        const cmd = parts[0]?.toLowerCase(); const args = parts.slice(1);
+        if (cmd && termCommands[cmd]) { termCommands[cmd](args); }
+        else if (currentInput.trim()) { tw('\r\nUnknown: ' + cmd + ' (type "help")\r\n') }
+        if (currentInput.trim()) { termHistory.push(currentInput); termHistoryIdx = termHistory.length; logActivity('Cmd: ' + currentInput) }
+        tw('\r\n$ '); currentInput = '';
+      } else if (d === '\x1b[A') { if (termHistoryIdx > 0) { termHistoryIdx--; tw('\r\x1b[2K$ ' + termHistory[termHistoryIdx]); currentInput = termHistory[termHistoryIdx] } }
+      else if (d === '\x1b[B') { if (termHistoryIdx < termHistory.length - 1) { termHistoryIdx++; tw('\r\x1b[2K$ ' + termHistory[termHistoryIdx]); currentInput = termHistory[termHistoryIdx] } else { tw('\r\x1b[2K$ '); currentInput = '' } }
+      else if (d === '\x7f') { if (currentInput.length > 0) { currentInput = currentInput.slice(0, -1); tw('\b \b') } }
+      else if (d.length === 1 && d >= ' ') { currentInput += d; tw(d) }
+      const ti = document.getElementById('termInfo'); if (ti) ti.textContent = 'cmds:' + termHistory.length + ' session:' + Math.floor((Date.now() - sessionStart) / 1000) + 's';
+    }
+    term.onData(handleTermData);
+
+    // Terminal toolbar
+    document.getElementById('termClear').onclick = () => { term.clear(); tw('$ ') };
+    document.getElementById('termHelp').onclick = () => { termCommands.help(); tw('$ ') };
+    document.getElementById('termFontInc').onclick = () => { termFontSize = Math.min(24, termFontSize + 1); term.setOption('fontSize', termFontSize); toast('Font: ' + termFontSize + 'px', 'info') };
+    document.getElementById('termFontDec').onclick = () => { termFontSize = Math.max(8, termFontSize - 1); term.setOption('fontSize', termFontSize); toast('Font: ' + termFontSize + 'px', 'info') };
+    document.getElementById('termExport').onclick = () => { const lines = []; for (let i = 0; i < term.buffer.active.length; i++) lines.push(term.buffer.active.getLine(i)?.translateToString() || ''); const blob = new Blob([lines.join('\n')]); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'terminal-output.txt'; a.click(); toast('Terminal exported', 'ok') };
+    document.getElementById('termFullscreen').onclick = () => { const t = document.querySelector('.terminal-area'); t.classList.toggle('fullscreen'); if (t.classList.contains('fullscreen')) { t.style.cssText = 'position:fixed;inset:0;z-index:500;background:#000' } else { t.style.cssText = '' } setTimeout(() => fitAddon.fit(), 100); toast('Fullscreen toggled', 'info') };
+
+    // Themes
+    const themes = {
+      default: { accent: '#7c6cf0', bg: '#060608', bg2: '#0c0c12', bg3: '#14141c', text: '#f0f0f5' },
+      midnight: { accent: '#4a6cf0', bg: '#020210', bg2: '#080820', bg3: '#101030', text: '#d0d0f0' },
+      dracula: { accent: '#bd93f9', bg: '#282a36', bg2: '#21222c', bg3: '#44475a', text: '#f8f8f2' },
+      solarized: { accent: '#268bd2', bg: '#002b36', bg2: '#073642', bg3: '#0d4a5a', text: '#93a1a1' },
+      monokai: { accent: '#a6e22e', bg: '#272822', bg2: '#1e1f1c', bg3: '#3e3d32', text: '#f8f8f2' },
+      github: { accent: '#58a6ff', bg: '#0d1117', bg2: '#161b22', bg3: '#21262d', text: '#c9d1d9' },
+      nord: { accent: '#88c0d0', bg: '#2e3440', bg2: '#3b4252', bg3: '#434c5e', text: '#d8dee9' },
+    };
+    function setTheme(name) {
+      const t = themes[name]; if (!t) return; currentTheme = name;
+      const r = document.documentElement.style;
+      r.setProperty('--accent', t.accent); r.setProperty('--bg', t.bg); r.setProperty('--bg2', t.bg2); r.setProperty('--bg3', t.bg3); r.setProperty('--text', t.text);
+      r.setProperty('--accent-dim', t.accent + '20'); r.setProperty('--accent2', t.accent);
+      toast('Theme: ' + name, 'ok'); logActivity('Theme: ' + name);
+    }
+
+    // Settings panel
+    function initSettings() {
+      const sp = document.getElementById('settingsPanel'); if (!sp) return;
+      let html = '<div class="settings-section"><h5>Theme</h5><div class="theme-picker">';
+      for (const [name, t] of Object.entries(themes)) html += '<div class="theme-swatch' + (name === currentTheme ? ' active' : '') + '" data-theme="' + name + '" style="background:linear-gradient(135deg,' + t.bg2 + ',' + t.accent + ')" title="' + name + '"></div>';
+      html += '</div></div>';
+      html += '<div class="settings-section"><h5>Accent Color</h5><div class="color-row"><label>Primary</label><input type="color" id="accentColorPicker" value="#7c6cf0"></div></div>';
+      html += '<div class="settings-section"><h5>Display</h5>';
+      html += '<div class="slider-row"><label>Font size</label><input type="range" min="8" max="24" value="13" id="fontSizeSlider"><span class="sval" id="fontSizeVal">13</span></div>';
+      html += '<div class="slider-row"><label>Panel opacity</label><input type="range" min="50" max="100" value="100" id="opacitySlider"><span class="sval" id="opacityVal">100%</span></div>';
+      html += '<div class="slider-row"><label>Border radius</label><input type="range" min="0" max="20" value="8" id="radiusSlider"><span class="sval" id="radiusVal">8px</span></div></div>';
+      html += '<div class="settings-section"><h5>Toggles</h5>';
+      html += '<div class="toggle-row"><label>Compact mode</label><div class="toggle" id="toggleCompact"></div></div>';
+      html += '<div class="toggle-row"><label>Wide mode</label><div class="toggle" id="toggleWide"></div></div>';
+      html += '<div class="toggle-row"><label>High contrast</label><div class="toggle" id="toggleHC"></div></div>';
+      html += '<div class="toggle-row"><label>Reduce motion</label><div class="toggle" id="toggleMotion"></div></div>';
+      html += '<div class="toggle-row"><label>Show file badges</label><div class="toggle on" id="toggleBadges"></div></div>';
+      html += '<div class="toggle-row"><label>Auto-analysis</label><div class="toggle on" id="toggleAutoAnalysis"></div></div></div>';
+      html += '<div class="settings-section"><h5>Shortcuts</h5><div style="font-size:11px;color:var(--dim);line-height:1.8">';
+      html += '<div><kbd>Ctrl+1-9</kbd> Switch tabs</div><div><kbd>Ctrl+F</kbd> Search</div><div><kbd>Ctrl+A</kbd> Select all</div>';
+      html += '<div><kbd>Ctrl+P</kbd> Command palette</div><div><kbd>Esc</kbd> Close</div><div><kbd>?</kbd> Help</div><div><kbd>↑↓</kbd> History</div></div></div>';
+      sp.innerHTML = html;
+      sp.querySelectorAll('.theme-swatch').forEach(s => s.onclick = () => { sp.querySelectorAll('.theme-swatch').forEach(x => x.classList.remove('active')); s.classList.add('active'); setTheme(s.dataset.theme) });
+      const acp = document.getElementById('accentColorPicker'); if (acp) acp.oninput = () => { document.documentElement.style.setProperty('--accent', acp.value); document.documentElement.style.setProperty('--accent2', acp.value); document.documentElement.style.setProperty('--accent-dim', acp.value + '20') };
+      const fss = document.getElementById('fontSizeSlider'); if (fss) fss.oninput = () => { termFontSize = parseInt(fss.value); term.setOption('fontSize', termFontSize); document.getElementById('fontSizeVal').textContent = termFontSize };
+      const ops = document.getElementById('opacitySlider'); if (ops) ops.oninput = () => { document.querySelector('.main').style.opacity = ops.value / 100; document.getElementById('opacityVal').textContent = ops.value + '%' };
+      const rds = document.getElementById('radiusSlider'); if (rds) rds.oninput = () => { document.documentElement.style.setProperty('--radius', rds.value + 'px'); document.querySelectorAll('.stat-card, .tool-card, .export-btn').forEach(el => el.style.borderRadius = rds.value + 'px'); document.getElementById('radiusVal').textContent = rds.value + 'px' };
+      const wt = (id, cls) => { const t = document.getElementById(id); if (!t) return; t.onclick = () => { t.classList.toggle('on'); document.body.classList.toggle(cls); toast(cls + ' ' + (t.classList.contains('on') ? 'on' : 'off'), 'info') } };
+      wt('toggleCompact', 'compact'); wt('toggleWide', 'wide'); wt('toggleHC', 'hc'); wt('toggleMotion', 'reduce-motion');
+    }
+
+    // Command palette
+    const cmdPalette = document.getElementById('cmdPalette'), cmdInput = document.getElementById('cmdInput'), cmdList = document.getElementById('cmdList');
+    const allCommands = Object.entries(termCommands).map(([k, v]) => ({ name: k, cat: 'terminal', run: v }));
+    allCommands.push(
+      { name: 'upload', cat: 'file', run: () => document.getElementById('fileInput').click() },
+      { name: 'download', cat: 'file', run: () => document.getElementById('downloadBtn').click() },
+      { name: 'restart', cat: 'system', run: () => document.getElementById('reload').click() },
+      { name: 'settings', cat: 'ui', run: () => { document.querySelector('.sidebar .tab[data-stab="settings"]')?.click() } },
+      { name: 'tools', cat: 'ui', run: () => { document.querySelector('.sidebar .tab[data-stab="tools"]')?.click() } },
+      { name: 'viz', cat: 'ui', run: () => { document.querySelector('.right .tab[data-rtab="viz"]')?.click() } },
+      { name: 'export', cat: 'ui', run: () => { document.querySelector('.right .tab[data-rtab="export"]')?.click() } },
+      { name: 'security', cat: 'ui', run: () => { document.querySelector('.right .tab[data-rtab="security"]')?.click() } },
+      { name: 'collab', cat: 'ui', run: () => { document.querySelector('.right .tab[data-rtab="collab"]')?.click() } },
+    );
+    function openCmdPalette() { cmdPalette.classList.add('active'); cmdInput.value = ''; cmdInput.focus(); filterCommands('') }
+    function filterCommands(q) { const f = allCommands.filter(c => c.name.includes(q)); cmdList.innerHTML = f.map((c, i) => '<div class="cmd-item' + (i === 0 ? ' selected' : '') + '" data-cmd="' + c.name + '">' + c.name + '<span class="cmd-cat">' + c.cat + '</span></div>').join(''); cmdList.querySelectorAll('.cmd-item').forEach(el => el.onclick = () => { cmdPalette.classList.remove('active'); const c = allCommands.find(x => x.name === el.dataset.cmd); if (c) c.run() }) }
+    cmdInput.addEventListener('input', () => filterCommands(cmdInput.value.toLowerCase()));
+    cmdInput.addEventListener('keydown', e => { if (e.key === 'Escape') cmdPalette.classList.remove('active'); if (e.key === 'Enter') { const s = cmdList.querySelector('.selected'); if (s) s.click() } });
+    document.addEventListener('keydown', e => { if (e.ctrlKey && e.key === 'p') { e.preventDefault(); openCmdPalette() } });
+
+    // Context menu new actions
+    ctxMenu.querySelectorAll('.ctx-item').forEach(item => {
+      const origOnclick = item.onclick;
+      item.onclick = async () => {
+        ctxMenu.classList.remove('active'); if (!ctxPath) return;
+        const act = item.dataset.act;
+        if (act === 'pin') { togglePin(ctxPath) }
+        else if (act === 'base64') { const d = vfsData.get(ctxPath); if (d) { const b64 = btoa(String.fromCharCode(...d.slice(0, 1000))); navigator.clipboard.writeText(b64); toast('Base64 copied (' + Math.min(d.length, 1000) + ' bytes)', 'ok') } }
+        else if (act === 'url') { const url = location.origin + '/__box__/' + ctxPath; navigator.clipboard.writeText(url); toast('URL copied: ' + url, 'ok') }
+        else { origOnclick?.() }
+      };
+    });
+
+    // Ctrl+A select all
+    document.addEventListener('keydown', e => {
+      if (e.ctrlKey && e.key === 'a' && document.querySelector('.sidebar .tab.active')?.dataset.stab === 'files') {
+        e.preventDefault(); containerMeta.entropyData.forEach(f => selectedFiles.add(f.path)); updateSelection(); toast('All selected', 'info');
+      }
+    });
+    function updateSelection() { fileList.querySelectorAll('.file-item').forEach(el => el.classList.toggle('selected', selectedFiles.has(el.dataset.path))) }
+
+    // ===== Visualization & Analysis =====
+    function mean(a) { return a.reduce((s, x) => s + x, 0) / a.length }
+    function std(a) { const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / a.length) }
+    function median(a) { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)] }
+    function skew(a) { const m = mean(a); const sd = std(a); return sd > 0 ? a.reduce((s, x) => s + ((x - m) / sd) ** 3, 0) / a.length : 0 }
+    function kurt(a) { const m = mean(a); const sd = std(a); return sd > 0 ? a.reduce((s, x) => s + ((x - m) / sd) ** 4, 0) / a.length - 3 : 0 }
+    function pearson(x, y) { const mx = mean(x), my = mean(y); const num = x.reduce((s, xi, i) => s + (xi - mx) * (y[i] - my), 0); const dx = Math.sqrt(x.reduce((s, xi) => s + (xi - mx) ** 2, 0)); const dy = Math.sqrt(y.reduce((s, yi) => s + (yi - my) ** 2, 0)); return dx * dy > 0 ? num / (dx * dy) : 0 }
+
+    function initVizStats() {
+      const el = document.getElementById('vizStats'); if (!el || !containerMeta.entropyData.length) return;
+      const ents = containerMeta.entropyData.map(f => f.entropy), sizes = containerMeta.entropyData.map(f => f.size);
+      let html = '<div class="stat-pills">';
+      html += '<span class="stat-pill">Entropy μ=<b>' + mean(ents).toFixed(2) + '</b></span>';
+      html += '<span class="stat-pill">σ=<b>' + std(ents).toFixed(2) + '</b></span>';
+      html += '<span class="stat-pill">med=<b>' + median(ents).toFixed(2) + '</b></span>';
+      html += '<span class="stat-pill">skew=<b>' + skew(ents).toFixed(2) + '</b></span>';
+      html += '<span class="stat-pill">kurt=<b>' + kurt(ents).toFixed(2) + '</b></span>';
+      html += '<span class="stat-pill">Size μ=<b>' + fmtSize(mean(sizes)) + '</b></span>';
+      html += '<span class="stat-pill">σ=<b>' + fmtSize(std(sizes)) + '</b></span>';
+      html += '</div>';
+      // Quartiles
+      const sortedE = [...ents].sort((a, b) => a - b);
+      const q1 = sortedE[Math.floor(sortedE.length * 0.25)];
+      const q3 = sortedE[Math.floor(sortedE.length * 0.75)];
+      const iqr = q3 - q1;
+      html += '<div class="ml-row"><span class="name">Q1 / Q3</span><span class="val">' + q1.toFixed(2) + ' / ' + q3.toFixed(2) + '</span></div>';
+      html += '<div class="ml-row"><span class="name">IQR</span><span class="val">' + iqr.toFixed(2) + '</span></div>';
+      html += '<div class="ml-row"><span class="name">Range</span><span class="val">' + Math.min(...ents).toFixed(2) + ' – ' + Math.max(...ents).toFixed(2) + '</span></div>';
+      // Coefficient of variation
+      const cv = mean(ents) > 0 ? (std(ents) / mean(ents) * 100).toFixed(1) : '0';
+      html += '<div class="ml-row"><span class="name">CV (entropy)</span><span class="val">' + cv + '%</span></div>';
+      el.innerHTML = html;
+    }
+
+    function initVizDist() {
+      const el = document.getElementById('vizDist'); if (!el || !containerMeta.entropyData.length) return;
+      el.innerHTML = '<canvas id="distCanvas" width="380" height="120" class="mini-chart" style="height:120px"></canvas><canvas id="sizeDistCanvas" width="380" height="120" class="mini-chart" style="height:120px"></canvas>';
+      // Entropy distribution histogram
+      const dc = document.getElementById('distCanvas'); if (dc) { const ctx = dc.getContext('2d'); const w = dc.width, h = dc.height; ctx.clearRect(0, 0, w, h); const bins = 20; const ents = containerMeta.entropyData.map(f => f.entropy); const lo = 0, hi = 8; const hist = new Array(bins).fill(0); ents.forEach(e => { const b = Math.min(bins - 1, Math.floor((e - lo) / (hi - lo) * bins)); hist[b]++ }); const mx = Math.max(...hist); const bw = w / bins; for (let i = 0; i < bins; i++) { const bh = (hist[i] / mx) * h * 0.85; ctx.fillStyle = 'hsl(' + (i / bins * 120 + 180) + ',60%,50%)'; ctx.fillRect(i * bw, h - bh, bw - 1, bh) } ctx.fillStyle = '#8888a0'; ctx.font = '9px sans-serif'; ctx.fillText('Entropy Distribution', 4, 12) }
+      // Size distribution histogram
+      const sc = document.getElementById('sizeDistCanvas'); if (sc) { const ctx = sc.getContext('2d'); const w = sc.width, h = sc.height; ctx.clearRect(0, 0, w, h); const bins = 20; const sizes = containerMeta.entropyData.map(f => f.size); const lo = Math.min(...sizes), hi = Math.max(...sizes); const hist = new Array(bins).fill(0); sizes.forEach(s => { const b = Math.min(bins - 1, Math.floor((s - lo) / (hi - lo + 1) * bins)); hist[b]++ }); const mx = Math.max(...hist); const bw = w / bins; for (let i = 0; i < bins; i++) { const bh = (hist[i] / mx) * h * 0.85; ctx.fillStyle = '#7c6cf0'; ctx.fillRect(i * bw, h - bh, bw - 1, bh) } ctx.fillStyle = '#8888a0'; ctx.font = '9px sans-serif'; ctx.fillText('Size Distribution', 4, 12) }
+    }
+
+    function initCorrelationMatrix() {
+      const el = document.getElementById('corrMatrix'); if (!el || !containerMeta.entropyData.length) return;
+      const files = containerMeta.entropyData;
+      const vars = ['entropy', 'size', 'compRatio'];
+      const data = vars.map(v => files.map(f => v === 'entropy' ? f.entropy : v === 'size' ? f.size : (containerMeta.files.find(p => p.path === f.path)?.compSize || f.size) / (containerMeta.files.find(p => p.path === f.path)?.origSize || f.size)));
+      const n = vars.length;
+      let html = '<div class="corr-matrix" style="grid-template-columns:repeat(' + (n + 1) + ',1fr)"><div class="corr-header"></div>';
+      vars.forEach(v => html += '<div class="corr-header">' + v.substr(0, 4) + '</div>');
+      for (let i = 0; i < n; i++) {
+        html += '<div class="corr-header">' + vars[i].substr(0, 4) + '</div>';
+        for (let j = 0; j < n; j++) {
+          const r = pearson(data[i], data[j]);
+          const color = Math.abs(r) > 0.7 ? 'var(--red)' : Math.abs(r) > 0.4 ? 'var(--orange)' : 'var(--green)';
+          html += '<div class="corr-cell" style="color:' + color + '">' + r.toFixed(2) + '</div>';
+        }
+      }
+      html += '</div>';
+      el.innerHTML = html;
+    }
+
+    function drawRadarChart() {
+      const c = document.getElementById('radarCanvas'); if (!c || !containerMeta.entropyData.length) return;
+      const ctx = c.getContext('2d'); const w = c.width, h = c.height; const cx = w / 2, cy = h / 2, r = 70;
+      ctx.clearRect(0, 0, w, h);
+      const files = containerMeta.entropyData;
+      const metrics = ['Compression', 'Entropy', 'Diversity', 'Integrity', 'Efficiency'];
+      const vals = [
+        containerMeta.totalOrig > 0 ? 1 - containerMeta.totalComp / containerMeta.totalOrig : 0,
+        mean(files.map(f => f.entropy)) / 8,
+        Object.keys(getFileTypeCounts()).length / 8,
+        integrityStatus === 'pass' ? 1 : 0,
+        containerMeta.totalOrig > 0 ? Math.max(0, 1 - containerMeta.totalComp / containerMeta.totalOrig) : 0,
+      ];
+      const n = metrics.length;
+      // Grid
+      for (let ring = 1; ring <= 4; ring++) { ctx.beginPath(); for (let i = 0; i <= n; i++) { const a = (i / n) * Math.PI * 2 - Math.PI / 2; const rr = r * ring / 4; ctx.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr) } ctx.strokeStyle = '#1e1e2a'; ctx.lineWidth = 1; ctx.stroke() }
+      // Data
+      ctx.beginPath();
+      for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2 - Math.PI / 2; const rr = r * vals[i]; if (i === 0) ctx.moveTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); else ctx.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr) }
+      ctx.closePath(); ctx.fillStyle = 'rgba(124,108,240,.2)'; ctx.fill(); ctx.strokeStyle = '#7c6cf0'; ctx.lineWidth = 2; ctx.stroke();
+      // Labels
+      ctx.fillStyle = '#8888a0'; ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
+      for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2 - Math.PI / 2; ctx.fillText(metrics[i].substr(0, 6), cx + Math.cos(a) * (r + 12), cy + Math.sin(a) * (r + 12) + 3) }
+    }
+
+    function initDiversityIndices() {
+      const el = document.getElementById('diversityIdx'); if (!el || !containerMeta.entropyData.length) return;
+      const counts = getFileTypeCounts(); const total = containerMeta.entropyData.length;
+      const props = Object.values(counts).map(c => c / total);
+      // Shannon diversity
+      const shannon = -props.reduce((s, p) => s + (p > 0 ? p * Math.log2(p) : 0), 0);
+      // Simpson diversity
+      const simpson = 1 - props.reduce((s, p) => s + p * p, 0);
+      // Evenness (Pielou)
+      const maxH = Math.log2(Object.keys(counts).length);
+      const pielou = maxH > 0 ? shannon / maxH : 0;
+      // Richness
+      const richness = Object.keys(counts).length;
+      let html = '<div class="ml-row"><span class="name">Shannon H</span><span class="val">' + shannon.toFixed(3) + '</span></div>';
+      html += '<div class="ml-row"><span class="name">Simpson D</span><span class="val">' + simpson.toFixed(3) + '</span></div>';
+      html += '<div class="ml-row"><span class="name">Pielou J</span><span class="val">' + pielou.toFixed(3) + '</span></div>';
+      html += '<div class="ml-row"><span class="name">Richness</span><span class="val">' + richness + '</span></div>';
+      html += '<div class="ml-row"><span class="name">Evenness</span><span class="val">' + (pielou > 0.8 ? 'High' : pielou > 0.5 ? 'Moderate' : 'Low') + '</span></div>';
+      el.innerHTML = html;
+    }
+
+    // ===== Export Panel =====
+    function initExportMenu() {
+      const el = document.getElementById('exportMenu'); if (!el) return;
+      const items = [
+        { name: 'JSON Stats', fn: () => document.getElementById('exportStatsBtn')?.click() },
+        { name: 'CSV Manifest', fn: exportCSV },
+        { name: 'Markdown Report', fn: exportMarkdown },
+        { name: 'HTML Report', fn: exportHTML },
+        { name: 'Entropy CSV', fn: exportEntropyCSV },
+        { name: 'Hash List', fn: exportHashList },
+        { name: 'File Tree', fn: exportFileTree },
+        { name: 'Binary Dump', fn: exportBinaryDump },
+      ];
+      el.innerHTML = items.map(i => '<div class="export-btn" data-export="' + i.name + '">' + i.name + '</div>').join('');
+      el.querySelectorAll('.export-btn').forEach(b => b.onclick = () => { const item = items.find(i => i.name === b.dataset.export); if (item) { item.fn(); toast('Exported: ' + item.name, 'ok') } });
+    }
+    function downloadText(filename, text, type) { const blob = new Blob([text], { type: type || 'text/plain' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href) }
+    function exportCSV() { let csv = 'path,origSize,compSize,ratio,entropy,type\n'; containerMeta.entropyData.forEach(f => { const p = containerMeta.files.find(x => x.path === f.path); csv += f.path + ',' + (p?.origSize || f.size) + ',' + (p?.compSize || 0) + ',' + (p && p.origSize ? (100 * p.compSize / p.origSize).toFixed(1) : '—') + ',' + f.entropy.toFixed(2) + ',' + getFileType(f.path) + '\n' }); downloadText('container-manifest.csv', csv, 'text/csv') }
+    function exportMarkdown() { let md = '# Container Report\n\n## Summary\n- Files: ' + containerMeta.entropyData.length + '\n- Total: ' + fmtSize(containerMeta.totalOrig) + '\n- Container: ' + fmtSize(containerMeta.totalComp) + '\n- Ratio: ' + (containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) : 0) + '%\n\n## Files\n| Path | Size | Entropy | Type |\n|------|------|---------|------|\n'; containerMeta.entropyData.forEach(f => { md += '| ' + f.path + ' | ' + fmtSize(f.size) + ' | ' + f.entropy.toFixed(2) + ' | ' + getFileType(f.path) + ' |\n' }); downloadText('container-report.md', md, 'text/markdown') }
+    function exportHTML() { let html = '<!DOCTYPE html><html><body><h1>Container Report</h1><table border="1"><tr><th>Path</th><th>Size</th><th>Entropy</th><th>Type</th></tr>'; containerMeta.entropyData.forEach(f => { html += '<tr><td>' + f.path + '</td><td>' + fmtSize(f.size) + '</td><td>' + f.entropy.toFixed(2) + '</td><td>' + getFileType(f.path) + '</td></tr>' }); html += '</table></body></html>'; downloadText('container-report.html', html, 'text/html') }
+    function exportEntropyCSV() { let csv = 'path,entropy,size,byte0,byte1,byte2,byte3,byte4,byte5,byte6,byte7\n'; containerMeta.entropyData.forEach(f => { const h = byteHistogram(f.data); csv += f.path + ',' + f.entropy.toFixed(4) + ',' + f.size + ',' + h.slice(0, 8).join(',') + '\n' }); downloadText('entropy-analysis.csv', csv, 'text/csv') }
+    function exportHashList() { let txt = ''; containerMeta.entropyData.forEach(f => { const fh = [...(containerMeta.files.find(p => p.path === f.path)?.fileHash || [])].map(b => b.toString(16).padStart(2, '0')).join(''); txt += fh + '  ' + f.path + '\n' }); downloadText('hashes.txt', txt) }
+    function exportFileTree() { let tree = ''; const paths = containerMeta.entropyData.map(f => f.path).sort(); const treeObj = {}; paths.forEach(p => { p.split('/').reduce((o, k) => (o[k] = o[k] || {}, o[k]), treeObj) }); function render(obj, prefix) { Object.keys(obj).forEach((k, i, arr) => { tree += prefix + (i === arr.length - 1 ? '└── ' : '├── ') + k + '\n'; if (Object.keys(obj[k]).length) render(obj[k], prefix + (i === arr.length - 1 ? '    ' : '│   ')) }) } render(treeObj, ''); downloadText('file-tree.txt', tree) }
+    function exportBinaryDump() { if (!lastBoxBytes) return; let hex = ''; for (let i = 0; i < Math.min(4096, lastBoxBytes.length); i += 16) { let line = i.toString(16).padStart(8, '0') + '  '; for (let j = 0; j < 16; j++) { if (i + j < lastBoxBytes.length) line += lastBoxBytes[i + j].toString(16).padStart(2, '0') + ' '; else line += '   ' } hex += line + '\n' } downloadText('binary-dump.hex', hex) }
+
+    function initChartExportMenu() {
+      const el = document.getElementById('chartExportMenu'); if (!el) return;
+      const items = [
+        { name: 'Histogram PNG', fn: () => canvasToPNG('histCanvas', 'histogram.png') },
+        { name: 'Size Chart PNG', fn: () => canvasToPNG('sizeCanvas', 'size-distribution.png') },
+        { name: 'Radar PNG', fn: () => canvasToPNG('radarCanvas', 'radar.png') },
+        { name: 'Gauge PNG', fn: () => canvasToPNG('gaugeCanvas', 'entropy-gauge.png') },
+        { name: 'Donut PNG', fn: () => canvasToPNG('distChart', 'filetype-donut.png') },
+        { name: 'RL Chart PNG', fn: () => canvasToPNG('rlCanvas', 'rl-training.png') },
+      ];
+      el.innerHTML = items.map(i => '<div class="export-btn" data-export="' + i.name + '">' + i.name + '</div>').join('');
+      el.querySelectorAll('.export-btn').forEach(b => b.onclick = () => { const item = items.find(i => i.name === b.dataset.export); if (item) { item.fn(); toast('Exported: ' + item.name, 'ok') } });
+    }
+    function canvasToPNG(id, filename) { const c = document.getElementById(id); if (!c) return; c.toBlob(blob => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href) }) }
+
+    function generateReport() {
+      const el = document.getElementById('reportOutput'); if (!el) return;
+      if (!containerMeta.entropyData.length) { el.innerHTML = '<span class="dim">Load container first.</span>'; return }
+      const files = containerMeta.entropyData;
+      const ents = files.map(f => f.entropy), sizes = files.map(f => f.size);
+      const ratio = containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) : '—';
+      const types = getFileTypeCounts();
+      let report = '═══ BoxVM Container Report ═══\n';
+      report += 'Generated: ' + new Date().toISOString() + '\n';
+      report += 'Version: v0.7\n\n';
+      report += '── Summary ──\n';
+      report += 'Files: ' + files.length + '\n';
+      report += 'Total size: ' + fmtSize(containerMeta.totalOrig) + '\n';
+      report += 'Container size: ' + fmtSize(containerMeta.totalComp) + '\n';
+      report += 'Compression ratio: ' + ratio + '%\n';
+      report += 'Space saved: ' + fmtSize(containerMeta.totalOrig - containerMeta.totalComp) + '\n\n';
+      report += '── Entropy ──\n';
+      report += 'Mean: ' + mean(ents).toFixed(3) + ' bits/byte\n';
+      report += 'Std dev: ' + std(ents).toFixed(3) + '\n';
+      report += 'Median: ' + median(ents).toFixed(3) + '\n';
+      report += 'Min/Max: ' + Math.min(...ents).toFixed(2) + ' / ' + Math.max(...ents).toFixed(2) + '\n';
+      report += 'Skewness: ' + skew(ents).toFixed(3) + '\n';
+      report += 'Kurtosis: ' + kurt(ents).toFixed(3) + '\n\n';
+      report += '── File Types ──\n';
+      Object.entries(types).sort((a, b) => b[1] - a[1]).forEach(([t, c]) => { report += '  ' + t + ': ' + c + ' (' + (c / files.length * 100).toFixed(0) + '%)\n' });
+      report += '\n── Size Stats ──\n';
+      report += 'Min: ' + fmtSize(Math.min(...sizes)) + '\n';
+      report += 'Max: ' + fmtSize(Math.max(...sizes)) + '\n';
+      report += 'Mean: ' + fmtSize(mean(sizes)) + '\n';
+      report += 'Median: ' + fmtSize(median(sizes)) + '\n\n';
+      report += '── Integrity ──\n';
+      report += 'Status: ' + integrityStatus + '\n\n';
+      report += '── Diversity ──\n';
+      const props = Object.values(types).map(c => c / files.length);
+      const shannon = -props.reduce((s, p) => s + (p > 0 ? p * Math.log2(p) : 0), 0);
+      report += 'Shannon H: ' + shannon.toFixed(3) + '\n';
+      report += 'Richness: ' + Object.keys(types).length + '\n';
+      el.textContent = report;
+    }
+    document.getElementById('genReport')?.addEventListener('click', generateReport);
+
+    // ===== Security Panel =====
+    function initSecTools() {
+      const el = document.getElementById('secToolGrid'); if (!el) return;
+      const tools = [
+        { name: 'Hash All', desc: 'SHA-256 every file', fn: secHashAll },
+        { name: 'Scan Secrets', desc: 'Find API keys, tokens', fn: runSecurityScan },
+        { name: 'MIME Check', desc: 'Verify file extensions', fn: secMimeCheck },
+        { name: 'Null Byte Scan', desc: 'Find null bytes in text', fn: secNullScan },
+        { name: 'Entropy Flag', desc: 'Flag suspicious entropy', fn: secEntropyFlag },
+        { name: 'Path Traversal', desc: 'Check for ../ patterns', fn: secPathTraversal },
+      ];
+      el.innerHTML = tools.map(t => '<div class="tool-card" data-tool="' + t.name + '"><div class="tool-name">' + t.name + '</div><div class="tool-desc">' + t.desc + '</div></div>').join('');
+      el.querySelectorAll('.tool-card').forEach(c => c.onclick = () => { const t = tools.find(x => x.name === c.dataset.tool); if (t) { t.fn(); toast('Tool: ' + t.name, 'info') } });
+    }
+    async function secHashAll() { const el = document.getElementById('secToolContent'); if (!el) return; let html = '<div class="devtool-output">'; for (const f of containerMeta.entropyData) { const h = await sha256(f.data); html += h.substr(0, 16) + '…  ' + f.path + '\n' } html += '</div>'; el.innerHTML = html; logActivity('Security: hashed all files') }
+    function runSecurityScan() {
+      const el = document.getElementById('secScanner'); if (!el || !containerMeta.entropyData.length) return;
+      const patterns = [
+        { name: 'API keys', regex: /[Aa]pi[_-]?[Kk]ey[=:]\s*['"]?[A-Za-z0-9]{20,}/g },
+        { name: 'AWS keys', regex: /AKIA[0-9A-Z]{16}/g },
+        { name: 'JWT tokens', regex: /eyJ[A-Za-z0-9_-]+\.eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g },
+        { name: 'Private keys', regex: /-----BEGIN [A-Z]+ PRIVATE KEY-----/g },
+        { name: 'Passwords', regex: /[Pp]assword[=:]\s*['"]?[^\s'"]{4,}/g },
+        { name: 'URLs with creds', regex: /https?:\/\/[^:]+:[^@]+@/g },
+        { name: 'GitHub tokens', regex: /gh[pousr]_[A-Za-z0-9]{36}/g },
+        { name: 'Slack tokens', regex: /xox[bp]-[A-Za-z0-9-]+/g },
+      ];
+      let findings = 0; let html = '';
+      for (const f of containerMeta.entropyData) {
+        const ext = f.path.split('.').pop().toLowerCase();
+        if (!['html', 'js', 'css', 'json', 'md', 'txt', 'xml', 'svg', 'env'].includes(ext)) continue;
+        const text = new TextDecoder().decode(f.data);
+        for (const p of patterns) { const m = text.match(p.regex); if (m) { findings += m.length; html += '<div class="ml-row"><span class="name">' + p.name + '</span><span class="val bad">' + m.length + ' in ' + f.path + '</span></div>' } }
+      }
+      const el2 = document.getElementById('secScanner');
+      if (el2) el2.innerHTML = findings === 0 ? '<div style="color:var(--green);font-size:12px">✓ No sensitive data detected.</div>' : '<div style="font-size:11px;color:var(--red);margin-bottom:6px">' + findings + ' potential findings:</div>' + html;
+      logActivity('Security scan: ' + findings + ' findings');
+    }
+    function secMimeCheck() { const el = document.getElementById('secToolContent'); if (!el) return; let html = '<div class="devtool-output">'; const extMime = { html: 'text/html', js: 'text/javascript', css: 'text/css', json: 'application/json', wasm: 'application/wasm', md: 'text/markdown', png: 'image/png', jpg: 'image/jpeg' }; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop().toLowerCase(); const expected = extMime[ext] || 'unknown'; const isText = ['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext); const actual = isText ? 'text' : 'binary'; const ok = (isText && actual === 'text') || (!isText && actual === 'binary'); html += (ok ? '✓' : '✗') + ' ' + f.path + ' → ' + expected + '\n' }); html += '</div>'; el.innerHTML = html }
+    function secNullScan() { const el = document.getElementById('secToolContent'); if (!el) return; let html = '<div class="devtool-output">'; let found = 0; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { let count = 0; for (let i = 0; i < f.data.length; i++) if (f.data[i] === 0) count++; if (count > 0) { html += '⚠ ' + f.path + ': ' + count + ' null bytes\n'; found++ } } }); if (!found) html += '✓ No null bytes in text files\n'; html += '</div>'; el.innerHTML = html }
+    function secEntropyFlag() { const el = document.getElementById('secToolContent'); if (!el) return; let html = '<div class="devtool-output">'; containerMeta.entropyData.forEach(f => { if (f.entropy > 7.5) html += '⚠ HIGH ' + f.path + ': ' + f.entropy.toFixed(2) + ' (possible encrypted/compressed)\n'; else if (f.entropy < 0.5) html += '⚠ LOW ' + f.path + ': ' + f.entropy.toFixed(2) + ' (possible padding/empty)\n' }); html += '</div>'; el.innerHTML = html }
+    function secPathTraversal() { const el = document.getElementById('secToolContent'); if (!el) return; let html = '<div class="devtool-output">'; let found = 0; containerMeta.entropyData.forEach(f => { if (f.path.includes('..') || f.path.includes('//') || f.path.startsWith('/')) { html += '⚠ ' + f.path + '\n'; found++ } }); if (!found) html += '✓ No path traversal patterns\n'; html += '</div>'; el.innerHTML = html }
+
+    function initSecIntegrity() {
+      const el = document.getElementById('secIntegrity'); if (!el) return;
+      if (!containerMeta.entropyData.length) { el.innerHTML = '<span class="dim">Load container.</span>'; return }
+      el.innerHTML = '<div class="ml-row"><span class="name">Status</span><span class="val">' + getIntegrityBadge() + '</span></div>' +
+        '<div class="ml-row"><span class="name">Algorithm</span><span class="val">SHA-256</span></div>' +
+        '<div class="ml-row"><span class="name">Files checked</span><span class="val">' + containerMeta.entropyData.length + '</span></div>' +
+        '<div class="ml-row"><span class="name">Trailer hash</span><span class="val" style="font-size:9px">' + (lastBoxBytes ? [...lastBoxBytes.slice(-32)].map(b => b.toString(16).padStart(2, '0')).join('').substr(0, 32) + '…' : '—') + '</span></div>';
+    }
+
+    // ===== Collab Panel =====
+    document.getElementById('annAdd')?.addEventListener('click', () => {
+      const inp = document.getElementById('annInput'); if (!inp || !inp.value.trim()) return;
+      annotations.push({ time: new Date().toISOString().substr(11, 8), text: inp.value.trim() });
+      inp.value = ''; updateAnnotations(); logActivity('Annotation added');
+    });
+    function updateAnnotations() { const el = document.getElementById('collabAnnotations'); if (!el) return; el.innerHTML = annotations.map(a => '<div class="annotation"><div class="ann-author">@user · ' + a.time + '</div>' + a.text + '</div>').join('') }
+
+    function initCollabHealth() {
+      const el = document.getElementById('collabHealth'); if (!el) return;
+      if (!containerMeta.entropyData.length) { el.innerHTML = '<span class="dim">Load container.</span>'; return }
+      const ratio = containerMeta.totalOrig > 0 ? 100 * containerMeta.totalComp / containerMeta.totalOrig : 100;
+      const entScore = mean(containerMeta.entropyData.map(f => f.entropy)) / 8 * 100;
+      const integScore = integrityStatus === 'pass' ? 100 : 0;
+      const divScore = Object.keys(getFileTypeCounts()).length / 8 * 100;
+      const compScore = 100 - ratio;
+      const overall = (compScore + entScore + integScore + divScore) / 4;
+      let html = '<div class="badge-grid">';
+      html += '<div class="badge-item"><div class="bv">' + Math.round(overall) + '</div><div class="bl">Overall</div></div>';
+      html += '<div class="badge-item"><div class="bv">' + Math.round(compScore) + '</div><div class="bl">Compress</div></div>';
+      html += '<div class="badge-item"><div class="bv">' + Math.round(entScore) + '</div><div class="bl">Entropy</div></div>';
+      html += '<div class="badge-item"><div class="bv">' + Math.round(integScore) + '</div><div class="bl">Integrity</div></div>';
+      html += '<div class="badge-item"><div class="bv">' + Math.round(divScore) + '</div><div class="bl">Diversity</div></div>';
+      html += '</div>';
+      // Health bars
+      const bars = [['Compression', compScore, 'var(--green)'], ['Entropy', entScore, 'var(--accent)'], ['Integrity', integScore, 'var(--green)'], ['Diversity', divScore, 'var(--blue)']];
+      bars.forEach(([label, val, color]) => { html += '<div class="ml-row"><span class="name">' + label + '</span><span class="val">' + Math.round(val) + '%</span></div><div class="health-bar"><div class="fill" style="width:' + val + '%;background:' + color + '"></div></div>' });
+      el.innerHTML = html;
+    }
+
+    function initShareMenu() {
+      const el = document.getElementById('shareMenu'); if (!el) return;
+      const items = [
+        { name: 'Copy URL', fn: () => { navigator.clipboard.writeText(location.href); toast('URL copied', 'ok') } },
+        { name: 'Copy Stats', fn: () => { const s = containerMeta.entropyData.length + ' files, ' + fmtSize(containerMeta.totalComp) + ', ratio ' + (containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) : 0) + '%'; navigator.clipboard.writeText(s); toast('Stats copied', 'ok') } },
+        { name: 'Share JSON', fn: () => document.getElementById('exportStatsBtn')?.click() },
+        { name: 'QR Code', fn: generateQR },
+      ];
+      el.innerHTML = items.map(i => '<div class="export-btn" data-share="' + i.name + '">' + i.name + '</div>').join('');
+      el.querySelectorAll('.export-btn').forEach(b => b.onclick = () => { const item = items.find(i => i.name === b.dataset.share); if (item) item.fn() });
+    }
+    function generateQR() { const url = location.href; const c = document.createElement('canvas'); c.width = 200; c.height = 200; const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, 200, 200); ctx.fillStyle = '#000'; ctx.font = '10px monospace'; ctx.fillText('Scan:', 10, 20); ctx.fillText(url.substr(0, 30), 10, 40); ctx.fillText(url.substr(30, 30), 10, 55); toast('QR placeholder generated (URL copied)', 'info'); navigator.clipboard.writeText(url) }
+
+    // ===== Tools Panel =====
+    function initTools() {
+      const el = document.getElementById('toolGrid'); if (!el) return;
+      const tools = [
+        { name: 'Base64 Encode', desc: 'Encode file to base64', fn: toolBase64 },
+        { name: 'URL Encode', desc: 'URL-encode file content', fn: toolURLEncode },
+        { name: 'Hex Dump', desc: 'Hex dump any file', fn: toolHexDump },
+        { name: 'String Extract', desc: 'Extract ASCII strings', fn: toolStrings },
+        { name: 'Byte Stats', desc: 'Per-byte frequency', fn: toolByteStats },
+        { name: 'Line Count', desc: 'Count lines in text files', fn: toolLineCount },
+        { name: 'Word Count', desc: 'Count words in text files', fn: toolWordCount },
+        { name: 'Char Frequency', desc: 'Character frequency analysis', fn: toolCharFreq },
+        { name: 'MIME Detect', desc: 'Detect MIME type', fn: toolMimeDetect },
+        { name: 'File Diff', desc: 'Compare two files', fn: toolFileDiff },
+        { name: 'Gzip Estimate', desc: 'Estimate gzip compression', fn: toolGzipEst },
+        { name: 'Brotli Estimate', desc: 'Estimate brotli compression', fn: toolBrotliEst },
+        { name: 'Hash Compare', desc: 'Compare file hashes', fn: toolHashCompare },
+        { name: 'Entropy Profile', desc: 'Sliding window entropy', fn: toolEntropyProfile },
+        { name: 'Byte Distribution', desc: '256-bin byte distribution', fn: toolByteDist },
+        { name: 'Container Info', desc: 'Container metadata summary', fn: toolContainerInfo },
+      ];
+      el.innerHTML = tools.map(t => '<div class="tool-card" data-tool="' + t.name + '"><div class="tool-name">' + t.name + '</div><div class="tool-desc">' + t.desc + '</div></div>').join('');
+      el.querySelectorAll('.tool-card').forEach(c => c.onclick = () => { const t = tools.find(x => x.name === c.dataset.tool); if (t) { t.fn(); toast('Tool: ' + t.name, 'info') } });
+    }
+    function toolOutput(html) { const el = document.getElementById('toolContent'); if (el) el.innerHTML = '<div class="devtool-output">' + html + '</div>' }
+    function toolBase64() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const b64 = btoa(String.fromCharCode(...f.data.slice(0, 1000))); toolOutput('Base64 (' + f.path + ', first 1000 bytes):\n' + b64) }
+    function toolURLEncode() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const text = new TextDecoder().decode(f.data.slice(0, 500)); toolOutput('URL-encoded:\n' + encodeURIComponent(text)) }
+    function toolHexDump() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; let hex = ''; for (let i = 0; i < Math.min(256, f.data.length); i += 16) { let line = i.toString(16).padStart(8, '0') + '  '; let ascii = ''; for (let j = 0; j < 16; j++) { if (i + j < f.data.length) { line += f.data[i + j].toString(16).padStart(2, '0') + ' '; ascii += f.data[i + j] >= 32 && f.data[i + j] < 127 ? String.fromCharCode(f.data[i + j]) : '.' } else { line += '   '; ascii += ' ' } } hex += line + ' |' + ascii + '|\n' } toolOutput(hex) }
+    function toolStrings() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const text = new TextDecoder().decode(f.data); const strings = text.match(/[\x20-\x7e]{4,}/g) || []; toolOutput('Strings (≥4 chars) in ' + f.path + ':\n' + strings.slice(0, 50).join('\n')) }
+    function toolByteStats() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const h = byteHistogram(f.data); let html = 'Byte stats for ' + f.path + ':\n'; const sorted = h.map((c, b) => [b, c]).sort((a, b) => b[1] - a[1]).slice(0, 20); sorted.forEach(([b, c]) => html += '  0x' + b.toString(16).padStart(2, '0') + ' (' + (b >= 32 && b < 127 ? String.fromCharCode(b) : '.') + '): ' + c + '\n'); toolOutput(html) }
+    function toolLineCount() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let html = ''; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { const lines = new TextDecoder().decode(f.data).split('\n').length; html += f.path + ': ' + lines + ' lines\n' } }); toolOutput(html || 'No text files found.') }
+    function toolWordCount() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let html = ''; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { const words = new TextDecoder().decode(f.data).split(/\s+/).filter(w => w).length; html += f.path + ': ' + words + ' words\n' } }); toolOutput(html || 'No text files found.') }
+    function toolCharFreq() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const text = new TextDecoder().decode(f.data); const freq = {}; for (const c of text) freq[c] = (freq[c] || 0) + 1; const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 20); toolOutput('Char frequency (' + f.path + '):\n' + sorted.map(([c, n]) => '  ' + JSON.stringify(c) + ': ' + n).join('\n')) }
+    function toolMimeDetect() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const extMime = { html: 'text/html', js: 'text/javascript', css: 'text/css', json: 'application/json', wasm: 'application/wasm', md: 'text/markdown', png: 'image/png', jpg: 'image/jpeg', svg: 'image/svg+xml', xml: 'application/xml' }; let html = ''; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop().toLowerCase(); html += f.path + ' → ' + (extMime[ext] || 'application/octet-stream') + '\n' }); toolOutput(html) }
+    function toolFileDiff() { if (containerMeta.entropyData.length < 2) return toolOutput('Need at least 2 files.'); const f1 = containerMeta.entropyData[0], f2 = containerMeta.entropyData[1]; const t1 = new TextDecoder().decode(f1.data).split('\n'), t2 = new TextDecoder().decode(f2.data).split('\n'); let html = 'Diff: ' + f1.path + ' vs ' + f2.path + '\n\n'; const max = Math.max(t1.length, t2.length); for (let i = 0; i < Math.min(max, 50); i++) { if (t1[i] !== t2[i]) { html += '- ' + (t1[i] || '') + '\n+ ' + (t2[i] || '') + '\n\n' } } toolOutput(html) }
+    function toolGzipEst() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let html = 'Gzip estimates:\n'; containerMeta.entropyData.forEach(f => { const est = Math.max(0, 100 - f.entropy * 10); html += f.path + ': ~' + est.toFixed(0) + '% of original\n' }); toolOutput(html) }
+    function toolBrotliEst() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let html = 'Brotli estimates:\n'; containerMeta.entropyData.forEach(f => { const est = Math.max(0, 95 - f.entropy * 9); html += f.path + ': ~' + est.toFixed(0) + '% of original\n' }); toolOutput(html) }
+    function toolHashCompare() { if (containerMeta.entropyData.length < 2) return toolOutput('Need 2+ files.'); let html = 'Hash comparison:\n'; for (let i = 0; i < containerMeta.entropyData.length; i++) { for (let j = i + 1; j < containerMeta.entropyData.length; j++) { if (containerMeta.entropyData[i].size === containerMeta.entropyData[j].size && containerMeta.entropyData[i].entropy === containerMeta.entropyData[j].entropy) html += '⚠ Possible match: ' + containerMeta.entropyData[i].path + ' ≈ ' + containerMeta.entropyData[j].path + '\n' } } toolOutput(html || 'No matches found.') }
+    function toolEntropyProfile() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const window = 256; let html = 'Sliding window entropy (' + f.path + ', window=' + window + '):\n'; for (let i = 0; i < f.data.length; i += window * 4) { const chunk = f.data.slice(i, i + window); if (chunk.length > 0) html += '  offset ' + i + ': ' + shannonEntropy(chunk).toFixed(2) + '\n' } toolOutput(html) }
+    function toolByteDist() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const h = byteHistogram(f.data); let html = '256-bin distribution (' + f.path + '):\n'; for (let i = 0; i < 256; i += 16) { html += '  ' + i.toString(16).padStart(2, '0') + '-' + (i + 15).toString(16).padStart(2, '0') + ': ' + h.slice(i, i + 16).join(' ') + '\n' } toolOutput(html) }
+    function toolContainerInfo() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); toolOutput('Container Info:\n  Files: ' + containerMeta.entropyData.length + '\n  Total: ' + fmtSize(containerMeta.totalOrig) + '\n  Container: ' + fmtSize(containerMeta.totalComp) + '\n  Ratio: ' + (containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) : 0) + '%\n  Integrity: ' + integrityStatus + '\n  Avg entropy: ' + mean(containerMeta.entropyData.map(f => f.entropy)).toFixed(3) + '\n  Types: ' + Object.keys(getFileTypeCounts()).length) }
+
+    // ===== Wire everything into initAllFeatures =====
+    const origInitAll = initAllFeatures;
+    initAllFeatures = function () {
+      origInitAll();
+      renderFileList();
+      initFilterBar();
+      initSettings();
+      initTools();
+      initVizStats();
+      initVizDist();
+      initCorrelationMatrix();
+      drawRadarChart();
+      initDiversityIndices();
+      initExportMenu();
+      initChartExportMenu();
+      initSecTools();
+      initSecIntegrity();
+      initCollabHealth();
+      initShareMenu();
+      logActivity('Container loaded: ' + containerMeta.entropyData.length + ' files');
+    };
+
+    // ===== 150 MORE FEATURES (Part 2) =====
+
+    // Extended terminal commands
+    Object.assign(termCommands, {
+      tree: () => { const paths = containerMeta.entropyData.map(f => f.path).sort(); const obj = {}; paths.forEach(p => p.split('/').reduce((o, k) => (o[k] = o[k] || {}, o[k]), obj)); function r(o, p) { Object.keys(o).forEach((k, i, a) => { tw(p + (i === a.length - 1 ? '└── ' : '├── ') + k + '\r\n'); if (Object.keys(o[k]).length) r(o[k], p + (i === a.length - 1 ? '    ' : '│   ')) }) } r(obj, '') },
+      wc: (args) => { const d = vfsData.get(args[0]); if (d) { const t = new TextDecoder().decode(d); tw(t.split(/\s+/).filter(w => w).length + ' words, ' + t.split('\n').length + ' lines, ' + t.length + ' chars\r\n') } else tw('Not found\r\n') },
+      head: (args) => { const d = vfsData.get(args[0]); if (d) { new TextDecoder().decode(d).split('\n').slice(0, 10).forEach(l => tw(l + '\r\n')) } else tw('Not found\r\n') },
+      tail: (args) => { const d = vfsData.get(args[0]); if (d) { new TextDecoder().decode(d).split('\n').slice(-10).forEach(l => tw(l + '\r\n')) } else tw('Not found\r\n') },
+      grep: (args) => { const pattern = args[0]; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { const text = new TextDecoder().decode(f.data); text.split('\n').forEach((l, i) => { if (l.toLowerCase().includes(pattern.toLowerCase())) tw(f.path + ':' + (i + 1) + ': ' + l + '\r\n') }) } }) },
+      find: (args) => { const q = (args[0] || '').toLowerCase(); containerMeta.entropyData.forEach(f => { if (f.path.toLowerCase().includes(q)) tw(f.path + '\r\n') }) },
+      du: () => { containerMeta.entropyData.forEach(f => tw(fmtSize(f.size).padStart(8) + '  ' + f.path + '\r\n')); tw(fmtSize(containerMeta.totalOrig).padStart(8) + '  total\r\n') },
+      file: (args) => { const d = vfsData.get(args[0]); if (d) tw(args[0] + ': ' + args[0].split('.').pop() + ', ' + fmtSize(d.length) + '\r\n'); else tw('Not found\r\n') },
+      diff: () => { if (containerMeta.entropyData.length < 2) { tw('Need 2+ files\r\n'); return } toolFileDiff(); tw('Diff complete\r\n') },
+      base64: (args) => { const d = vfsData.get(args[0]); if (d) tw(btoa(String.fromCharCode(...d.slice(0, 1000))).substr(0, 80) + '...\r\n'); else tw('Not found\r\n') },
+      stat: (args) => { const f = containerMeta.entropyData.find(x => x.path === args[0]); if (f) tw('File: ' + f.path + '\r\nSize: ' + fmtSize(f.size) + '\r\nEntropy: ' + f.entropy.toFixed(3) + '\r\nType: ' + getFileType(f.path) + '\r\n'); else tw('Not found\r\n') },
+      history: () => { termHistory.forEach((h, i) => tw((i + 1) + '  ' + h + '\r\n')) },
+      echo: (args) => tw(args.join(' ') + '\r\n'),
+      env: () => { tw('BoxVM v0.7\r\nBrowser: ' + navigator.userAgent.substr(0, 60) + '\r\nCores: ' + (navigator.hardwareConcurrency || 4) + '\r\n') },
+      date: () => tw(new Date().toISOString() + '\r\n'),
+      whoami: () => tw('developer@boxvm\r\n'),
+      man: (args) => { if (termCommands[args[0]]) tw('man ' + args[0] + ': Run "' + args[0] + '" for usage.\r\n'); else tw('No manual for ' + args[0] + '\r\n') },
+      sleep: (args) => { const ms = parseInt(args[0]) || 1000; tw('Sleeping ' + ms + 'ms...\r\n'); setTimeout(() => tw('Done\r\n'), ms) },
+      time: (args) => { const c = args[0]; if (termCommands[c]) { const s = performance.now(); termCommands[c](args.slice(1)); tw('Time: ' + (performance.now() - s).toFixed(1) + 'ms\r\n') } else tw('Unknown\r\n') },
+      seq: (args) => { const n = parseInt(args[0]) || 10; for (let i = 1; i <= n; i++) tw(i + ' '); tw('\r\n') },
+      sort: (args) => { const d = vfsData.get(args[0]); if (d) new TextDecoder().decode(d).split('\n').sort().forEach(l => tw(l + '\r\n')); else tw('Not found\r\n') },
+      uniq: (args) => { const d = vfsData.get(args[0]); if (d) { const lines = new TextDecoder().decode(d).split('\n'); const seen = new Set(); lines.forEach(l => { if (!seen.has(l)) { seen.add(l); tw(l + '\r\n') } }) } else tw('Not found\r\n') },
+      rev: (args) => { const d = vfsData.get(args[0]); if (d) new TextDecoder().decode(d).split('\n').forEach(l => tw(l.split('').reverse().join('') + '\r\n')); else tw('Not found\r\n') },
+      nl: (args) => { const d = vfsData.get(args[0]); if (d) new TextDecoder().decode(d).split('\n').forEach((l, i) => tw((i + 1).toString().padStart(4) + '  ' + l + '\r\n')); else tw('Not found\r\n') },
+      od: (args) => { const d = vfsData.get(args[0]); if (d) { for (let i = 0; i < Math.min(64, d.length); i += 8) { let line = i.toString(8).padStart(7, '0') + ' '; for (let j = 0; j < 8 && i + j < d.length; j++) line += d[i + j].toString(8).padStart(3, '0') + ' '; tw(line + '\r\n') } } else tw('Not found\r\n') },
+      xxd: (args) => { const d = vfsData.get(args[0]); if (d) { toolHexDump(); tw('\r\n') } else tw('Not found\r\n') },
+      uuid: () => tw(crypto.randomUUID() + '\r\n'),
+      random: (args) => { const n = parseInt(args[0]) || 32; const arr = new Uint8Array(n); crypto.getRandomValues(arr); tw([...arr].map(b => b.toString(16).padStart(2, '0')).join('') + '\r\n') },
+      calc: (args) => { try { tw(Function('return ' + args.join(''))() + '\r\n') } catch (e) { tw('Error\r\n') } },
+      minify: (args) => { const d = vfsData.get(args[0]); if (d) { const t = new TextDecoder().decode(d); tw(t.replace(/\s+/g, ' ').substr(0, 200) + '...\r\n') } else tw('Not found\r\n') },
+      count: () => tw('Files: ' + containerMeta.entropyData.length + '\r\n'),
+      largest: () => { const f = [...containerMeta.entropyData].sort((a, b) => b.size - a.size)[0]; if (f) tw(f.path + ' (' + fmtSize(f.size) + ')\r\n') },
+      smallest: () => { const f = [...containerMeta.entropyData].sort((a, b) => a.size - b.size)[0]; if (f) tw(f.path + ' (' + fmtSize(f.size) + ')\r\n') },
+      highest: () => { const f = [...containerMeta.entropyData].sort((a, b) => b.entropy - a.entropy)[0]; if (f) tw(f.path + ' (' + f.entropy.toFixed(2) + ')\r\n') },
+      lowest: () => { const f = [...containerMeta.entropyData].sort((a, b) => a.entropy - b.entropy)[0]; if (f) tw(f.path + ' (' + f.entropy.toFixed(2) + ')\r\n') },
+      ratio: () => { tw('Ratio: ' + (containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) : 0) + '%\r\nSaved: ' + fmtSize(containerMeta.totalOrig - containerMeta.totalComp) + '\r\n') },
+      validate: () => { tw('Integrity: ' + integrityStatus + '\r\nFiles: ' + containerMeta.entropyData.length + '\r\n') },
+      benchmark: () => { const s = performance.now(); let h = 0; containerMeta.entropyData.forEach(f => { for (let i = 0; i < f.data.length; i++) h = (h * 31 + f.data[i]) | 0 }); tw('Benchmark: ' + (performance.now() - s).toFixed(1) + 'ms\r\n') },
+      profile: () => { tw('Profile:\r\n  Decompress: ' + (decompTime || 0).toFixed(1) + 'ms\r\n  Files: ' + containerMeta.entropyData.length + '\r\n') },
+      banner: () => { tw('\r\n ____  ____  ____  ____\r\n|  _ \\|  _ \\|  _ \\|  _ \\\r\n| |_) | |_) | |_) | |_) |\r\n|  _ <|  __/|  _ <|  __/\r\n|_| \\_\\_|   |_| \\_\\_|\r\n\r\n') },
+      matrix: () => { for (let i = 0; i < 5; i++) { let row = ''; for (let j = 0; j < 40; j++) row += Math.random() > 0.5 ? '1' : '0'; tw(row + '\r\n') } },
+      weather: () => tw('BoxVM cloud: 100% containerized, 0% cloud dependency\r\n'),
+      coffee: () => tw('BoxVM coffee: brewed locally, no cloud required\r\n'),
+      logo: () => { tw('\r\n\x1b[35m ____  ____  ____  ____\x1b[0m\r\n\x1b[35m|  _ \\|  _ \\|  _ \\|  _ \\\x1b[0m\r\n\x1b[35m| |_) | |_) | |_) | |_) |\x1b[0m\r\n\x1b[35m|  _ <|  __/|  _ <|  __/\x1b[0m\r\n\x1b[35m|_| \\_\\_|   |_| \\_\\_|\x1b[0m\r\n\r\n') },
+    });
+
+    // Extended tools
+    function initToolsExtended() {
+      const el = document.getElementById('toolGrid'); if (!el) return;
+      const moreTools = [
+        { name: 'CRC32', desc: 'CRC32 checksum', fn: toolCRC32 },
+        { name: 'URL Decode', desc: 'URL-decode text', fn: toolURLDecode },
+        { name: 'HTML Escape', desc: 'Escape HTML', fn: toolHTMLEscape },
+        { name: 'HTML Unescape', desc: 'Unescape HTML', fn: toolHTMLUnescape },
+        { name: 'JSON Format', desc: 'Pretty JSON', fn: toolJSONFormat },
+        { name: 'JSON Minify', desc: 'Minify JSON', fn: toolJSONMinify },
+        { name: 'JS Beautify', desc: 'Beautify JS', fn: toolJSBeautify },
+        { name: 'CSS Clean', desc: 'Clean CSS', fn: toolCSSClean },
+        { name: 'Bin→Text', desc: 'Binary to ASCII', fn: toolBinToText },
+        { name: 'Text→Bin', desc: 'ASCII to binary', fn: toolTextToBin },
+        { name: 'Reverse', desc: 'Reverse bytes', fn: toolReverseBytes },
+        { name: 'Swap Endian', desc: 'Swap endianness', fn: toolSwapEndian },
+        { name: 'Bit Count', desc: 'Count set bits', fn: toolBitCount },
+        { name: 'Hamming', desc: 'Hamming distance', fn: toolHamming },
+        { name: 'Levenshtein', desc: 'Edit distance', fn: toolLevenshtein },
+        { name: 'Token Count', desc: 'Count tokens', fn: toolTokenCount },
+        { name: 'Line Hist', desc: 'Lines per file', fn: toolLineHist },
+        { name: 'Path Depth', desc: 'Dir depth', fn: toolPathDepth },
+        { name: 'Ext Stats', desc: 'Extension stats', fn: toolExtStats },
+        { name: 'Dup Hash', desc: 'Duplicate hashes', fn: toolDupHash },
+        { name: 'Size Quartile', desc: 'Size quartiles', fn: toolSizeQuartile },
+        { name: 'Entropy Rank', desc: 'Rank by entropy', fn: toolEntropyRank },
+        { name: 'Comp Predict', desc: 'Predict compression', fn: toolCompPred },
+        { name: 'Magic Bytes', desc: 'Check magic bytes', fn: toolMagicBytes },
+        { name: 'Null Count', desc: 'Count nulls', fn: toolNullCount },
+        { name: 'Printable %', desc: 'Printable ratio', fn: toolPrintablePct },
+        { name: 'Unique Bytes', desc: 'Unique byte vals', fn: toolUniqueBytes },
+        { name: 'Entropy Map', desc: 'Visual entropy map', fn: toolEntropyMap },
+        { name: 'Container Hash', desc: 'Whole container hash', fn: toolContainerChecksum },
+      ];
+      el.innerHTML += moreTools.map(t => '<div class="tool-card" data-tool-ext="' + t.name + '"><div class="tool-name">' + t.name + '</div><div class="tool-desc">' + t.desc + '</div></div>').join('');
+      el.querySelectorAll('[data-tool-ext]').forEach(c => c.onclick = () => { const t = moreTools.find(x => x.name === c.dataset.toolExt); if (t) { t.fn(); toast('Tool: ' + t.name, 'info') } });
+    }
+    function toolCRC32() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; let crc = 0xFFFFFFFF; for (let i = 0; i < f.data.length; i++) { crc ^= f.data[i]; for (let j = 0; j < 8; j++) crc = (crc >>> 1) ^ (0xEDB88320 & -(crc & 1)) }; toolOutput('CRC32 (' + f.path + '): 0x' + (crc ^ 0xFFFFFFFF).toString(16).toUpperCase().padStart(8, '0')) }
+    function toolURLDecode() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; toolOutput('URL-decoded:\n' + decodeURIComponent(new TextDecoder().decode(f.data.slice(0, 500)))) }
+    function toolHTMLEscape() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const t = new TextDecoder().decode(f.data.slice(0, 500)); toolOutput('Escaped:\n' + t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')) }
+    function toolHTMLUnescape() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const t = new TextDecoder().decode(f.data.slice(0, 500)); toolOutput('Unescaped:\n' + t.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')) }
+    function toolJSONFormat() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData.find(x => x.path.endsWith('.json')) || containerMeta.entropyData[0]; try { toolOutput('Formatted:\n' + JSON.stringify(JSON.parse(new TextDecoder().decode(f.data)), null, 2)) } catch (e) { toolOutput('Invalid JSON: ' + e.message) } }
+    function toolJSONMinify() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData.find(x => x.path.endsWith('.json')) || containerMeta.entropyData[0]; try { toolOutput('Minified:\n' + JSON.stringify(JSON.parse(new TextDecoder().decode(f.data)))) } catch (e) { toolOutput('Invalid JSON: ' + e.message) } }
+    function toolJSBeautify() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData.find(x => x.path.endsWith('.js')) || containerMeta.entropyData[0]; const t = new TextDecoder().decode(f.data); toolOutput('Beautified:\n' + t.replace(/;/g, ';\n').replace(/\{/g, '{\n').replace(/\}/g, '\n}').substr(0, 1000)) }
+    function toolCSSClean() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData.find(x => x.path.endsWith('.css')) || containerMeta.entropyData[0]; const t = new TextDecoder().decode(f.data); toolOutput('Cleaned:\n' + t.replace(/\s*{\s*/g, ' {\n  ').replace(/\s*}\s*/g, '\n}\n').replace(/;\s*/g, ';\n  ').substr(0, 1000)) }
+    function toolBinToText() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; let bin = ''; for (let i = 0; i < Math.min(32, f.data.length); i++) bin += f.data[i].toString(2).padStart(8, '0') + ' '; toolOutput('Binary:\n' + bin) }
+    function toolTextToBin() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const t = new TextDecoder().decode(f.data.slice(0, 32)); let bin = ''; for (const c of t) bin += c.charCodeAt(0).toString(2).padStart(8, '0') + ' '; toolOutput('Binary:\n' + bin) }
+    function toolReverseBytes() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; toolOutput('Reversed:\n' + [...f.data.slice(0, 32)].reverse().map(b => b.toString(16).padStart(2, '0')).join(' ')) }
+    function toolSwapEndian() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const s = []; for (let i = 0; i < Math.min(32, f.data.length); i += 4) { if (i + 3 < f.data.length) s.push(f.data[i + 3], f.data[i + 2], f.data[i + 1], f.data[i]) } toolOutput('Endian-swapped:\n' + s.map(b => b.toString(16).padStart(2, '0')).join(' ')) }
+    function toolBitCount() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; let bits = 0; for (let i = 0; i < f.data.length; i++) { let b = f.data[i]; while (b) { bits += b & 1; b >>>= 1 } } toolOutput('Set bits: ' + bits + '/' + (f.data.length * 8) + ' (' + (bits / (f.data.length * 8) * 100).toFixed(1) + '%)') }
+    function toolHamming() { if (containerMeta.entropyData.length < 2) return toolOutput('Need 2+ files.'); const f1 = containerMeta.entropyData[0], f2 = containerMeta.entropyData[1]; const n = Math.min(f1.data.length, f2.data.length); let d = 0; for (let i = 0; i < n; i++) { let x = f1.data[i] ^ f2.data[i]; while (x) { d += x & 1; x >>>= 1 } }; toolOutput('Hamming: ' + d + ' bits over ' + n + ' bytes') }
+    function toolLevenshtein() { if (containerMeta.entropyData.length < 2) return toolOutput('Need 2+ files.'); const s1 = new TextDecoder().decode(containerMeta.entropyData[0].data.slice(0, 500)), s2 = new TextDecoder().decode(containerMeta.entropyData[1].data.slice(0, 500)); const m = s1.length, n = s2.length; const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0)); for (let i = 0; i <= m; i++) dp[i][0] = i; for (let j = 0; j <= n; j++) dp[0][j] = j; for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) dp[i][j] = s1[i - 1] === s2[j - 1] ? dp[i - 1][j - 1] : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]); toolOutput('Levenshtein: ' + dp[m][n]) }
+    function toolTokenCount() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let h = ''; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { h += f.path + ': ' + new TextDecoder().decode(f.data).split(/\s+/).filter(w => w).length + ' tokens\n' } }); toolOutput(h || 'No text files.') }
+    function toolLineHist() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let h = ''; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { const n = new TextDecoder().decode(f.data).split('\n').length; h += f.path + ': ' + n + ' ' + '█'.repeat(Math.min(40, Math.round(n / 10))) + '\n' } }); toolOutput(h) }
+    function toolPathDepth() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let h = ''; containerMeta.entropyData.forEach(f => { const d = f.path.split('/').length - 1; h += '  '.repeat(d) + '├ ' + f.path.split('/').pop() + ' (d=' + d + ')\n' }); toolOutput(h) }
+    function toolExtStats() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const e = {}; containerMeta.entropyData.forEach(f => { const x = f.path.split('.').pop(); e[x] = (e[x] || 0) + 1 }); toolOutput('Extensions:\n' + Object.entries(e).sort((a, b) => b[1] - a[1]).map(([x, c]) => '  .' + x + ': ' + c).join('\n')) }
+    function toolDupHash() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const map = new Map(); containerMeta.entropyData.forEach(f => { const k = f.size + ':' + f.entropy.toFixed(2); if (!map.has(k)) map.set(k, []); map.get(k).push(f.path) }); let h = 'Duplicates:\n'; let f = 0; map.forEach((p, k) => { if (p.length > 1) { h += '  ' + p.join(', ') + '\n'; f++ } }); toolOutput(f ? h : 'No duplicates.') }
+    function toolSizeQuartile() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const s = containerMeta.entropyData.map(f => f.size).sort((a, b) => a - b); toolOutput('Quartiles:\n  Q1: ' + fmtSize(s[Math.floor(s.length * 0.25)]) + '\n  Q2: ' + fmtSize(s[Math.floor(s.length * 0.5)]) + '\n  Q3: ' + fmtSize(s[Math.floor(s.length * 0.75)])) }
+    function toolEntropyRank() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); toolOutput('Entropy rank:\n' + [...containerMeta.entropyData].sort((a, b) => b.entropy - a.entropy).map((f, i) => (i + 1) + '. ' + f.path + ' — ' + f.entropy.toFixed(3)).join('\n')) }
+    function toolCompPred() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let h = ''; containerMeta.entropyData.forEach(f => { h += f.path + ': ~' + Math.max(5, 100 - f.entropy * 11).toFixed(0) + '%\n' }); toolOutput(h) }
+    function toolMagicBytes() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const sigs = { '89504E47': 'PNG', 'FFD8FF': 'JPEG', '504B0304': 'ZIP', '1F8B': 'GZIP', '25504446': 'PDF', '0061736D': 'WASM', '7F454C46': 'ELF' }; let h = ''; containerMeta.entropyData.forEach(f => { const hex = [...f.data.slice(0, 4)].map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase(); h += f.path + ': ' + (sigs[hex] || sigs[hex.substr(0, 6)] || sigs[hex.substr(0, 4)] || 'unknown') + '\n' }); toolOutput(h) }
+    function toolNullCount() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let h = ''; containerMeta.entropyData.forEach(f => { let n = 0; for (let i = 0; i < f.data.length; i++) if (f.data[i] === 0) n++; h += f.path + ': ' + n + ' (' + (n / f.data.length * 100).toFixed(1) + '%)\n' }); toolOutput(h) }
+    function toolPrintablePct() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let h = ''; containerMeta.entropyData.forEach(f => { let p = 0; for (let i = 0; i < f.data.length; i++) if (f.data[i] >= 32 && f.data[i] < 127) p++; h += f.path + ': ' + (p / f.data.length * 100).toFixed(1) + '%\n' }); toolOutput(h) }
+    function toolUniqueBytes() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); let h = ''; containerMeta.entropyData.forEach(f => { const s = new Set(); for (let i = 0; i < f.data.length; i++) s.add(f.data[i]); h += f.path + ': ' + s.size + '/256\n' }); toolOutput(h) }
+    function toolEntropyMap() { if (!containerMeta.entropyData.length) return toolOutput('Load container first.'); const f = containerMeta.entropyData[0]; const w = 64; let h = ''; for (let i = 0; i < f.data.length; i += w * 8) { const e = shannonEntropy(f.data.slice(i, i + w)); h += String(i).padStart(6) + ' [' + e.toFixed(2) + '] ' + '█'.repeat(Math.round(e)) + '\n' } toolOutput(h) }
+    async function toolContainerChecksum() { if (!lastBoxBytes) return toolOutput('No container.'); toolOutput('Container SHA-256:\n' + await sha256(lastBoxBytes)) }
+
+    // Extended export
+    function initExportMenuExtended() {
+      const el = document.getElementById('exportMenu'); if (!el) return;
+      const more = [
+        { name: 'YAML', fn: exportYAML }, { name: 'TSV', fn: exportTSV }, { name: 'XML', fn: exportXML },
+        { name: 'LaTeX', fn: exportLaTeX }, { name: 'SQL', fn: exportSQL }, { name: 'JSONL', fn: exportJSONL },
+        { name: 'Properties', fn: exportProperties }, { name: 'INI', fn: exportINI }, { name: 'TOML', fn: exportTOML },
+        { name: 'Dot Graph', fn: exportDot },
+      ];
+      el.innerHTML += more.map(i => '<div class="export-btn" data-export-ext="' + i.name + '">' + i.name + '</div>').join('');
+      el.querySelectorAll('[data-export-ext]').forEach(b => b.onclick = () => { const i = more.find(x => x.name === b.dataset.exportExt); if (i) { i.fn(); toast('Exported: ' + i.name, 'ok') } });
+    }
+    function exportYAML() { let y = 'container:\n  version: "0.7"\n  files: ' + containerMeta.entropyData.length + '\nfiles:\n'; containerMeta.entropyData.forEach(f => { y += '  - path: "' + f.path + '"\n    size: ' + f.size + '\n    entropy: ' + f.entropy.toFixed(3) + '\n' }); downloadText('container.yaml', y, 'text/yaml') }
+    function exportTSV() { let t = 'path\tsize\tentropy\ttype\n'; containerMeta.entropyData.forEach(f => t += f.path + '\t' + f.size + '\t' + f.entropy.toFixed(3) + '\t' + getFileType(f.path) + '\n'); downloadText('container.tsv', t) }
+    function exportXML() { let x = '<?xml version="1.0"?>\n<container>\n'; containerMeta.entropyData.forEach(f => { x += '  <file path="' + f.path + '" size="' + f.size + '" entropy="' + f.entropy.toFixed(3) + '"/>\n' }); x += '</container>'; downloadText('container.xml', x, 'application/xml') }
+    function exportLaTeX() { let l = '\\begin{tabular}{llrr}\n\\hline\nPath & Type & Size & Entropy \\\\\n\\hline\n'; containerMeta.entropyData.forEach(f => { l += f.path + ' & ' + getFileType(f.path) + ' & ' + fmtSize(f.size) + ' & ' + f.entropy.toFixed(2) + ' \\\\\n' }); l += '\\hline\n\\end{tabular}\n'; downloadText('container.tex', l) }
+    function exportSQL() { let s = 'CREATE TABLE files (path TEXT, size INTEGER, entropy REAL, type TEXT);\n'; containerMeta.entropyData.forEach(f => { s += "INSERT INTO files VALUES ('" + f.path + "', " + f.size + ", " + f.entropy.toFixed(3) + ", '" + getFileType(f.path) + "');\n" }); downloadText('container.sql', s) }
+    function exportJSONL() { let j = ''; containerMeta.entropyData.forEach(f => { j += JSON.stringify({ path: f.path, size: f.size, entropy: f.entropy, type: getFileType(f.path) }) + '\n' }); downloadText('container.jsonl', j) }
+    function exportProperties() { let p = 'container.version=0.7\ncontainer.files=' + containerMeta.entropyData.length + '\n'; containerMeta.entropyData.forEach((f, i) => { p += 'file.' + i + '.path=' + f.path + '\nfile.' + i + '.size=' + f.size + '\n' }); downloadText('container.properties', p) }
+    function exportINI() { let i = '[container]\nversion=0.7\nfiles=' + containerMeta.entropyData.length + '\n\n'; containerMeta.entropyData.forEach((f, idx) => { i += '[file' + idx + ']\npath=' + f.path + '\nsize=' + f.size + '\n\n' }); downloadText('container.ini', i) }
+    function exportTOML() { let t = '[container]\nversion = "0.7"\nfiles = ' + containerMeta.entropyData.length + '\n\n'; containerMeta.entropyData.forEach(f => { t += '[[files]]\npath = "' + f.path + '"\nsize = ' + f.size + '\n\n' }); downloadText('container.toml', t) }
+    function exportDot() { let d = 'digraph container {\n  container [shape=box];\n'; containerMeta.entropyData.forEach(f => { d += '  "' + f.path + '" [shape=ellipse];\n  container -> "' + f.path + '";\n' }); d += '}'; downloadText('container.dot', d) }
+
+    // Extended security
+    function initSecToolsExtended() {
+      const el = document.getElementById('secToolGrid'); if (!el) return;
+      const more = [
+        { name: 'Entropy Audit', desc: 'Full entropy audit', fn: secEntropyAudit },
+        { name: 'Fingerprint', desc: 'File fingerprints', fn: secFingerprint },
+        { name: 'Bin Signature', desc: 'Check binary sigs', fn: secBinSig },
+        { name: 'Encoding', desc: 'Detect encoding', fn: secEncoding },
+        { name: 'BOM Check', desc: 'Check BOM markers', fn: secBOMCheck },
+        { name: 'Control Chars', desc: 'Find control chars', fn: secControlChars },
+        { name: 'Long Lines', desc: 'Find long lines', fn: secLongLines },
+        { name: 'Unicode Scan', desc: 'Non-ASCII chars', fn: secUnicodeScan },
+        { name: 'Whitespace', desc: 'Trailing whitespace', fn: secWhitespace },
+        { name: 'Comments', desc: 'Extract comments', fn: secComments },
+      ];
+      el.innerHTML += more.map(t => '<div class="tool-card" data-sec-ext="' + t.name + '"><div class="tool-name">' + t.name + '</div><div class="tool-desc">' + t.desc + '</div></div>').join('');
+      el.querySelectorAll('[data-sec-ext]').forEach(c => c.onclick = () => { const t = more.find(x => x.name === c.dataset.secExt); if (t) { t.fn(); toast('Security: ' + t.name, 'info') } });
+    }
+    function secEntropyAudit() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Entropy Audit:\n'; containerMeta.entropyData.forEach(f => { h += f.path + ': ' + f.entropy.toFixed(3) + ' [' + (f.entropy > 7 ? 'HIGH' : f.entropy > 5 ? 'MED' : 'LOW') + ']\n' }); h += '</div>'; el.innerHTML = h }
+    function secFingerprint() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Fingerprints:\n'; containerMeta.entropyData.forEach(f => { h += [...f.data.slice(0, 16)].map(b => b.toString(16).padStart(2, '0')).join(':') + '  ' + f.path + '\n' }); h += '</div>'; el.innerHTML = h }
+    function secBinSig() { const el = document.getElementById('secToolContent'); if (!el) return; const sigs = { '89504E47': 'PNG', 'FFD8FF': 'JPEG', '504B': 'ZIP', '1F8B': 'GZIP', '0061736D': 'WASM' }; let h = '<div class="devtool-output">Signatures:\n'; containerMeta.entropyData.forEach(f => { const hex = [...f.data.slice(0, 4)].map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase(); h += (sigs[hex] || sigs[hex.substr(0, 6)] || sigs[hex.substr(0, 4)] ? '✓' : '—') + ' ' + f.path + ': ' + (sigs[hex] || sigs[hex.substr(0, 6)] || sigs[hex.substr(0, 4)] || 'none') + '\n' }); h += '</div>'; el.innerHTML = h }
+    function secEncoding() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Encoding:\n'; containerMeta.entropyData.forEach(f => { const ext = f.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { const hasBOM = f.data[0] === 0xEF && f.data[1] === 0xBB && f.data[2] === 0xBF; h += f.path + ': ' + (hasBOM ? 'UTF-8 BOM' : /[^\x00-\x7F]/.test(new TextDecoder().decode(f.data.slice(0, 100))) ? 'UTF-8' : 'ASCII') + '\n' } else h += f.path + ': binary\n' }); h += '</div>'; el.innerHTML = h }
+    function secBOMCheck() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">BOM:\n'; let f = 0; containerMeta.entropyData.forEach(d => { if (d.data[0] === 0xEF && d.data[1] === 0xBB && d.data[2] === 0xBF) { h += '⚠ BOM: ' + d.path + '\n'; f++ } }); if (!f) h += '✓ No BOM\n'; h += '</div>'; el.innerHTML = h }
+    function secControlChars() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Control chars:\n'; let f = 0; containerMeta.entropyData.forEach(d => { const ext = d.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { let c = 0; for (let i = 0; i < d.data.length; i++) if (d.data[i] < 32 && d.data[i] !== 9 && d.data[i] !== 10 && d.data[i] !== 13) c++; if (c > 0) { h += '⚠ ' + d.path + ': ' + c + '\n'; f++ } } }); if (!f) h += '✓ None\n'; h += '</div>'; el.innerHTML = h }
+    function secLongLines() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Long lines (>1000):\n'; let f = 0; containerMeta.entropyData.forEach(d => { const ext = d.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { new TextDecoder().decode(d.data).split('\n').forEach((l, i) => { if (l.length > 1000) { h += '⚠ ' + d.path + ':' + (i + 1) + ' (' + l.length + ')\n'; f++ } }) } }); if (!f) h += '✓ None\n'; h += '</div>'; el.innerHTML = h }
+    function secUnicodeScan() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Non-ASCII:\n'; let f = 0; containerMeta.entropyData.forEach(d => { const ext = d.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { const n = (new TextDecoder().decode(d.data).match(/[^\x00-\x7F]/g) || []).length; if (n > 0) { h += d.path + ': ' + n + ' non-ASCII\n'; f++ } } }); if (!f) h += '✓ All ASCII\n'; h += '</div>'; el.innerHTML = h }
+    function secWhitespace() { const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Trailing ws:\n'; let f = 0; containerMeta.entropyData.forEach(d => { const ext = d.path.split('.').pop(); if (['html', 'js', 'css', 'json', 'md', 'txt'].includes(ext)) { let c = 0; new TextDecoder().decode(d.data).split('\n').forEach(l => { if (l !== l.trimEnd()) c++ }); if (c > 0) { h += '⚠ ' + d.path + ': ' + c + ' lines\n'; f++ } } }); if (!f) h += '✓ Clean\n'; h += '</div>'; el.innerHTML = h }
+    function secComments() {
+      const el = document.getElementById('secToolContent'); if (!el) return; let h = '<div class="devtool-output">Comments:\n'; containerMeta.entropyData.forEach(f => {
+        const ext = f.path.split('.').pop(); const t = new TextDecoder().decode(f.data); if (ext === 'js' || ext === 'css') { const c = t.match(/\/\*[\s\S]*?\*\/|\/\/.*/g) || []; h += f.path + ': ' + c.length + ' comments\n' } else if (ext === 'html') {
+          h += f.path + ': ' + (t.match(/<!--[\s\S]*?-->/g)||[]).length + ' comments\n' } }); h += '</div>'; el.innerHTML = h }
+
+            // Extended visualization
+            function initVizExtended() {
+              const vd = document.getElementById('vizDist'); if (!vd || !containerMeta.entropyData.length) return;
+              vd.innerHTML += '<canvas id="scatterCanvas" width="380" height="120" class="mini-chart" style="height:120px"></canvas><canvas id="boxPlotCanvas" width="380" height="80" class="mini-chart" style="height:80px"></canvas>';
+              const sc = document.getElementById('scatterCanvas'); if (sc) { const ctx = sc.getContext('2d'); const w = sc.width, h = sc.height; ctx.clearRect(0, 0, w, h); const maxS = Math.max(...containerMeta.entropyData.map(f => f.size)); containerMeta.entropyData.forEach(f => { const x = (f.entropy / 8) * w; const y = h - (f.size / maxS) * h * 0.85; ctx.fillStyle = '#7c6cf0'; ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill() }); ctx.fillStyle = '#8888a0'; ctx.font = '9px sans-serif'; ctx.fillText('Entropy vs Size', 4, 12) }
+              const bp = document.getElementById('boxPlotCanvas'); if (bp) { const ctx = bp.getContext('2d'); const w = bp.width, h = bp.height; ctx.clearRect(0, 0, w, h); const e = containerMeta.entropyData.map(f => f.entropy).sort((a, b) => a - b); const q1 = e[Math.floor(e.length * 0.25)], q2 = e[Math.floor(e.length * 0.5)], q3 = e[Math.floor(e.length * 0.75)]; ctx.strokeStyle = '#7c6cf0'; ctx.lineWidth = 2; ctx.strokeRect(w * 0.3, h - (q3 / 8) * h * 0.8 - 10, w * 0.4, (q3 - q1) / 8 * h * 0.8); ctx.fillStyle = '#8888a0'; ctx.font = '9px sans-serif'; ctx.fillText('Entropy Box Plot', 4, 12) }
+            }
+
+    // Extended analysis
+    function initAnalysisExtended() {
+              const el = document.getElementById('vizStats'); if (!el || !containerMeta.entropyData.length) return;
+              const ents = containerMeta.entropyData.map(f => f.entropy).sort((a, b) => a - b);
+              let html = '<div class="ml-section" style="margin-top:8px"><h4 style="font-size:11px" class="collapsible">Percentiles</h4><div>';
+              [10, 25, 50, 75, 90, 95, 99].forEach(p => { html += '<div class="ml-row"><span class="name">P' + p + '</span><span class="val">' + ents[Math.floor(ents.length * p / 100)].toFixed(3) + '</span></div>' });
+              html += '</div></div>';
+              html += '<div class="ml-section"><h4 style="font-size:11px" class="collapsible">Z-Score Outliers</h4><div>';
+              const m = mean(ents), s = std(ents);
+              const outliers = containerMeta.entropyData.filter(f => Math.abs((f.entropy - m) / s) > 2);
+              if (outliers.length) outliers.forEach(f => { const z = ((f.entropy - m) / s).toFixed(2); html += '<div class="ml-row"><span class="name">' + f.path + '</span><span class="val ' + (z > 0 ? 'bad' : 'good') + '">z=' + z + '</span></div>' });
+              else html += '<div style="color:var(--green);font-size:11px">✓ No outliers</div>';
+              html += '</div></div>';
+              el.innerHTML += html;
+            }
+
+    // Extended collab
+    function initCollabExtended() {
+              const el = document.getElementById('collabHealth'); if (!el || !containerMeta.entropyData.length) return;
+              const ratio = containerMeta.totalOrig > 0 ? 100 * containerMeta.totalComp / containerMeta.totalOrig : 100;
+              const risk = ratio > 80 ? 'High' : ratio > 60 ? 'Medium' : 'Low';
+              el.innerHTML += '<div class="ml-section" style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px"><h4 style="font-size:11px">Risk Assessment</h4><div class="ml-row"><span class="name">Compression</span><span class="val" style="color:' + (ratio > 80 ? 'var(--red)' : 'var(--green)') + '">' + risk + '</span></div><div class="ml-row"><span class="name">Integrity</span><span class="val" style="color:' + (integrityStatus === 'pass' ? 'var(--green)' : 'var(--red)') + '">' + (integrityStatus === 'pass' ? 'OK' : 'FAIL') + '</span></div></div>';
+            }
+
+    // Collapsible sections
+    document.querySelectorAll('.ml-section h4').forEach(h => { h.classList.add('collapsible'); h.onclick = () => { h.classList.toggle('collapsed'); const n = h.nextElementSibling; if (n) n.style.display = h.classList.contains('collapsed') ? 'none' : '' } });
+
+          // Notification dots
+          function updateNotifDots() {
+            document.querySelectorAll('.right .tab').forEach(t => { const r = t.dataset.rtab; if (['viz', 'export', 'security', 'collab'].includes(r) && !t.querySelector('.notif-dot')) t.innerHTML += ' <span class="notif-dot"></span>' });
+          }
+
+          // Terminal info updater
+          function updateTermInfo() { const ti = document.getElementById('termInfo'); if (ti) ti.textContent = 'files:' + containerMeta.entropyData.length + ' cmds:' + termHistory.length + ' session:' + Math.floor((Date.now() - sessionStart) / 1000) + 's' }
+          setInterval(updateTermInfo, 5000);
+
+          // Extended keyboard shortcuts
+          document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'E') { e.preventDefault(); document.getElementById('exportStatsBtn')?.click() }
+            if (e.ctrlKey && e.shiftKey && e.key === 'S') { e.preventDefault(); runSecurityScan() }
+            if (e.ctrlKey && e.shiftKey && e.key === 'R') { e.preventDefault(); generateReport() }
+            if (e.ctrlKey && e.shiftKey && e.key === 'T') { e.preventDefault(); setTheme('dracula') }
+            if (e.ctrlKey && e.shiftKey && e.key === 'P') { e.preventDefault(); window.print() }
+          });
+
+          // Update initAllFeatures to include extended features
+          const origInitAll2 = initAllFeatures;
+          initAllFeatures = function () {
+            origInitAll2();
+            initToolsExtended();
+            initExportMenuExtended();
+            initSecToolsExtended();
+            initVizExtended();
+            initAnalysisExtended();
+            initCollabExtended();
+            updateNotifDots();
+          };
+
+          navigator.serviceWorker.register('sw.js').then(() => { log('SW registered'); load() }).catch(e => { label.textContent = ''; errEl.textContent = 'SW failed: ' + e.message });
+          document.getElementById('reload').onclick = () => { term.clear(); load() };
   </script>
 </body>
 

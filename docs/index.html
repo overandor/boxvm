@@ -849,7 +849,8 @@
       <div class="hero-grid"></div>
     </div>
     <div class="hero-content">
-      <div class="hero-badge"><span class="dot"></span> v0.7 — 30+ new portal features</div>
+      <div class="hero-badge"><span class="dot"></span> v0.7.1 — 300+ portal features · Terminal · Viz · Security ·
+        Export</div>
       <h1>Run containers <span class="grad">in the browser</span></h1>
       <p>BoxVM is a browser-native container runtime. Pack HTML, CSS, JS, and WASM into compressed <strong>.box</strong>
         files. Execute real binaries via WASI. No Docker daemon. No cloud. No install.</p>
@@ -878,6 +879,11 @@
       <div class="marquee-item"><span class="check">✓</span> Hex inspector</div>
       <div class="marquee-item"><span class="check">✓</span> Compression predictor</div>
       <div class="marquee-item"><span class="check">✓</span> Upload & export</div>
+      <div class="marquee-item"><span class="check">✓</span> 50+ terminal commands</div>
+      <div class="marquee-item"><span class="check">✓</span> 7 color themes</div>
+      <div class="marquee-item"><span class="check">✓</span> Command palette</div>
+      <div class="marquee-item"><span class="check">✓</span> Security scanning</div>
+      <div class="marquee-item"><span class="check">✓</span> 10 export formats</div>
       <div class="marquee-item"><span class="check">✓</span> Real zlib compression</div>
       <div class="marquee-item"><span class="check">✓</span> SHA-256 integrity</div>
       <div class="marquee-item"><span class="check">✓</span> WASI filesystem</div>
@@ -894,6 +900,11 @@
       <div class="marquee-item"><span class="check">✓</span> Hex inspector</div>
       <div class="marquee-item"><span class="check">✓</span> Compression predictor</div>
       <div class="marquee-item"><span class="check">✓</span> Upload & export</div>
+      <div class="marquee-item"><span class="check">✓</span> 50+ terminal commands</div>
+      <div class="marquee-item"><span class="check">✓</span> 7 color themes</div>
+      <div class="marquee-item"><span class="check">✓</span> Command palette</div>
+      <div class="marquee-item"><span class="check">✓</span> Security scanning</div>
+      <div class="marquee-item"><span class="check">✓</span> 10 export formats</div>
     </div>
   </div>
 
@@ -920,8 +931,8 @@
         <div class="stat-label">RL Q-table states</div>
       </div>
       <div class="stat-card fade-up">
-        <div class="stat-num" style="color:#ff9f43">v0.7</div>
-        <div class="stat-label">Upload + inspect + predict</div>
+        <div class="stat-num" style="color:#ff9f43">300+</div>
+        <div class="stat-label">Portal features</div>
       </div>
     </div>
   </div>
@@ -1012,10 +1023,11 @@
       </div>
       <div class="feature-card fade-up">
         <div class="feature-icon" style="background:rgba(108,92,231,.12)">📤</div>
-        <h3>Export</h3>
-        <p>Download the loaded container as a .box file. Works with both server-fetched and demo-generated containers.
-          Full round-trip: pack → load → inspect → export.</p>
-        <span class="tag">Round-trip</span>
+        <h3>Export & Multi-Format</h3>
+        <p>Export container data in 10+ formats: JSON, CSV, Markdown, HTML, YAML, XML, LaTeX, SQL, JSONL, TOML, Dot
+          graphs.
+          Chart export as PNG. Full round-trip pack → load → inspect → export.</p>
+        <span class="tag">10+ formats</span>
       </div>
       <div class="feature-card fade-up">
         <div class="feature-icon" style="background:rgba(0,212,160,.12)">📈</div>
@@ -1023,6 +1035,48 @@
         <p>ML model predicts compression ratio from entropy + file type features. Per-file predictions with model
           accuracy scoring against actual ratios.</p>
         <span class="tag">Predictive</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(124,92,252,.12)">🖥️</div>
+        <h3>Terminal Suite</h3>
+        <p>50+ terminal commands: ls, cat, grep, find, tree, head, tail, wc, sort, uniq, rev, od, base64, calc, uuid,
+          benchmark, profile, and more. Full history with arrow keys.</p>
+        <span class="tag">50+ commands</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(255,169,64,.12)">🎨</div>
+        <h3>Themes & Settings</h3>
+        <p>7 built-in color themes: default, midnight, dracula, solarized, monokai, github, nord. Adjustable terminal
+          font size, toggles for line numbers, auto-verify, and animations.</p>
+        <span class="tag">7 themes</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(255,92,92,.12)">🔒</div>
+        <h3>Security Suite</h3>
+        <p>Hash all files, secret scanning, MIME type checks, null byte detection, entropy flags, path traversal
+          detection, BOM checks, control char scans, long line detection, Unicode audits.</p>
+        <span class="tag">10+ scans</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(92,184,255,.12)">📊</div>
+        <h3>Visualization</h3>
+        <p>Entropy distributions, correlation matrices, radar charts, diversity indices, scatter plots, box plots,
+          percentile analysis, Z-score outliers, Shannon diversity, Simpson index.</p>
+        <span class="tag">10+ charts</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(0,232,160,.12)">🛠️</div>
+        <h3>Developer Tools</h3>
+        <p>30+ tools: CRC32, Hamming distance, Levenshtein, JSON formatter, JS beautifier, CSS cleaner, binary
+          converter, endian swapper, bit counter, magic byte detector, entropy mapper.</p>
+        <span class="tag">30+ tools</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(255,92,138,.12)">👥</div>
+        <h3>Collaboration</h3>
+        <p>Activity timeline, file annotations, container health metrics, risk assessment, sharing menu, notification
+          dots, collapsible sections, command palette with fuzzy search.</p>
+        <span class="tag">Team-ready</span>
       </div>
     </div>
   </section>
@@ -1255,6 +1309,12 @@
         <div class="when">Completed</div>
         <p>Upload .box files directly. Hex inspector with ASCII sidebar. Container metadata table. Compression ratio
           predictor with model accuracy scoring. Export/download loaded containers.</p>
+      </div>
+      <div class="rm-item done">
+        <h3>v0.7.1 — 300+ Portal Features</h3>
+        <div class="when">Completed</div>
+        <p>50+ terminal commands, 30+ dev tools, 10+ export formats, 10+ security scans, 10+ visualizations,
+          7 themes, command palette, file sorting/filtering/pinning, collaboration features, resizable panels.</p>
       </div>
       <div class="rm-item now">
         <h3>v0.8 — WASI Threads</h3>
