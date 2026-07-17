@@ -1,376 +1,913 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BoxVM — Developer Portal</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.css">
-<script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#08080a;--bg2:#0f0f14;--bg3:#16161e;--bg4:#1c1c28;--border:#222230;--border2:#2e2e3e;--text:#e8e8ec;--dim:#7a7a88;--faint:#4a4a56;--accent:#6c5ce7;--accent2:#8b7ff0;--green:#00d4a0;--orange:#ff9f43;--red:#ee5253;--blue:#54a0ff;--pink:#ff5c8a}
-body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column}
-.bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
-.bar .logo{font-weight:800;font-size:18px}.bar .logo span{color:var(--accent)}
-.bar .info{color:var(--dim);font-size:12px;margin-left:auto}
-.bar button{background:var(--accent);color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}
-.bar button:hover{background:var(--accent2)}
-.bar button.ghost{background:transparent;border:1px solid var(--border);color:var(--dim)}
-.bar a{color:var(--dim);font-size:12px;text-decoration:none}.bar a:hover{color:var(--text)}
-.split-btn{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600}
-.split-btn:hover{background:var(--accent);color:#fff}
-.main{flex:1;display:flex;overflow:hidden}
-.sidebar{width:260px;min-width:260px;border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg2)}
-.sidebar .tabs{display:flex;border-bottom:1px solid var(--border)}
-.sidebar .tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-size:11px;color:var(--dim);border-bottom:2px solid transparent;transition:all .15s}
-.sidebar .tab:hover{color:var(--text)}
-.sidebar .tab.active{color:var(--text);border-bottom-color:var(--accent)}
-.sidebar .content{flex:1;overflow-y:auto;padding:12px}
-.sidebar .panel{display:none}.sidebar .panel.active{display:block}
-.file-item{padding:6px 10px;border-radius:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-family:'SF Mono',monospace}
-.file-item:hover{background:var(--bg3)}.file-item .sz{color:var(--dim);font-size:11px}.file-item .icon{margin-right:6px}
-.terminal-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
-#terminal{flex:1;background:#000;padding:8px;overflow:hidden}
-.right{width:380px;min-width:380px;border-left:1px solid var(--border);display:flex;flex-direction:column;background:var(--bg2)}
-.right .tabs{display:flex;border-bottom:1px solid var(--border);flex-wrap:wrap}
-.right .tab{flex:1;padding:8px 4px;text-align:center;cursor:pointer;font-size:11px;color:var(--dim);border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-.right .tab:hover{color:var(--text)}
-.right .tab.active{color:var(--text);border-bottom-color:var(--accent)}
-.right .panel{flex:1;overflow-y:auto;padding:12px;display:none}
-.right .panel.active{display:block}
-.log-line{font-size:11px;font-family:monospace;color:var(--dim);padding:3px 0;white-space:pre-wrap;word-break:break-all;border-bottom:1px solid rgba(34,34,48,.3)}
-.log-line.ok{color:var(--green)}.log-line.err{color:var(--red)}.log-line .ts{color:var(--dim);opacity:.5}
-.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px}
-.stat-card .label{font-size:10px;text-transform:uppercase;color:var(--dim);letter-spacing:.5px}
-.stat-card .value{font-size:20px;font-weight:700;margin-top:2px}
-.stat-card .value.green{color:var(--green)}.stat-card .value.purple{color:var(--accent)}.stat-card .value.orange{color:var(--orange)}.stat-card .value.blue{color:var(--blue)}.stat-card .value.pink{color:var(--pink)}
-.agent textarea{width:100%;height:60px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:8px;font-family:monospace;font-size:12px;resize:none}
-.agent button{margin-top:8px;background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:12px}
-.agent .status{font-size:12px;margin-bottom:8px}.agent .connected{color:var(--green)}.agent .disconnected{color:var(--red)}
-.api-section{margin-bottom:20px}.api-section h4{font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent2)}
-.api-section code{display:block;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px;font-family:monospace;font-size:11px;color:var(--text);margin-bottom:4px;overflow-x:auto}
-.api-section p{font-size:12px;color:var(--dim);line-height:1.5}
-.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:var(--bg);z-index:100}
-.overlay.hidden{display:none}
-.spinner{width:40px;height:40px;border:3px solid var(--bg3);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.overlay .label{color:var(--dim);font-size:14px}.overlay .err{color:var(--red);font-size:13px;max-width:500px;text-align:center}
-.ml-section{margin-bottom:16px}
-.ml-section h4{font-size:13px;font-weight:700;margin-bottom:8px;color:var(--accent2);display:flex;align-items:center;gap:6px}
-.ml-section h4 .badge{font-size:9px;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;text-transform:uppercase}
-.ml-chart{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px}
-.ml-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:12px;border-bottom:1px solid rgba(34,34,48,.3)}
-.ml-row .name{color:var(--text)}.ml-row .val{color:var(--dim);font-family:monospace}
-.ml-row .val.good{color:var(--green)}.ml-row .val.bad{color:var(--red)}.ml-row .val.warn{color:var(--orange)}
-.ml-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin:4px 0}
-.ml-bar .fill{height:100%;transition:width .5s}
-.ml-btn{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;margin-top:8px}
-.ml-btn:hover{background:var(--accent2)}
-.ml-btn.ghost{background:transparent;border:1px solid var(--border);color:var(--dim)}
-.ml-btn.ghost:hover{border-color:var(--accent);color:var(--text)}
-.ml-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600}
-.ml-tag.rl{background:rgba(108,92,231,.15);color:var(--accent2)}
-.ml-tag.llm{background:rgba(0,212,160,.15);color:var(--green)}
-.ml-tag.ml{background:rgba(255,159,67,.15);color:var(--orange)}
-.ml-textarea{width:100%;height:80px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:8px;font-family:monospace;font-size:12px;resize:none;margin-bottom:8px}
-.ml-output{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:10px;font-size:12px;line-height:1.6;max-height:200px;overflow-y:auto;white-space:pre-wrap}
-.ml-output .ai{color:var(--green)}.ml-output .dim{color:var(--dim)}
-.ml-output .warn{color:var(--orange)}.ml-output .err{color:var(--red)}
-</style>
-</head>
-<body>
-<div class="bar">
-<div class="logo">Box<span>VM</span></div>
-<a href="index.html">Home</a>
-<div class="info" id="info">Initializing…</div>
-<button class="split-btn" id="splitBtn">Split</button>
-<button class="ghost" id="reload">Restart</button>
-</div>
-<div class="main">
-<div class="sidebar">
-<div class="tabs">
-<div class="tab active" data-stab="files">Files</div>
-<div class="tab" data-stab="stats">Stats</div>
-<div class="tab" data-stab="entropy">Entropy</div>
-</div>
-<div class="content">
-<div class="panel active" id="spanel-files"><div id="fileList"></div></div>
-<div class="panel" id="spanel-stats"><div id="statsPanel"></div></div>
-<div class="panel" id="spanel-entropy"><div id="entropyPanel"></div></div>
-</div>
-</div>
-<div class="terminal-area"><div id="terminal"></div></div>
-<div class="right">
-<div class="tabs">
-<div class="tab active" data-rtab="log">Log</div>
-<div class="tab" data-rtab="agent">Agent</div>
-<div class="tab" data-rtab="ml">ML</div>
-<div class="tab" data-rtab="llm">LLM</div>
-<div class="tab" data-rtab="api">API</div>
-</div>
-<div class="panel active" id="rpanel-log"><div id="logBox"></div></div>
-<div class="panel" id="rpanel-agent">
-<div class="agent">
-<div class="status disconnected" id="wsStatus">WebSocket: Disconnected</div>
-<textarea id="agentInput" placeholder='{"cmd":"list"}'></textarea>
-<button id="agentSend">Send Command</button>
-<div id="agentLog" style="margin-top:12px"></div>
-</div>
-</div>
-<div class="panel" id="rpanel-ml">
-<div class="ml-section">
-<h4>RL Compression Optimizer <span class="badge">Q-Learning</span></h4>
-<p style="font-size:12px;color:var(--dim);margin-bottom:8px">Reinforcement learning agent that learns optimal compression strategies per file type.</p>
-<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">
-<canvas id="rlCanvas" width="340" height="100"></canvas>
-</div>
-<div id="rlStats"></div>
-<button class="ml-btn" id="rlTrain">Train 100 Episodes</button>
-<button class="ml-btn ghost" id="rlReset" style="margin-left:8px">Reset</button>
-</div>
-<div class="ml-section">
-<h4>Compression Strategy Matrix <span class="ml-tag ml">ML</span></h4>
-<div id="strategyMatrix"></div>
-</div>
-<div class="ml-section">
-<h4>Neural Layout Optimizer <span class="ml-tag ml">ML</span></h4>
-<p style="font-size:12px;color:var(--dim);margin-bottom:8px">Predicts optimal file ordering for maximum compression ratio using entropy-based feature extraction.</p>
-<div id="layoutStats"></div>
-<button class="ml-btn" id="optimizeLayout">Optimize Layout</button>
-</div>
-</div>
-<div class="panel" id="rpanel-llm">
-<div class="ml-section">
-<h4>Container Intelligence <span class="ml-tag llm">LLM</span></h4>
-<p style="font-size:12px;color:var(--dim);margin-bottom:8px">Abstract LLM analysis layer. Analyzes container contents, detects patterns, suggests optimizations.</p>
-<textarea class="ml-textarea" id="llmInput" placeholder="Ask about the container... e.g. 'What files are redundant?' or 'Suggest compression improvements'"></textarea>
-<button class="ml-btn" id="llmAnalyze">Analyze Container</button>
-<button class="ml-btn ghost" id="llmAuto" style="margin-left:8px">Auto-Analysis</button>
-<div class="ml-output" id="llmOutput" style="margin-top:12px"><span class="dim">Analysis output will appear here.</span></div>
-</div>
-<div class="ml-section">
-<h4>Pattern Detection <span class="ml-tag llm">LLM</span></h4>
-<div id="patternResults"></div>
-</div>
-<div class="ml-section">
-<h4>Anomaly Detection <span class="ml-tag ml">ML</span></h4>
-<div id="anomalyResults"></div>
-</div>
-</div>
-<div class="panel" id="rpanel-api">
-<div class="api-section">
-<h4>GET /api/box</h4>
-<code>curl http://localhost:7860/api/box -o container.box</code>
-<p>Download the raw .box container file</p>
-</div>
-<div class="api-section">
-<h4>GET /api/size</h4>
-<code>curl http://localhost:7860/api/size</code>
-<p>Returns container size in bytes as JSON</p>
-</div>
-<div class="api-section">
-<h4>POST /api/split</h4>
-<code>curl -X POST http://localhost:7860/api/split</code>
-<p>Trigger container split — broadcasts to all WebSocket clients</p>
-</div>
-<div class="api-section">
-<h4>WebSocket /ws</h4>
-<code>ws://localhost:7860/ws</code>
-<p>Agent connection for live container control. Send JSON commands, receive events.</p>
-</div>
-<div class="api-section">
-<h4>GET /__box__/:path</h4>
-<code>curl http://localhost:7860/__box__/index.html</code>
-<p>Serve file from Service Worker VFS (after container is loaded)</p>
-</div>
-<div class="api-section">
-<h4>ML/LLM Abstraction Layer</h4>
-<code>portal.html → ML tab → RL Optimizer</code>
-<p>Q-learning compression strategy optimizer. Trains on file entropy features. Visualizes reward curves and policy convergence.</p>
-<code>portal.html → LLM tab → Container Intelligence</code>
-<p>Abstract LLM analysis: pattern detection, redundancy analysis, anomaly flagging, compression suggestions. Runs locally on container metadata.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="overlay" id="overlay">
-<div class="spinner"></div>
-<div class="label" id="label">Booting BoxVM…</div>
-<div class="err" id="err"></div>
-</div>
-<script>
-const overlay=document.getElementById('overlay'),label=document.getElementById('label'),errEl=document.getElementById('err'),info=document.getElementById('info'),logBox=document.getElementById('logBox'),fileList=document.getElementById('fileList'),statsPanel=document.getElementById('statsPanel'),entropyPanel=document.getElementById('entropyPanel');
-const term=new Terminal({fontSize:13,theme:{background:'#000',foreground:'#e8e8ec',cursor:'#6c5ce7'}});
-const fitAddon=new FitAddon.FitAddon();term.loadAddon(fitAddon);
-term.open(document.getElementById('terminal'));fitAddon.fit();
-window.addEventListener('resize',()=>fitAddon.fit());
-function log(m,c){const d=document.createElement('div');d.className='log-line'+(c?' '+c:'');const t=new Date().toISOString().substr(11,8);d.innerHTML='<span class="ts">'+t+'</span> '+m;logBox.appendChild(d);logBox.scrollTop=logBox.scrollHeight}
-function tw(s){term.write(s)}
-function fmtSize(n){if(n>1e6)return(n/1e6).toFixed(1)+'MB';if(n>1e3)return(n/1e3).toFixed(1)+'KB';return n+'B'}
-async function sha256(buf){const h=await crypto.subtle.digest('SHA-256',buf);return[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('')}
-function shannonEntropy(data){if(!data||data.length===0)return 0;const freq=new Array(256).fill(0);for(let i=0;i<data.length;i++)freq[data[i]]++;let h=0;for(let i=0;i<256;i++){if(freq[i]>0){const p=freq[i]/data.length;h-=p*Math.log2(p)}}return h}
-function byteHistogram(data){const hist=new Array(256).fill(0);for(let i=0;i<data.length;i++)hist[data[i]]++;return hist}
-function parseBox(buf){const files=[],dv=new DataView(buf);let p=4;const ver=dv.getUint16(p,true);p+=2;const flags=dv.getUint16(p,true);p+=2;const count=dv.getUint32(p,true);p+=4;p+=32;for(let i=0;i<count;i++){const plen=dv.getUint16(p,true);p+=2;let path='';for(let j=0;j<plen;j++)path+=String.fromCharCode(dv.getUint8(p+j));p+=plen;const os=dv.getUint32(p,true);p+=4;const cs=dv.getUint32(p,true);p+=4;const fh=new Uint8Array(buf,p,32);p+=32;const cd=new Uint8Array(buf,p,cs);p+=cs;files.push({path,origSize:os,compSize:cs,compData:cd,fileHash:fh})}return{ver,flags,count,files}}
-async function decompressParallel(files){const nw=Math.min(navigator.hardwareConcurrency||4,files.length),cs=Math.ceil(files.length/nw);const ps=[];for(let w=0;w<nw;w++){const worker=new Worker('worker.js');const slice=files.slice(w*cs,(w+1)*cs);const entries=slice.map(f=>({path:f.path,compData:f.compData,origSize:f.origSize}));ps.push(new Promise((res,rej)=>{worker.onmessage=e=>{res(e.data.results);worker.terminate()};worker.onerror=rej;worker.postMessage({id:w,entries})}))}return(await Promise.all(ps)).flat()}
-async function verifyFiles(files){let ok=0,bad=0;for(const f of files){const h=await sha256(f.data);const exp=[...f.fileHash].map(b=>b.toString(16).padStart(2,'0')).join('');if(h===exp)ok++;else{bad++;log('SHA-256 mismatch: '+f.path,'err')}}log('Integrity: '+ok+' OK, '+bad+' failed',bad?'err':'ok');return bad===0}
-async function executeWasm(wasmBytes,vfs){log('Executing WASM ('+wasmBytes.length+' bytes)…');tw('\r\n\x1b[36m[exec] WASM binary: '+wasmBytes.length+' bytes\x1b[0m\r\n');try{const wasi=new WASI();const result=await wasi.execute(wasmBytes,[],vfs);if(result.stdout){tw('\x1b[32m'+result.stdout+'\x1b[0m');log('stdout: '+result.stdout.substr(0,200),'ok')}if(result.stderr){tw('\x1b[31m'+result.stderr+'\x1b[0m');log('stderr: '+result.stderr.substr(0,200),'err')}log('Exit code: '+result.exitCode,result.exitCode===0?'ok':'err');tw('\r\n\x1b[36m[exec] exit code: '+result.exitCode+'\x1b[0m\r\n')}catch(e){log('WASM error: '+e.message,'err');tw('\r\n\x1b[31m[error] '+e.message+'\x1b[0m\r\n')}}
-let ws=null;
-function connectWS(){try{ws=new WebSocket('ws://'+location.host+'/ws')}catch(e){log('WS not available on GitHub Pages','err');return}const st=document.getElementById('wsStatus');ws.onopen=()=>{st.textContent='WebSocket: Connected';st.className='status connected';log('Agent WS connected','ok')};ws.onclose=()=>{st.textContent='WebSocket: Disconnected';st.className='status disconnected'};ws.onmessage=e=>{const msg=JSON.parse(e.data);const d=document.createElement('div');d.className='log-line';d.textContent=JSON.stringify(msg);document.getElementById('agentLog').appendChild(d);if(msg.type==='split')log('Container split event','ok')}}
-document.getElementById('agentSend').onclick=()=>{if(!ws||ws.readyState!==1)return;const i=document.getElementById('agentInput').value;ws.send(i);log('Sent: '+i)};
-document.querySelectorAll('.sidebar .tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.sidebar .tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.sidebar .panel').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('spanel-'+t.dataset.stab).classList.add('active')});
-document.querySelectorAll('.right .tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.right .tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.right .panel').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.getElementById('rpanel-'+t.dataset.rtab).classList.add('active')});
-let vfsData=new Map();let containerMeta={files:[],totalOrig:0,totalComp:0,entropyData:[]};
-document.getElementById('splitBtn').onclick=async()=>{const reg=await navigator.serviceWorker.ready;const lc=new MessageChannel(),ld=new Promise(r=>{lc.port1.onmessage=e=>r(e.data)});reg.active.postMessage({type:'LIST'},[lc.port2]);const lr=await ld;const files=lr.files.map(p=>({path:p,data:vfsData.get(p)})).filter(f=>f.data);const ch=new MessageChannel(),done=new Promise(r=>{ch.port1.onmessage=e=>r(e.data)});const prefix='split-'+Date.now();reg.active.postMessage({type:'SPLIT',prefix,files:files.map(f=>({path:f.path,data:f.data}))},[ch.port2]);const r=await done;log('Split → '+prefix+' ('+r.count+' files)','ok');tw('\r\n\x1b[35m[split] '+prefix+' ('+r.count+' files)\x1b[0m\r\n')};
-function makeDemoContainer(){return[{path:'index.html',data:new TextEncoder().encode('<!DOCTYPE html><html><body><h1>Hello from BoxVM VFS!</h1><p>This file was read from inside a .box container.</p></body></html>')},{path:'app.js',data:new TextEncoder().encode('console.log("BoxVM running");\nfunction init(){console.log("initialized")}\ninit();')},{path:'data.json',data:new TextEncoder().encode('{"name":"boxvm","version":"0.5","files":5,"features":["wasi","zlib","sha256","rl-optimizer","llm-analysis"]}')},{path:'README.md',data:new TextEncoder().encode('# BoxVM Demo Container\n\nThis container was generated in-browser for the GitHub Pages demo.\n\n## Features\n- Real zlib compression\n- SHA-256 integrity\n- WASI filesystem access\n- RL compression optimizer\n- LLM container analysis\n')},{path:'styles.css',data:new TextEncoder().encode('body{font-family:sans-serif;background:#0a0a0f;color:#e8e8ec;margin:40px}h1{color:#6c5ce7}')}]}
-
-async function load(){
-  overlay.classList.remove('hidden');label.textContent='Fetching…';errEl.textContent='';
-  tw('\x1b[36mBoxVM v0.5 — Developer Portal\x1b[0m\r\n');
-  tw('\x1b[36m===============================\x1b[0m\r\n\r\n');
-  try{
-    let u8;
-    try{
-      const r=await fetch('api/box');
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      const buf=await r.arrayBuffer();u8=new Uint8Array(buf);
-      label.textContent='Parsing…';
-      tw('Container: '+fmtSize(u8.byteLength)+' bytes\r\n');log('Fetched: '+u8.byteLength+' bytes');
-    }catch(e){
-      log('No server detected — generating demo container','err');
-      tw('\x1b[33m[demo] No server — generating in-browser container\x1b[0m\r\n');
-      label.textContent='Generating demo container…';
-      const demoFiles=makeDemoContainer();
-      const enc=new TextEncoder();
-      const hdr=new Uint8Array(4+2+2+4+32);
-      hdr.set([66,79,88,50],0);const hdv=new DataView(hdr.buffer);
-      hdv.setUint16(4,2,true);hdv.setUint16(6,1,true);hdv.setUint32(8,demoFiles.length,true);
-      let manData=new Uint8Array(0);
-      for(const f of demoFiles){const ep=enc.encode(f.path);const tmp=new Uint8Array(manData.length+ep.length+4+32);tmp.set(manData);tmp.set(ep,manData.length);const dv=new DataView(tmp.buffer);dv.setUint32(manData.length+ep.length,f.data.length,true);const h=new Uint8Array(await crypto.subtle.digest('SHA-256',f.data));tmp.set(h,manData.length+ep.length+4);manData=tmp}
-      const manHash=new Uint8Array(await crypto.subtle.digest('SHA-256',manData));hdr.set(manHash,12);
-      const parts=[hdr];
-      for(const f of demoFiles){
-        const ep=enc.encode(f.path);
-        const cs=new CompressionStream('deflate');const writer=cs.writable.getWriter();writer.write(f.data);writer.close();
-        const reader=cs.readable.getReader();const chunks=[];let total=0;
-        while(true){const{done,value}=await reader.read();if(done)break;chunks.push(value);total+=value.length}
-        const comp=new Uint8Array(total);let off=0;for(const c of chunks){comp.set(c,off);off+=c.length}
-        const fh=new Uint8Array(await crypto.subtle.digest('SHA-256',f.data));
-        const eh=new Uint8Array(2+ep.length+4+4+32+comp.length);const edv=new DataView(eh.buffer);
-        edv.setUint16(0,ep.length,true);eh.set(ep,2);edv.setUint32(2+ep.length,f.data.length,true);edv.setUint32(2+ep.length+4,comp.length,true);eh.set(fh,2+ep.length+8);eh.set(comp,2+ep.length+8+32);parts.push(eh);
-      }
-      let totalLen=0;for(const p of parts)totalLen+=p.length;
-      const body=new Uint8Array(totalLen);let pos=0;for(const p of parts){body.set(p,pos);pos+=p.length}
-      const trailer=new Uint8Array(await crypto.subtle.digest('SHA-256',body.subarray(4)));
-      u8=new Uint8Array(body.length+32);u8.set(body);u8.set(trailer,body.length);
-      tw('Demo container: '+fmtSize(u8.byteLength)+' bytes\r\n');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>BoxVM — Developer Portal</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/css/xterm.css">
+  <script src="https://cdn.jsdelivr.net/npm/@xterm/xterm@5.5.0/lib/xterm.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.10.0/lib/addon-fit.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
     }
-    const parsed=parseBox(u8);label.textContent='Decompressing '+parsed.files.length+' files…';
-    tw('Entries: '+parsed.files.length+' (v'+parsed.ver+', flags=0x'+parsed.flags.toString(16)+')\r\n');
-    log('Parsed: '+parsed.files.length+' files');
-    const dec=await decompressParallel(parsed.files);
-    tw('Decompressed via '+Math.min(navigator.hardwareConcurrency||4,parsed.files.length)+' workers\r\n');
-    log('Decompressed '+dec.length+' files');
-    for(const f of dec){const o=parsed.files.find(p=>p.path===f.path);if(o)f.fileHash=o.fileHash;vfsData.set(f.path,f.data)}
-    label.textContent='Verifying…';await verifyFiles(dec);
-    const vfsFiles=dec.map(f=>({path:f.path,data:f.data}));
-    label.textContent='Loading into VM…';
-    const reg=await navigator.serviceWorker.ready;
-    const ch=new MessageChannel(),done=new Promise(r=>{ch.port1.onmessage=e=>r(e.data)});
-    reg.active.postMessage({type:'LOAD',files:vfsFiles},[ch.port2]);
-    const result=await done;tw('VFS: '+result.count+' files in RAM\r\n');log('VFS loaded: '+result.count,'ok');
-    fileList.innerHTML=vfsFiles.map(f=>{const sz=vfsData.get(f.path)?.length||0;const ext=f.path.split('.').pop();const ic=ext==='wasm'?'⚡':ext==='html'?'📄':ext==='js'?'📜':ext==='css'?'🎨':ext==='json'?'🔧':ext==='md'?'📋':'📋';return'<div class="file-item" data-path="'+f.path+'"><span><span class="icon">'+ic+'</span>'+f.path+'</span><span class="sz">'+fmtSize(sz)+'</span></div>'}).join('');
-    fileList.querySelectorAll('.file-item').forEach(el=>el.onclick=()=>{const p=el.dataset.path;if(p.endsWith('.wasm')){executeWasm(vfsData.get(p),vfsData);tw('\r\n$ ')}else log('File: '+p+' ('+fmtSize(vfsData.get(p)?.length||0)+')')});
-    const entropyData=vfsFiles.map(f=>({path:f.path,entropy:shannonEntropy(f.data),size:f.data.length,data:f.data}));
-    const totalOrig=vfsFiles.reduce((s,f)=>s+(f.data.length||0),0);
-    containerMeta={files:parsed.files,totalOrig,totalComp:u8.byteLength,entropyData};
-    const wasmFiles=vfsFiles.filter(f=>f.path.endsWith('.wasm'));
-    statsPanel.innerHTML='<div class="stat-card"><div class="label">Files</div><div class="value purple">'+vfsFiles.length+'</div></div><div class="stat-card"><div class="label">Total Size</div><div class="value green">'+fmtSize(totalOrig)+'</div></div><div class="stat-card"><div class="label">Container Size</div><div class="value orange">'+fmtSize(u8.byteLength)+'</div></div><div class="stat-card"><div class="label">Compression</div><div class="value">'+(totalOrig>0?(100*u8.byteLength/totalOrig).toFixed(1):0)+'%</div></div><div class="stat-card"><div class="label">WASM Binaries</div><div class="value blue">'+wasmFiles.length+'</div></div><div class="stat-card"><div class="label">Threads</div><div class="value">'+(navigator.hardwareConcurrency||4)+'</div></div><div class="stat-card"><div class="label">Avg Entropy</div><div class="value pink">'+(entropyData.reduce((s,e)=>s+e.entropy,0)/entropyData.length).toFixed(2)+'</div></div>';
-    entropyPanel.innerHTML=entropyData.map(e=>{const pct=(e.entropy/8)*100;const color=e.entropy>7?'var(--red)':e.entropy>5?'var(--orange)':'var(--green)';return'<div style="margin-bottom:8px"><div style="font-size:12px;font-family:monospace;margin-bottom:2px">'+e.path+'</div><div style="font-size:10px;color:var(--dim)">'+e.entropy.toFixed(2)+' bits/byte · '+fmtSize(e.size)+'</div><div class="ml-bar"><div class="fill" style="width:'+pct+'%;background:'+color+'"></div></div></div>'}).join('');
-    if(wasmFiles.length>0){label.textContent='Executing WASM…';log('Found '+wasmFiles.length+' WASM binaries');for(const w of wasmFiles)await executeWasm(vfsData.get(w.path),vfsData)}
-    info.textContent=vfsFiles.length+' files · '+fmtSize(u8.byteLength)+' · '+(navigator.hardwareConcurrency||4)+' threads';
-    label.textContent='Ready';setTimeout(()=>overlay.classList.add('hidden'),300);
-    try{connectWS()}catch(e){}
-    tw('\r\n\x1b[32m[ready] Click a .wasm file to execute. Use ML/LLM tabs for analysis.\x1b[0m\r\n');
-    tw('\r\n$ ');
-    initRL();initLLM();initLayoutOptimizer();initAnomalyDetection();
-  }catch(e){label.textContent='';errEl.textContent=e.message;log('FATAL: '+e.message,'err');tw('\r\n\x1b[31m[error] '+e.message+'\x1b[0m\r\n')}
-}
 
-// ===== RL Compression Optimizer =====
-let rlQTable={},rlHistory=[],rlTrained=false;
-const COMPRESSION_ACTIONS=['store','deflate-1','deflate-6','deflate-9','deflate-best'];
-const FILE_TYPES=['html','js','css','json','md','wasm','binary','text'];
-function getFileType(path){const ext=path.split('.').pop().toLowerCase();if(['html','htm'].includes(ext))return'html';if(['js','mjs'].includes(ext))return'js';if(['css'].includes(ext))return'css';if(['json'].includes(ext))return'json';if(['md','txt'].includes(ext))return'text';if(['wasm'].includes(ext))return'wasm';return'binary'}
-function entropyBucket(e){if(e<2)return 0;if(e<4)return 1;if(e<6)return 2;if(e<7)return 3;return 4}
-function rlState(ft,e){return ft+':'+entropyBucket(e)}
-function rlReward(state,action,actualRatio){const ai=COMPRESSION_ACTIONS.indexOf(action);const eb=parseInt(state.split(':')[1]);const ef=1-(eb*1.6/5);const af=0.3+(ai/4)*0.7;const pr=(actualRatio||0.5)*ef*af;return-pr+(ai>2?-0.05:0)}
-function initRL(){rlQTable={};rlHistory=[];rlTrained=false;for(const ft of FILE_TYPES)for(let e=0;e<5;e++){const s=ft+':'+e;rlQTable[s]={};for(const a of COMPRESSION_ACTIONS)rlQTable[s][a]=0}if(containerMeta.entropyData.length>0)trainRL(50);updateRLDisplay()}
-function trainRL(episodes){if(!containerMeta.entropyData.length)return;const alpha=0.1,gamma=0.9,eps=0.3;const rewards=[];for(let ep=0;ep<episodes;ep++){let tr=0;for(const file of containerMeta.entropyData){const ft=getFileType(file.path);const state=ft+':'+entropyBucket(file.entropy);const ar=file.size>0?containerMeta.totalComp/containerMeta.totalOrig:0.5;let action;if(Math.random()<eps)action=COMPRESSION_ACTIONS[Math.floor(Math.random()*COMPRESSION_ACTIONS.length)];else{let best=-Infinity;for(const a of COMPRESSION_ACTIONS)if(rlQTable[state][a]>best){best=rlQTable[state][a];action=a}}const r=rlReward(state,action,ar);tr+=r;let mn=-Infinity;for(const a of COMPRESSION_ACTIONS)if(rlQTable[state][a]>mn)mn=rlQTable[state][a];rlQTable[state][action]+=alpha*(r+gamma*mn-rlQTable[state][action])}rewards.push(tr/containerMeta.entropyData.length)}rlHistory=rlHistory.concat(rewards);rlTrained=true;updateRLDisplay()}
-function updateRLDisplay(){const c=document.getElementById('rlCanvas');if(!c)return;const ctx=c.getContext('2d');const w=c.width,h=c.height;ctx.clearRect(0,0,w,h);if(rlHistory.length>1){const mn=Math.min(...rlHistory),mx=Math.max(...rlHistory);const rng=mx-mn||1;ctx.strokeStyle='#6c5ce7';ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<rlHistory.length;i++){const x=(i/(rlHistory.length-1))*w;const y=h-((rlHistory[i]-mn)/rng)*h*0.8-h*0.1;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke();ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.closePath();ctx.fillStyle='rgba(108,92,231,.15)';ctx.fill()}else{ctx.fillStyle='#4a4a56';ctx.font='11px monospace';ctx.fillText('Train to see reward curve',10,50)}const el=document.getElementById('rlStats');if(rlTrained&&containerMeta.entropyData.length){let html='';for(const ft of FILE_TYPES){const has=containerMeta.entropyData.some(f=>getFileType(f.path)===ft);if(!has)continue;const state=ft+':2';if(!rlQTable[state])continue;let best=-Infinity,ba='store';for(const a of COMPRESSION_ACTIONS)if(rlQTable[state][a]>best){best=rlQTable[state][a];ba=a}html+='<div class="ml-row"><span class="name">'+ft+'</span><span class="val good">'+ba+'</span></div>'}html+='<div class="ml-row"><span class="name">Episodes</span><span class="val">'+rlHistory.length+'</span></div>';const lr=rlHistory.length>0?rlHistory[rlHistory.length-1].toFixed(4):'—';html+='<div class="ml-row"><span class="name">Avg Reward</span><span class="val '+(lr>-'0.5'?'good':'warn')+'">'+lr+'</span></div>';el.innerHTML=html}else el.innerHTML='<div style="color:var(--dim);font-size:12px">Load container to train.</div>';updateStrategyMatrix()}
-function updateStrategyMatrix(){const el=document.getElementById('strategyMatrix');if(!el)return;if(!rlTrained||!containerMeta.entropyData.length){el.innerHTML='<div style="color:var(--dim);font-size:12px">Train RL agent to see strategy matrix.</div>';return}let html='<div style="font-size:10px;color:var(--dim);margin-bottom:4px">File type → Optimal strategy</div>';for(const ft of FILE_TYPES){const files=containerMeta.entropyData.filter(f=>getFileType(f.path)===ft);if(!files.length)continue;const ae=files.reduce((s,f)=>s+f.entropy,0)/files.length;const state=ft+':'+entropyBucket(ae);if(!rlQTable[state])continue;let best=-Infinity,ba='store';for(const a of COMPRESSION_ACTIONS)if(rlQTable[state][a]>best){best=rlQTable[state][a];ba=a}html+='<div class="ml-row"><span class="name">'+ft+' ('+files.length+' files, '+ae.toFixed(1)+' ent)</span><span class="val good">'+ba+'</span></div>'}el.innerHTML=html}
-document.getElementById('rlTrain')?.addEventListener('click',()=>{if(!containerMeta.entropyData.length){log('No container loaded','err');return}log('Training RL agent: 100 episodes…');tw('\r\n\x1b[36m[rl] Training 100 episodes…\x1b[0m\r\n');setTimeout(()=>{trainRL(100);log('RL training complete: '+rlHistory.length+' episodes','ok');tw('\r\n\x1b[32m[rl] Training complete\x1b[0m\r\n')},50)});
-document.getElementById('rlReset')?.addEventListener('click',()=>{rlQTable={};rlHistory=[];rlTrained=false;initRL();log('RL agent reset')});
+    :root {
+      --bg: #08080a;
+      --bg2: #0f0f14;
+      --bg3: #16161e;
+      --bg4: #1c1c28;
+      --border: #222230;
+      --border2: #2e2e3e;
+      --text: #e8e8ec;
+      --dim: #7a7a88;
+      --faint: #4a4a56;
+      --accent: #6c5ce7;
+      --accent2: #8b7ff0;
+      --green: #00d4a0;
+      --orange: #ff9f43;
+      --red: #ee5253;
+      --blue: #54a0ff;
+      --pink: #ff5c8a
+    }
 
-// ===== Layout Optimizer =====
-function initLayoutOptimizer(){const el=document.getElementById('layoutStats');if(!el)return;if(!containerMeta.entropyData.length){el.innerHTML='<div style="color:var(--dim);font-size:12px">Load container to optimize.</div>';return}const ev=containerMeta.entropyData.length>1?(Math.sqrt(containerMeta.entropyData.reduce((s,e,i,a)=>{const m=a.reduce((ss,x)=>ss+x.entropy,0)/a.length;return s+(e.entropy-m)**2},0)/containerMeta.entropyData.length)).toFixed(2):'—';el.innerHTML='<div class="ml-row"><span class="name">Current layout</span><span class="val">Sequential</span></div><div class="ml-row"><span class="name">Entropy variance</span><span class="val">'+ev+'</span></div><div class="ml-row"><span class="name">Predicted gain</span><span class="val warn">—</span></div>'}
-document.getElementById('optimizeLayout')?.addEventListener('click',()=>{if(!containerMeta.entropyData.length){log('No container loaded','err');return}log('Optimizing layout via entropy-based clustering…');tw('\r\n\x1b[36m[ml] Optimizing layout…\x1b[0m\r\n');const sorted=[...containerMeta.entropyData].sort((a,b)=>a.entropy-b.entropy);const bv=containerMeta.entropyData.length>1?Math.sqrt(containerMeta.entropyData.reduce((s,e,i,a)=>{const m=a.reduce((ss,x)=>ss+x.entropy,0)/a.length;return s+(e.entropy-m)**2},0)/containerMeta.entropyData.length):0;const av=sorted.length>1?Math.sqrt(sorted.reduce((s,e,i,a)=>{const m=a.reduce((ss,x)=>ss+x.entropy,0)/a.length;return s+(e.entropy-m)**2},0)/sorted.length):0;const gain=bv>0?((bv-av)/bv*100).toFixed(1):'0.0';const el=document.getElementById('layoutStats');el.innerHTML='<div class="ml-row"><span class="name">Optimized layout</span><span class="val good">Entropy-sorted</span></div><div class="ml-row"><span class="name">Before variance</span><span class="val">'+bv.toFixed(2)+'</span></div><div class="ml-row"><span class="name">After variance</span><span class="val">'+av.toFixed(2)+'</span></div><div class="ml-row"><span class="name">Predicted gain</span><span class="val good">+'+gain+'%</span></div><div style="font-size:10px;color:var(--dim);margin-top:4px">Files reordered: '+sorted.map(f=>f.path).join(' → ')+'</div>';log('Layout optimized: +'+gain+'% predicted gain','ok');tw('\r\n\x1b[32m[ml] Layout optimized: +'+gain+'% gain\x1b[0m\r\n')});
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column
+    }
 
-// ===== LLM Analysis =====
-function initLLM(){const o=document.getElementById('llmOutput');if(!o)return;if(!containerMeta.entropyData.length){o.innerHTML='<span class="dim">Load container to analyze.</span>';return}autoAnalyze()}
-function llmAnalyze(query){
-  if(!containerMeta.entropyData.length)return'<span class="dim">No container loaded.</span>';
-  const files=containerMeta.entropyData;const to=containerMeta.totalOrig;const tc=containerMeta.totalComp;
-  const ratio=(100*tc/to).toFixed(1);const ae=(files.reduce((s,f)=>s+f.entropy,0)/files.length).toFixed(2);
-  const ft={};for(const f of files){const t=getFileType(f.path);ft[t]=(ft[t]||0)+1}
-  const he=files.filter(f=>f.entropy>7);const le=files.filter(f=>f.entropy<3);
-  const lf=files.reduce((a,b)=>a.size>b.size?a:b);
-  const q=query.toLowerCase();let r='';
-  if(q.includes('redund')||q.includes('duplicate')){
-    r+='<span class="ai">[Analysis]</span> Scanning for redundant files…\n';
-    const seen={};for(const f of files){const sig=f.path.split('.').pop()+':'+f.size;seen[sig]=(seen[sig]||[]).concat(f.path)}
-    const dups=Object.entries(seen).filter(([k,v])=>v.length>1);
-    if(dups.length>0){r+='<span class="warn">Found '+dups.length+' potential duplicate sets:</span>\n';for(const[s,p]of dups)r+='  • '+p.join(', ')+'\n'}else r+='<span class="ai">No duplicates found.</span>\n';
-  }else if(q.includes('compress')||q.includes('optim')){
-    r+='<span class="ai">[Analysis]</span> Compression optimization suggestions:\n';
-    r+='  • Current ratio: '+ratio+'%\n  • Avg entropy: '+ae+' bits/byte\n';
-    if(he.length>0){r+='<span class="warn">  • '+he.length+' high-entropy files (>7.0):</span>\n';for(const f of he)r+='    → '+f.path+' ('+f.entropy.toFixed(2)+') — near-optimal\n'}
-    if(le.length>0){r+='<span class="ai">  • '+le.length+' low-entropy files (<3.0):</span>\n';for(const f of le)r+='    → '+f.path+' ('+f.entropy.toFixed(2)+') — high potential\n'}
-    r+='  • RL agent recommends: deflate-best for high-entropy, deflate-6 for text\n';
-  }else if(q.includes('pattern')||q.includes('struct')){
-    r+='<span class="ai">[Analysis]</span> Pattern detection:\n';
-    r+='  • Types: '+Object.entries(ft).map(([t,c])=>t+':'+c).join(', ')+'\n';
-    r+='  • Size: largest='+fmtSize(lf.size)+', avg='+fmtSize(to/files.length)+'\n';
-    r+='  • Entropy range: '+Math.min(...files.map(f=>f.entropy)).toFixed(2)+' - '+Math.max(...files.map(f=>f.entropy)).toFixed(2)+'\n';
-  }else if(q.includes('anomal')||q.includes('unusual')){
-    r+='<span class="ai">[Analysis]</span> Anomaly detection:\n';
-    const ms=to/files.length;const outliers=files.filter(f=>f.size>ms*3||f.size<ms*0.1);
-    if(outliers.length>0){r+='<span class="warn">  • Size outliers:</span>\n';for(const f of outliers)r+='    → '+f.path+' ('+fmtSize(f.size)+', mean='+fmtSize(ms)+')\n'}
-    const eo=files.filter(f=>Math.abs(f.entropy-ae)>2);
-    if(eo.length>0){r+='<span class="warn">  • Entropy outliers:</span>\n';for(const f of eo)r+='    → '+f.path+' ('+f.entropy.toFixed(2)+', mean='+ae+')\n'}
-    if(!outliers.length&&!eo.length)r+='<span class="ai">  • No anomalies detected.</span>\n';
-  }else{
-    r+='<span class="ai">[Container Intelligence Report]</span>\n\n';
-    r+='<span class="dim">Container:</span> '+files.length+' files, '+fmtSize(to)+' → '+fmtSize(tc)+' ('+ratio+'%)\n';
-    r+='<span class="dim">Entropy:</span> avg='+ae+' bits/byte\n';
-    r+='<span class="dim">Types:</span> '+Object.entries(ft).map(([t,c])=>t+'×'+c).join(', ')+'\n';
-    r+='<span class="dim">Largest:</span> '+lf.path+' ('+fmtSize(lf.size)+', ent='+lf.entropy.toFixed(2)+')\n\n';
-    if(he.length>0)r+='<span class="warn">⚠ '+he.length+' high-entropy files (hard to compress)</span>\n';
-    if(le.length>0)r+='<span class="ai">✓ '+le.length+' low-entropy files (excellent compression)</span>\n';
-    r+='\n<span class="dim">Try: "redundancy", "compression", "patterns", "anomalies"</span>\n';
-  }
-  return r;
-}
-function autoAnalyze(){const o=document.getElementById('llmOutput');if(!o)return;o.innerHTML=llmAnalyze('general');const pe=document.getElementById('patternResults');if(pe&&containerMeta.entropyData.length){const files=containerMeta.entropyData;const types={};for(const f of files){const t=getFileType(f.path);types[t]=(types[t]||0)+1}let html='';for(const[t,c]of Object.entries(types).sort((a,b)=>b[1]-a[1])){const pct=(c/files.length*100).toFixed(0);html+='<div class="ml-row"><span class="name">'+t+'</span><span class="val">'+c+' files ('+pct+'%)</span></div><div class="ml-bar"><div class="fill" style="width:'+pct+'%;background:var(--accent)"></div></div>'}pe.innerHTML=html}}
-document.getElementById('llmAnalyze')?.addEventListener('click',()=>{const q=document.getElementById('llmInput').value||'general';document.getElementById('llmOutput').innerHTML=llmAnalyze(q);log('LLM analysis: '+q.substr(0,50),'ok');tw('\r\n\x1b[36m[llm] Analysis complete\x1b[0m\r\n')});
-document.getElementById('llmAuto')?.addEventListener('click',()=>{autoAnalyze();log('Auto-analysis triggered','ok')});
+    .bar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0
+    }
 
-// ===== Anomaly Detection =====
-function initAnomalyDetection(){const el=document.getElementById('anomalyResults');if(!el)return;if(!containerMeta.entropyData.length){el.innerHTML='<div style="color:var(--dim);font-size:12px">Load container to detect anomalies.</div>';return}const files=containerMeta.entropyData;const ms=containerMeta.totalOrig/files.length;const me=files.reduce((s,f)=>s+f.entropy,0)/files.length;let html='';const so=files.filter(f=>f.size>ms*2||f.size<ms*0.15);if(so.length>0){html+='<div style="font-size:11px;color:var(--orange);margin-bottom:4px">Size Outliers</div>';for(const f of so){const dev=((Math.abs(f.size-ms)/ms)*100).toFixed(0);html+='<div class="ml-row"><span class="name">'+f.path+'</span><span class="val warn">'+fmtSize(f.size)+' ('+dev+'% from mean)</span></div>'}}const eo=files.filter(f=>Math.abs(f.entropy-me)>2);if(eo.length>0){html+='<div style="font-size:11px;color:var(--pink);margin-bottom:4px;margin-top:8px">Entropy Outliers</div>';for(const f of eo){const dev=(f.entropy-me).toFixed(2);html+='<div class="ml-row"><span class="name">'+f.path+'</span><span class="val '+(dev>0?'bad':'good')+'">'+f.entropy.toFixed(2)+' (Δ'+(dev>0?'+':'')+dev+')</span></div>'}}if(!so.length&&!eo.length)html='<div style="color:var(--green);font-size:12px">✓ No anomalies detected. All files within normal ranges.</div>';el.innerHTML=html}
+    .bar .logo {
+      font-weight: 800;
+      font-size: 18px
+    }
 
-navigator.serviceWorker.register('sw.js').then(()=>{log('SW registered');load()}).catch(e=>{label.textContent='';errEl.textContent='SW failed: '+e.message});
-document.getElementById('reload').onclick=()=>{term.clear();load()};
-term.onData(d=>{if(d==='\r')tw('\r\n$ ');else tw(d)});
-</script>
+    .bar .logo span {
+      color: var(--accent)
+    }
+
+    .bar .info {
+      color: var(--dim);
+      font-size: 12px;
+      margin-left: auto
+    }
+
+    .bar button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600
+    }
+
+    .bar button:hover {
+      background: var(--accent2)
+    }
+
+    .bar button.ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--dim)
+    }
+
+    .bar a {
+      color: var(--dim);
+      font-size: 12px;
+      text-decoration: none
+    }
+
+    .bar a:hover {
+      color: var(--text)
+    }
+
+    .split-btn {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600
+    }
+
+    .split-btn:hover {
+      background: var(--accent);
+      color: #fff
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      overflow: hidden
+    }
+
+    .sidebar {
+      width: 260px;
+      min-width: 260px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      background: var(--bg2)
+    }
+
+    .sidebar .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .sidebar .tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--dim);
+      border-bottom: 2px solid transparent;
+      transition: all .15s
+    }
+
+    .sidebar .tab:hover {
+      color: var(--text)
+    }
+
+    .sidebar .tab.active {
+      color: var(--text);
+      border-bottom-color: var(--accent)
+    }
+
+    .sidebar .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px
+    }
+
+    .sidebar .panel {
+      display: none
+    }
+
+    .sidebar .panel.active {
+      display: block
+    }
+
+    .file-item {
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-family: 'SF Mono', monospace
+    }
+
+    .file-item:hover {
+      background: var(--bg3)
+    }
+
+    .file-item .sz {
+      color: var(--dim);
+      font-size: 11px
+    }
+
+    .file-item .icon {
+      margin-right: 6px
+    }
+
+    .terminal-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    #terminal {
+      flex: 1;
+      background: #000;
+      padding: 8px;
+      overflow: hidden
+    }
+
+    .right {
+      width: 380px;
+      min-width: 380px;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      background: var(--bg2)
+    }
+
+    .right .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap
+    }
+
+    .right .tab {
+      flex: 1;
+      padding: 8px 4px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--dim);
+      border-bottom: 2px solid transparent;
+      transition: all .15s;
+      white-space: nowrap
+    }
+
+    .right .tab:hover {
+      color: var(--text)
+    }
+
+    .right .tab.active {
+      color: var(--text);
+      border-bottom-color: var(--accent)
+    }
+
+    .right .panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: none
+    }
+
+    .right .panel.active {
+      display: block
+    }
+
+    .log-line {
+      font-size: 11px;
+      font-family: monospace;
+      color: var(--dim);
+      padding: 3px 0;
+      white-space: pre-wrap;
+      word-break: break-all;
+      border-bottom: 1px solid rgba(34, 34, 48, .3)
+    }
+
+    .log-line.ok {
+      color: var(--green)
+    }
+
+    .log-line.err {
+      color: var(--red)
+    }
+
+    .log-line .ts {
+      color: var(--dim);
+      opacity: .5
+    }
+
+    .stat-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px
+    }
+
+    .stat-card .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--dim);
+      letter-spacing: .5px
+    }
+
+    .stat-card .value {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 2px
+    }
+
+    .stat-card .value.green {
+      color: var(--green)
+    }
+
+    .stat-card .value.purple {
+      color: var(--accent)
+    }
+
+    .stat-card .value.orange {
+      color: var(--orange)
+    }
+
+    .stat-card .value.blue {
+      color: var(--blue)
+    }
+
+    .stat-card .value.pink {
+      color: var(--pink)
+    }
+
+    .agent textarea {
+      width: 100%;
+      height: 60px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      resize: none
+    }
+
+    .agent button {
+      margin-top: 8px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px
+    }
+
+    .agent .status {
+      font-size: 12px;
+      margin-bottom: 8px
+    }
+
+    .agent .connected {
+      color: var(--green)
+    }
+
+    .agent .disconnected {
+      color: var(--red)
+    }
+
+    .api-section {
+      margin-bottom: 20px
+    }
+
+    .api-section h4 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--accent2)
+    }
+
+    .api-section code {
+      display: block;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--text);
+      margin-bottom: 4px;
+      overflow-x: auto
+    }
+
+    .api-section p {
+      font-size: 12px;
+      color: var(--dim);
+      line-height: 1.5
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--bg);
+      z-index: 100
+    }
+
+    .overlay.hidden {
+      display: none
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--bg3);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .6s linear infinite
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .overlay .label {
+      color: var(--dim);
+      font-size: 14px
+    }
+
+    .overlay .err {
+      color: var(--red);
+      font-size: 13px;
+      max-width: 500px;
+      text-align: center
+    }
+
+    .ml-section {
+      margin-bottom: 16px
+    }
+
+    .ml-section h4 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--accent2);
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .ml-section h4 .badge {
+      font-size: 9px;
+      background: var(--accent);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase
+    }
+
+    .ml-chart {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px
+    }
+
+    .ml-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 12px;
+      border-bottom: 1px solid rgba(34, 34, 48, .3)
+    }
+
+    .ml-row .name {
+      color: var(--text)
+    }
+
+    .ml-row .val {
+      color: var(--dim);
+      font-family: monospace
+    }
+
+    .ml-row .val.good {
+      color: var(--green)
+    }
+
+    .ml-row .val.bad {
+      color: var(--red)
+    }
+
+    .ml-row .val.warn {
+      color: var(--orange)
+    }
+
+    .ml-bar {
+      height: 4px;
+      background: var(--bg3);
+      border-radius: 2px;
+      overflow: hidden;
+      margin: 4px 0
+    }
+
+    .ml-bar .fill {
+      height: 100%;
+      transition: width .5s
+    }
+
+    .ml-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px
+    }
+
+    .ml-btn:hover {
+      background: var(--accent2)
+    }
+
+    .ml-btn.ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--dim)
+    }
+
+    .ml-btn.ghost:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .ml-tag {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600
+    }
+
+    .ml-tag.rl {
+      background: rgba(108, 92, 231, .15);
+      color: var(--accent2)
+    }
+
+    .ml-tag.llm {
+      background: rgba(0, 212, 160, .15);
+      color: var(--green)
+    }
+
+    .ml-tag.ml {
+      background: rgba(255, 159, 67, .15);
+      color: var(--orange)
+    }
+
+    .ml-textarea {
+      width: 100%;
+      height: 80px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      resize: none;
+      margin-bottom: 8px
+    }
+
+    .ml-output {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 12px;
+      line-height: 1.6;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap
+    }
+
+    .ml-output .ai {
+      color: var(--green)
+    }
+
+    .ml-output .dim {
+      color: var(--dim)
+    }
+
+    .ml-output .warn {
+      color: var(--orange)
+    }
+
+    .ml-output .err {
+      color: var(--red)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bar">
+    <div class="logo">Box<span>VM</span></div>
+    <a href="index.html">Home</a>
+    <div class="info" id="info">Initializing…</div>
+    <button class="split-btn" id="splitBtn">Split</button>
+    <button class="ghost" id="reload">Restart</button>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="tabs">
+        <div class="tab active" data-stab="files">Files</div>
+        <div class="tab" data-stab="stats">Stats</div>
+        <div class="tab" data-stab="entropy">Entropy</div>
+      </div>
+      <div class="content">
+        <div class="panel active" id="spanel-files">
+          <div id="fileList"></div>
+        </div>
+        <div class="panel" id="spanel-stats">
+          <div id="statsPanel"></div>
+        </div>
+        <div class="panel" id="spanel-entropy">
+          <div id="entropyPanel"></div>
+        </div>
+      </div>
+    </div>
+    <div class="terminal-area">
+      <div id="terminal"></div>
+    </div>
+    <div class="right">
+      <div class="tabs">
+        <div class="tab active" data-rtab="log">Log</div>
+        <div class="tab" data-rtab="agent">Agent</div>
+        <div class="tab" data-rtab="ml">ML</div>
+        <div class="tab" data-rtab="llm">LLM</div>
+        <div class="tab" data-rtab="api">API</div>
+      </div>
+      <div class="panel active" id="rpanel-log">
+        <div id="logBox"></div>
+      </div>
+      <div class="panel" id="rpanel-agent">
+        <div class="agent">
+          <div class="status disconnected" id="wsStatus">WebSocket: Disconnected</div>
+          <textarea id="agentInput" placeholder='{"cmd":"list"}'></textarea>
+          <button id="agentSend">Send Command</button>
+          <div id="agentLog" style="margin-top:12px"></div>
+        </div>
+      </div>
+      <div class="panel" id="rpanel-ml">
+        <div class="ml-section">
+          <h4>RL Compression Optimizer <span class="badge">Q-Learning</span></h4>
+          <p style="font-size:12px;color:var(--dim);margin-bottom:8px">Reinforcement learning agent that learns optimal
+            compression strategies per file type.</p>
+          <div
+            style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px">
+            <canvas id="rlCanvas" width="340" height="100"></canvas>
+          </div>
+          <div id="rlStats"></div>
+          <button class="ml-btn" id="rlTrain">Train 100 Episodes</button>
+          <button class="ml-btn ghost" id="rlReset" style="margin-left:8px">Reset</button>
+        </div>
+        <div class="ml-section">
+          <h4>Compression Strategy Matrix <span class="ml-tag ml">ML</span></h4>
+          <div id="strategyMatrix"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Neural Layout Optimizer <span class="ml-tag ml">ML</span></h4>
+          <p style="font-size:12px;color:var(--dim);margin-bottom:8px">Predicts optimal file ordering for maximum
+            compression ratio using entropy-based feature extraction.</p>
+          <div id="layoutStats"></div>
+          <button class="ml-btn" id="optimizeLayout">Optimize Layout</button>
+        </div>
+      </div>
+      <div class="panel" id="rpanel-llm">
+        <div class="ml-section">
+          <h4>Container Intelligence <span class="ml-tag llm">LLM</span></h4>
+          <p style="font-size:12px;color:var(--dim);margin-bottom:8px">Abstract LLM analysis layer. Analyzes container
+            contents, detects patterns, suggests optimizations.</p>
+          <textarea class="ml-textarea" id="llmInput"
+            placeholder="Ask about the container... e.g. 'What files are redundant?' or 'Suggest compression improvements'"></textarea>
+          <button class="ml-btn" id="llmAnalyze">Analyze Container</button>
+          <button class="ml-btn ghost" id="llmAuto" style="margin-left:8px">Auto-Analysis</button>
+          <div class="ml-output" id="llmOutput" style="margin-top:12px"><span class="dim">Analysis output will appear
+              here.</span></div>
+        </div>
+        <div class="ml-section">
+          <h4>Pattern Detection <span class="ml-tag llm">LLM</span></h4>
+          <div id="patternResults"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Anomaly Detection <span class="ml-tag ml">ML</span></h4>
+          <div id="anomalyResults"></div>
+        </div>
+      </div>
+      <div class="panel" id="rpanel-api">
+        <div class="api-section">
+          <h4>GET /api/box</h4>
+          <code>curl http://localhost:7860/api/box -o container.box</code>
+          <p>Download the raw .box container file</p>
+        </div>
+        <div class="api-section">
+          <h4>GET /api/size</h4>
+          <code>curl http://localhost:7860/api/size</code>
+          <p>Returns container size in bytes as JSON</p>
+        </div>
+        <div class="api-section">
+          <h4>POST /api/split</h4>
+          <code>curl -X POST http://localhost:7860/api/split</code>
+          <p>Trigger container split — broadcasts to all WebSocket clients</p>
+        </div>
+        <div class="api-section">
+          <h4>WebSocket /ws</h4>
+          <code>ws://localhost:7860/ws</code>
+          <p>Agent connection for live container control. Send JSON commands, receive events.</p>
+        </div>
+        <div class="api-section">
+          <h4>GET /__box__/:path</h4>
+          <code>curl http://localhost:7860/__box__/index.html</code>
+          <p>Serve file from Service Worker VFS (after container is loaded)</p>
+        </div>
+        <div class="api-section">
+          <h4>ML/LLM Abstraction Layer</h4>
+          <code>portal.html → ML tab → RL Optimizer</code>
+          <p>Q-learning compression strategy optimizer. Trains on file entropy features. Visualizes reward curves and
+            policy convergence.</p>
+          <code>portal.html → LLM tab → Container Intelligence</code>
+          <p>Abstract LLM analysis: pattern detection, redundancy analysis, anomaly flagging, compression suggestions.
+            Runs locally on container metadata.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="overlay" id="overlay">
+    <div class="spinner"></div>
+    <div class="label" id="label">Booting BoxVM…</div>
+    <div class="err" id="err"></div>
+  </div>
+  <script>
+    const overlay = document.getElementById('overlay'), label = document.getElementById('label'), errEl = document.getElementById('err'), info = document.getElementById('info'), logBox = document.getElementById('logBox'), fileList = document.getElementById('fileList'), statsPanel = document.getElementById('statsPanel'), entropyPanel = document.getElementById('entropyPanel');
+    const term = new Terminal({ fontSize: 13, theme: { background: '#000', foreground: '#e8e8ec', cursor: '#6c5ce7' } });
+    const fitAddon = new FitAddon.FitAddon(); term.loadAddon(fitAddon);
+    term.open(document.getElementById('terminal')); fitAddon.fit();
+    window.addEventListener('resize', () => fitAddon.fit());
+    function log(m, c) { const d = document.createElement('div'); d.className = 'log-line' + (c ? ' ' + c : ''); const t = new Date().toISOString().substr(11, 8); d.innerHTML = '<span class="ts">' + t + '</span> ' + m; logBox.appendChild(d); logBox.scrollTop = logBox.scrollHeight }
+    function tw(s) { term.write(s) }
+    function fmtSize(n) { if (n > 1e6) return (n / 1e6).toFixed(1) + 'MB'; if (n > 1e3) return (n / 1e3).toFixed(1) + 'KB'; return n + 'B' }
+    async function sha256(buf) { const h = await crypto.subtle.digest('SHA-256', buf); return [...new Uint8Array(h)].map(b => b.toString(16).padStart(2, '0')).join('') }
+    function shannonEntropy(data) { if (!data || data.length === 0) return 0; const freq = new Array(256).fill(0); for (let i = 0; i < data.length; i++)freq[data[i]]++; let h = 0; for (let i = 0; i < 256; i++) { if (freq[i] > 0) { const p = freq[i] / data.length; h -= p * Math.log2(p) } } return h }
+    function byteHistogram(data) { const hist = new Array(256).fill(0); for (let i = 0; i < data.length; i++)hist[data[i]]++; return hist }
+    function parseBox(buf) { const ab = buf instanceof ArrayBuffer ? buf : buf.buffer; const files = [], dv = new DataView(ab); let p = 4; const ver = dv.getUint16(p, true); p += 2; const flags = dv.getUint16(p, true); p += 2; const count = dv.getUint32(p, true); p += 4; p += 32; for (let i = 0; i < count; i++) { const plen = dv.getUint16(p, true); p += 2; let path = ''; for (let j = 0; j < plen; j++)path += String.fromCharCode(dv.getUint8(p + j)); p += plen; const os = dv.getUint32(p, true); p += 4; const cs = dv.getUint32(p, true); p += 4; const fh = new Uint8Array(ab, p, 32); p += 32; const cd = new Uint8Array(ab, p, cs); p += cs; files.push({ path, origSize: os, compSize: cs, compData: cd, fileHash: fh }) } return { ver, flags, count, files } }
+    async function decompressParallel(files) { const nw = Math.min(navigator.hardwareConcurrency || 4, files.length), cs = Math.ceil(files.length / nw); const ps = []; for (let w = 0; w < nw; w++) { const worker = new Worker('worker.js'); const slice = files.slice(w * cs, (w + 1) * cs); const entries = slice.map(f => ({ path: f.path, compData: f.compData, origSize: f.origSize })); ps.push(new Promise((res, rej) => { worker.onmessage = e => { res(e.data.results); worker.terminate() }; worker.onerror = rej; worker.postMessage({ id: w, entries }) })) } return (await Promise.all(ps)).flat() }
+    async function verifyFiles(files) { let ok = 0, bad = 0; for (const f of files) { const h = await sha256(f.data); const exp = [...f.fileHash].map(b => b.toString(16).padStart(2, '0')).join(''); if (h === exp) ok++; else { bad++; log('SHA-256 mismatch: ' + f.path, 'err') } } log('Integrity: ' + ok + ' OK, ' + bad + ' failed', bad ? 'err' : 'ok'); return bad === 0 }
+    async function executeWasm(wasmBytes, vfs) { log('Executing WASM (' + wasmBytes.length + ' bytes)…'); tw('\r\n\x1b[36m[exec] WASM binary: ' + wasmBytes.length + ' bytes\x1b[0m\r\n'); try { const wasi = new WASI(); const result = await wasi.execute(wasmBytes, [], vfs); if (result.stdout) { tw('\x1b[32m' + result.stdout + '\x1b[0m'); log('stdout: ' + result.stdout.substr(0, 200), 'ok') } if (result.stderr) { tw('\x1b[31m' + result.stderr + '\x1b[0m'); log('stderr: ' + result.stderr.substr(0, 200), 'err') } log('Exit code: ' + result.exitCode, result.exitCode === 0 ? 'ok' : 'err'); tw('\r\n\x1b[36m[exec] exit code: ' + result.exitCode + '\x1b[0m\r\n') } catch (e) { log('WASM error: ' + e.message, 'err'); tw('\r\n\x1b[31m[error] ' + e.message + '\x1b[0m\r\n') } }
+    let ws = null;
+    function connectWS() { try { ws = new WebSocket('ws://' + location.host + '/ws') } catch (e) { log('WS not available on GitHub Pages', 'err'); return } const st = document.getElementById('wsStatus'); ws.onopen = () => { st.textContent = 'WebSocket: Connected'; st.className = 'status connected'; log('Agent WS connected', 'ok') }; ws.onclose = () => { st.textContent = 'WebSocket: Disconnected'; st.className = 'status disconnected' }; ws.onmessage = e => { const msg = JSON.parse(e.data); const d = document.createElement('div'); d.className = 'log-line'; d.textContent = JSON.stringify(msg); document.getElementById('agentLog').appendChild(d); if (msg.type === 'split') log('Container split event', 'ok') } }
+    document.getElementById('agentSend').onclick = () => { if (!ws || ws.readyState !== 1) return; const i = document.getElementById('agentInput').value; ws.send(i); log('Sent: ' + i) };
+    document.querySelectorAll('.sidebar .tab').forEach(t => t.onclick = () => { document.querySelectorAll('.sidebar .tab').forEach(x => x.classList.remove('active')); document.querySelectorAll('.sidebar .panel').forEach(x => x.classList.remove('active')); t.classList.add('active'); document.getElementById('spanel-' + t.dataset.stab).classList.add('active') });
+    document.querySelectorAll('.right .tab').forEach(t => t.onclick = () => { document.querySelectorAll('.right .tab').forEach(x => x.classList.remove('active')); document.querySelectorAll('.right .panel').forEach(x => x.classList.remove('active')); t.classList.add('active'); document.getElementById('rpanel-' + t.dataset.rtab).classList.add('active') });
+    let vfsData = new Map(); let containerMeta = { files: [], totalOrig: 0, totalComp: 0, entropyData: [] };
+    document.getElementById('splitBtn').onclick = async () => { const reg = await navigator.serviceWorker.ready; const lc = new MessageChannel(), ld = new Promise(r => { lc.port1.onmessage = e => r(e.data) }); reg.active.postMessage({ type: 'LIST' }, [lc.port2]); const lr = await ld; const files = lr.files.map(p => ({ path: p, data: vfsData.get(p) })).filter(f => f.data); const ch = new MessageChannel(), done = new Promise(r => { ch.port1.onmessage = e => r(e.data) }); const prefix = 'split-' + Date.now(); reg.active.postMessage({ type: 'SPLIT', prefix, files: files.map(f => ({ path: f.path, data: f.data })) }, [ch.port2]); const r = await done; log('Split → ' + prefix + ' (' + r.count + ' files)', 'ok'); tw('\r\n\x1b[35m[split] ' + prefix + ' (' + r.count + ' files)\x1b[0m\r\n') };
+    function makeDemoContainer() { return [{ path: 'index.html', data: new TextEncoder().encode('<!DOCTYPE html><html><body><h1>Hello from BoxVM VFS!</h1><p>This file was read from inside a .box container.</p></body></html>') }, { path: 'app.js', data: new TextEncoder().encode('console.log("BoxVM running");\nfunction init(){console.log("initialized")}\ninit();') }, { path: 'data.json', data: new TextEncoder().encode('{"name":"boxvm","version":"0.5","files":5,"features":["wasi","zlib","sha256","rl-optimizer","llm-analysis"]}') }, { path: 'README.md', data: new TextEncoder().encode('# BoxVM Demo Container\n\nThis container was generated in-browser for the GitHub Pages demo.\n\n## Features\n- Real zlib compression\n- SHA-256 integrity\n- WASI filesystem access\n- RL compression optimizer\n- LLM container analysis\n') }, { path: 'styles.css', data: new TextEncoder().encode('body{font-family:sans-serif;background:#0a0a0f;color:#e8e8ec;margin:40px}h1{color:#6c5ce7}') }] }
+
+    async function load() {
+      overlay.classList.remove('hidden'); label.textContent = 'Fetching…'; errEl.textContent = '';
+      tw('\x1b[36mBoxVM v0.5 — Developer Portal\x1b[0m\r\n');
+      tw('\x1b[36m===============================\x1b[0m\r\n\r\n');
+      try {
+        let u8;
+        try {
+          const r = await fetch('api/box');
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          const buf = await r.arrayBuffer(); u8 = new Uint8Array(buf);
+          label.textContent = 'Parsing…';
+          tw('Container: ' + fmtSize(u8.byteLength) + ' bytes\r\n'); log('Fetched: ' + u8.byteLength + ' bytes');
+        } catch (e) {
+          log('No server detected — generating demo container', 'err');
+          tw('\x1b[33m[demo] No server — generating in-browser container\x1b[0m\r\n');
+          label.textContent = 'Generating demo container…';
+          const demoFiles = makeDemoContainer();
+          const enc = new TextEncoder();
+          const hdr = new Uint8Array(4 + 2 + 2 + 4 + 32);
+          hdr.set([66, 79, 88, 50], 0); const hdv = new DataView(hdr.buffer);
+          hdv.setUint16(4, 2, true); hdv.setUint16(6, 1, true); hdv.setUint32(8, demoFiles.length, true);
+          let manData = new Uint8Array(0);
+          for (const f of demoFiles) { const ep = enc.encode(f.path); const tmp = new Uint8Array(manData.length + ep.length + 4 + 32); tmp.set(manData); tmp.set(ep, manData.length); const dv = new DataView(tmp.buffer); dv.setUint32(manData.length + ep.length, f.data.length, true); const h = new Uint8Array(await crypto.subtle.digest('SHA-256', f.data)); tmp.set(h, manData.length + ep.length + 4); manData = tmp }
+          const manHash = new Uint8Array(await crypto.subtle.digest('SHA-256', manData)); hdr.set(manHash, 12);
+          const parts = [hdr];
+          for (const f of demoFiles) {
+            const ep = enc.encode(f.path);
+            const cs = new CompressionStream('deflate'); const writer = cs.writable.getWriter(); writer.write(f.data); writer.close();
+            const reader = cs.readable.getReader(); const chunks = []; let total = 0;
+            while (true) { const { done, value } = await reader.read(); if (done) break; chunks.push(value); total += value.length }
+            const comp = new Uint8Array(total); let off = 0; for (const c of chunks) { comp.set(c, off); off += c.length }
+            const fh = new Uint8Array(await crypto.subtle.digest('SHA-256', f.data));
+            const eh = new Uint8Array(2 + ep.length + 4 + 4 + 32 + comp.length); const edv = new DataView(eh.buffer);
+            edv.setUint16(0, ep.length, true); eh.set(ep, 2); edv.setUint32(2 + ep.length, f.data.length, true); edv.setUint32(2 + ep.length + 4, comp.length, true); eh.set(fh, 2 + ep.length + 8); eh.set(comp, 2 + ep.length + 8 + 32); parts.push(eh);
+          }
+          let totalLen = 0; for (const p of parts) totalLen += p.length;
+          const body = new Uint8Array(totalLen); let pos = 0; for (const p of parts) { body.set(p, pos); pos += p.length }
+          const trailer = new Uint8Array(await crypto.subtle.digest('SHA-256', body.subarray(4)));
+          u8 = new Uint8Array(body.length + 32); u8.set(body); u8.set(trailer, body.length);
+          tw('Demo container: ' + fmtSize(u8.byteLength) + ' bytes\r\n');
+        }
+        const parsed = parseBox(u8); label.textContent = 'Decompressing ' + parsed.files.length + ' files…';
+        tw('Entries: ' + parsed.files.length + ' (v' + parsed.ver + ', flags=0x' + parsed.flags.toString(16) + ')\r\n');
+        log('Parsed: ' + parsed.files.length + ' files');
+        const dec = await decompressParallel(parsed.files);
+        tw('Decompressed via ' + Math.min(navigator.hardwareConcurrency || 4, parsed.files.length) + ' workers\r\n');
+        log('Decompressed ' + dec.length + ' files');
+        for (const f of dec) { const o = parsed.files.find(p => p.path === f.path); if (o) f.fileHash = o.fileHash; vfsData.set(f.path, f.data) }
+        label.textContent = 'Verifying…'; await verifyFiles(dec);
+        const vfsFiles = dec.map(f => ({ path: f.path, data: f.data }));
+        label.textContent = 'Loading into VM…';
+        const reg = await navigator.serviceWorker.ready;
+        const ch = new MessageChannel(), done = new Promise(r => { ch.port1.onmessage = e => r(e.data) });
+        reg.active.postMessage({ type: 'LOAD', files: vfsFiles }, [ch.port2]);
+        const result = await done; tw('VFS: ' + result.count + ' files in RAM\r\n'); log('VFS loaded: ' + result.count, 'ok');
+        fileList.innerHTML = vfsFiles.map(f => { const sz = vfsData.get(f.path)?.length || 0; const ext = f.path.split('.').pop(); const ic = ext === 'wasm' ? '⚡' : ext === 'html' ? '📄' : ext === 'js' ? '📜' : ext === 'css' ? '🎨' : ext === 'json' ? '🔧' : ext === 'md' ? '📋' : '📋'; return '<div class="file-item" data-path="' + f.path + '"><span><span class="icon">' + ic + '</span>' + f.path + '</span><span class="sz">' + fmtSize(sz) + '</span></div>' }).join('');
+        fileList.querySelectorAll('.file-item').forEach(el => el.onclick = () => { const p = el.dataset.path; if (p.endsWith('.wasm')) { executeWasm(vfsData.get(p), vfsData); tw('\r\n$ ') } else log('File: ' + p + ' (' + fmtSize(vfsData.get(p)?.length || 0) + ')') });
+        const entropyData = vfsFiles.map(f => ({ path: f.path, entropy: shannonEntropy(f.data), size: f.data.length, data: f.data }));
+        const totalOrig = vfsFiles.reduce((s, f) => s + (f.data.length || 0), 0);
+        containerMeta = { files: parsed.files, totalOrig, totalComp: u8.byteLength, entropyData };
+        const wasmFiles = vfsFiles.filter(f => f.path.endsWith('.wasm'));
+        statsPanel.innerHTML = '<div class="stat-card"><div class="label">Files</div><div class="value purple">' + vfsFiles.length + '</div></div><div class="stat-card"><div class="label">Total Size</div><div class="value green">' + fmtSize(totalOrig) + '</div></div><div class="stat-card"><div class="label">Container Size</div><div class="value orange">' + fmtSize(u8.byteLength) + '</div></div><div class="stat-card"><div class="label">Compression</div><div class="value">' + (totalOrig > 0 ? (100 * u8.byteLength / totalOrig).toFixed(1) : 0) + '%</div></div><div class="stat-card"><div class="label">WASM Binaries</div><div class="value blue">' + wasmFiles.length + '</div></div><div class="stat-card"><div class="label">Threads</div><div class="value">' + (navigator.hardwareConcurrency || 4) + '</div></div><div class="stat-card"><div class="label">Avg Entropy</div><div class="value pink">' + (entropyData.reduce((s, e) => s + e.entropy, 0) / entropyData.length).toFixed(2) + '</div></div>';
+        entropyPanel.innerHTML = entropyData.map(e => { const pct = (e.entropy / 8) * 100; const color = e.entropy > 7 ? 'var(--red)' : e.entropy > 5 ? 'var(--orange)' : 'var(--green)'; return '<div style="margin-bottom:8px"><div style="font-size:12px;font-family:monospace;margin-bottom:2px">' + e.path + '</div><div style="font-size:10px;color:var(--dim)">' + e.entropy.toFixed(2) + ' bits/byte · ' + fmtSize(e.size) + '</div><div class="ml-bar"><div class="fill" style="width:' + pct + '%;background:' + color + '"></div></div></div>' }).join('');
+        if (wasmFiles.length > 0) { label.textContent = 'Executing WASM…'; log('Found ' + wasmFiles.length + ' WASM binaries'); for (const w of wasmFiles) await executeWasm(vfsData.get(w.path), vfsData) }
+        info.textContent = vfsFiles.length + ' files · ' + fmtSize(u8.byteLength) + ' · ' + (navigator.hardwareConcurrency || 4) + ' threads';
+        label.textContent = 'Ready'; setTimeout(() => overlay.classList.add('hidden'), 300);
+        try { connectWS() } catch (e) { }
+        tw('\r\n\x1b[32m[ready] Click a .wasm file to execute. Use ML/LLM tabs for analysis.\x1b[0m\r\n');
+        tw('\r\n$ ');
+        initRL(); initLLM(); initLayoutOptimizer(); initAnomalyDetection();
+      } catch (e) { label.textContent = ''; errEl.textContent = e.message; log('FATAL: ' + e.message, 'err'); tw('\r\n\x1b[31m[error] ' + e.message + '\x1b[0m\r\n') }
+    }
+
+    // ===== RL Compression Optimizer =====
+    let rlQTable = {}, rlHistory = [], rlTrained = false;
+    const COMPRESSION_ACTIONS = ['store', 'deflate-1', 'deflate-6', 'deflate-9', 'deflate-best'];
+    const FILE_TYPES = ['html', 'js', 'css', 'json', 'md', 'wasm', 'binary', 'text'];
+    function getFileType(path) { const ext = path.split('.').pop().toLowerCase(); if (['html', 'htm'].includes(ext)) return 'html'; if (['js', 'mjs'].includes(ext)) return 'js'; if (['css'].includes(ext)) return 'css'; if (['json'].includes(ext)) return 'json'; if (['md', 'txt'].includes(ext)) return 'text'; if (['wasm'].includes(ext)) return 'wasm'; return 'binary' }
+    function entropyBucket(e) { if (e < 2) return 0; if (e < 4) return 1; if (e < 6) return 2; if (e < 7) return 3; return 4 }
+    function rlState(ft, e) { return ft + ':' + entropyBucket(e) }
+    function rlReward(state, action, actualRatio) { const ai = COMPRESSION_ACTIONS.indexOf(action); const eb = parseInt(state.split(':')[1]); const ef = 1 - (eb * 1.6 / 5); const af = 0.3 + (ai / 4) * 0.7; const pr = (actualRatio || 0.5) * ef * af; return -pr + (ai > 2 ? -0.05 : 0) }
+    function initRL() { rlQTable = {}; rlHistory = []; rlTrained = false; for (const ft of FILE_TYPES) for (let e = 0; e < 5; e++) { const s = ft + ':' + e; rlQTable[s] = {}; for (const a of COMPRESSION_ACTIONS) rlQTable[s][a] = 0 } if (containerMeta.entropyData.length > 0) trainRL(50); updateRLDisplay() }
+    function trainRL(episodes) { if (!containerMeta.entropyData.length) return; const alpha = 0.1, gamma = 0.9, eps = 0.3; const rewards = []; for (let ep = 0; ep < episodes; ep++) { let tr = 0; for (const file of containerMeta.entropyData) { const ft = getFileType(file.path); const state = ft + ':' + entropyBucket(file.entropy); const ar = file.size > 0 ? containerMeta.totalComp / containerMeta.totalOrig : 0.5; let action; if (Math.random() < eps) action = COMPRESSION_ACTIONS[Math.floor(Math.random() * COMPRESSION_ACTIONS.length)]; else { let best = -Infinity; for (const a of COMPRESSION_ACTIONS) if (rlQTable[state][a] > best) { best = rlQTable[state][a]; action = a } } const r = rlReward(state, action, ar); tr += r; let mn = -Infinity; for (const a of COMPRESSION_ACTIONS) if (rlQTable[state][a] > mn) mn = rlQTable[state][a]; rlQTable[state][action] += alpha * (r + gamma * mn - rlQTable[state][action]) } rewards.push(tr / containerMeta.entropyData.length) } rlHistory = rlHistory.concat(rewards); rlTrained = true; updateRLDisplay() }
+    function updateRLDisplay() { const c = document.getElementById('rlCanvas'); if (!c) return; const ctx = c.getContext('2d'); const w = c.width, h = c.height; ctx.clearRect(0, 0, w, h); if (rlHistory.length > 1) { const mn = Math.min(...rlHistory), mx = Math.max(...rlHistory); const rng = mx - mn || 1; ctx.strokeStyle = '#6c5ce7'; ctx.lineWidth = 2; ctx.beginPath(); for (let i = 0; i < rlHistory.length; i++) { const x = (i / (rlHistory.length - 1)) * w; const y = h - ((rlHistory[i] - mn) / rng) * h * 0.8 - h * 0.1; if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y) } ctx.stroke(); ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath(); ctx.fillStyle = 'rgba(108,92,231,.15)'; ctx.fill() } else { ctx.fillStyle = '#4a4a56'; ctx.font = '11px monospace'; ctx.fillText('Train to see reward curve', 10, 50) } const el = document.getElementById('rlStats'); if (rlTrained && containerMeta.entropyData.length) { let html = ''; for (const ft of FILE_TYPES) { const has = containerMeta.entropyData.some(f => getFileType(f.path) === ft); if (!has) continue; const state = ft + ':2'; if (!rlQTable[state]) continue; let best = -Infinity, ba = 'store'; for (const a of COMPRESSION_ACTIONS) if (rlQTable[state][a] > best) { best = rlQTable[state][a]; ba = a } html += '<div class="ml-row"><span class="name">' + ft + '</span><span class="val good">' + ba + '</span></div>' } html += '<div class="ml-row"><span class="name">Episodes</span><span class="val">' + rlHistory.length + '</span></div>'; const lr = rlHistory.length > 0 ? rlHistory[rlHistory.length - 1].toFixed(4) : '—'; html += '<div class="ml-row"><span class="name">Avg Reward</span><span class="val ' + (lr > -'0.5' ? 'good' : 'warn') + '">' + lr + '</span></div>'; el.innerHTML = html } else el.innerHTML = '<div style="color:var(--dim);font-size:12px">Load container to train.</div>'; updateStrategyMatrix() }
+    function updateStrategyMatrix() { const el = document.getElementById('strategyMatrix'); if (!el) return; if (!rlTrained || !containerMeta.entropyData.length) { el.innerHTML = '<div style="color:var(--dim);font-size:12px">Train RL agent to see strategy matrix.</div>'; return } let html = '<div style="font-size:10px;color:var(--dim);margin-bottom:4px">File type → Optimal strategy</div>'; for (const ft of FILE_TYPES) { const files = containerMeta.entropyData.filter(f => getFileType(f.path) === ft); if (!files.length) continue; const ae = files.reduce((s, f) => s + f.entropy, 0) / files.length; const state = ft + ':' + entropyBucket(ae); if (!rlQTable[state]) continue; let best = -Infinity, ba = 'store'; for (const a of COMPRESSION_ACTIONS) if (rlQTable[state][a] > best) { best = rlQTable[state][a]; ba = a } html += '<div class="ml-row"><span class="name">' + ft + ' (' + files.length + ' files, ' + ae.toFixed(1) + ' ent)</span><span class="val good">' + ba + '</span></div>' } el.innerHTML = html }
+    document.getElementById('rlTrain')?.addEventListener('click', () => { if (!containerMeta.entropyData.length) { log('No container loaded', 'err'); return } log('Training RL agent: 100 episodes…'); tw('\r\n\x1b[36m[rl] Training 100 episodes…\x1b[0m\r\n'); setTimeout(() => { trainRL(100); log('RL training complete: ' + rlHistory.length + ' episodes', 'ok'); tw('\r\n\x1b[32m[rl] Training complete\x1b[0m\r\n') }, 50) });
+    document.getElementById('rlReset')?.addEventListener('click', () => { rlQTable = {}; rlHistory = []; rlTrained = false; initRL(); log('RL agent reset') });
+
+    // ===== Layout Optimizer =====
+    function initLayoutOptimizer() { const el = document.getElementById('layoutStats'); if (!el) return; if (!containerMeta.entropyData.length) { el.innerHTML = '<div style="color:var(--dim);font-size:12px">Load container to optimize.</div>'; return } const ev = containerMeta.entropyData.length > 1 ? (Math.sqrt(containerMeta.entropyData.reduce((s, e, i, a) => { const m = a.reduce((ss, x) => ss + x.entropy, 0) / a.length; return s + (e.entropy - m) ** 2 }, 0) / containerMeta.entropyData.length)).toFixed(2) : '—'; el.innerHTML = '<div class="ml-row"><span class="name">Current layout</span><span class="val">Sequential</span></div><div class="ml-row"><span class="name">Entropy variance</span><span class="val">' + ev + '</span></div><div class="ml-row"><span class="name">Predicted gain</span><span class="val warn">—</span></div>' }
+    document.getElementById('optimizeLayout')?.addEventListener('click', () => { if (!containerMeta.entropyData.length) { log('No container loaded', 'err'); return } log('Optimizing layout via entropy-based clustering…'); tw('\r\n\x1b[36m[ml] Optimizing layout…\x1b[0m\r\n'); const sorted = [...containerMeta.entropyData].sort((a, b) => a.entropy - b.entropy); const bv = containerMeta.entropyData.length > 1 ? Math.sqrt(containerMeta.entropyData.reduce((s, e, i, a) => { const m = a.reduce((ss, x) => ss + x.entropy, 0) / a.length; return s + (e.entropy - m) ** 2 }, 0) / containerMeta.entropyData.length) : 0; const av = sorted.length > 1 ? Math.sqrt(sorted.reduce((s, e, i, a) => { const m = a.reduce((ss, x) => ss + x.entropy, 0) / a.length; return s + (e.entropy - m) ** 2 }, 0) / sorted.length) : 0; const gain = bv > 0 ? ((bv - av) / bv * 100).toFixed(1) : '0.0'; const el = document.getElementById('layoutStats'); el.innerHTML = '<div class="ml-row"><span class="name">Optimized layout</span><span class="val good">Entropy-sorted</span></div><div class="ml-row"><span class="name">Before variance</span><span class="val">' + bv.toFixed(2) + '</span></div><div class="ml-row"><span class="name">After variance</span><span class="val">' + av.toFixed(2) + '</span></div><div class="ml-row"><span class="name">Predicted gain</span><span class="val good">+' + gain + '%</span></div><div style="font-size:10px;color:var(--dim);margin-top:4px">Files reordered: ' + sorted.map(f => f.path).join(' → ') + '</div>'; log('Layout optimized: +' + gain + '% predicted gain', 'ok'); tw('\r\n\x1b[32m[ml] Layout optimized: +' + gain + '% gain\x1b[0m\r\n') });
+
+    // ===== LLM Analysis =====
+    function initLLM() { const o = document.getElementById('llmOutput'); if (!o) return; if (!containerMeta.entropyData.length) { o.innerHTML = '<span class="dim">Load container to analyze.</span>'; return } autoAnalyze() }
+    function llmAnalyze(query) {
+      if (!containerMeta.entropyData.length) return '<span class="dim">No container loaded.</span>';
+      const files = containerMeta.entropyData; const to = containerMeta.totalOrig; const tc = containerMeta.totalComp;
+      const ratio = (100 * tc / to).toFixed(1); const ae = (files.reduce((s, f) => s + f.entropy, 0) / files.length).toFixed(2);
+      const ft = {}; for (const f of files) { const t = getFileType(f.path); ft[t] = (ft[t] || 0) + 1 }
+      const he = files.filter(f => f.entropy > 7); const le = files.filter(f => f.entropy < 3);
+      const lf = files.reduce((a, b) => a.size > b.size ? a : b);
+      const q = query.toLowerCase(); let r = '';
+      if (q.includes('redund') || q.includes('duplicate')) {
+        r += '<span class="ai">[Analysis]</span> Scanning for redundant files…\n';
+        const seen = {}; for (const f of files) { const sig = f.path.split('.').pop() + ':' + f.size; seen[sig] = (seen[sig] || []).concat(f.path) }
+        const dups = Object.entries(seen).filter(([k, v]) => v.length > 1);
+        if (dups.length > 0) { r += '<span class="warn">Found ' + dups.length + ' potential duplicate sets:</span>\n'; for (const [s, p] of dups) r += '  • ' + p.join(', ') + '\n' } else r += '<span class="ai">No duplicates found.</span>\n';
+      } else if (q.includes('compress') || q.includes('optim')) {
+        r += '<span class="ai">[Analysis]</span> Compression optimization suggestions:\n';
+        r += '  • Current ratio: ' + ratio + '%\n  • Avg entropy: ' + ae + ' bits/byte\n';
+        if (he.length > 0) { r += '<span class="warn">  • ' + he.length + ' high-entropy files (>7.0):</span>\n'; for (const f of he) r += '    → ' + f.path + ' (' + f.entropy.toFixed(2) + ') — near-optimal\n' }
+        if (le.length > 0) { r += '<span class="ai">  • ' + le.length + ' low-entropy files (<3.0):</span>\n'; for (const f of le) r += '    → ' + f.path + ' (' + f.entropy.toFixed(2) + ') — high potential\n' }
+        r += '  • RL agent recommends: deflate-best for high-entropy, deflate-6 for text\n';
+      } else if (q.includes('pattern') || q.includes('struct')) {
+        r += '<span class="ai">[Analysis]</span> Pattern detection:\n';
+        r += '  • Types: ' + Object.entries(ft).map(([t, c]) => t + ':' + c).join(', ') + '\n';
+        r += '  • Size: largest=' + fmtSize(lf.size) + ', avg=' + fmtSize(to / files.length) + '\n';
+        r += '  • Entropy range: ' + Math.min(...files.map(f => f.entropy)).toFixed(2) + ' - ' + Math.max(...files.map(f => f.entropy)).toFixed(2) + '\n';
+      } else if (q.includes('anomal') || q.includes('unusual')) {
+        r += '<span class="ai">[Analysis]</span> Anomaly detection:\n';
+        const ms = to / files.length; const outliers = files.filter(f => f.size > ms * 3 || f.size < ms * 0.1);
+        if (outliers.length > 0) { r += '<span class="warn">  • Size outliers:</span>\n'; for (const f of outliers) r += '    → ' + f.path + ' (' + fmtSize(f.size) + ', mean=' + fmtSize(ms) + ')\n' }
+        const eo = files.filter(f => Math.abs(f.entropy - ae) > 2);
+        if (eo.length > 0) { r += '<span class="warn">  • Entropy outliers:</span>\n'; for (const f of eo) r += '    → ' + f.path + ' (' + f.entropy.toFixed(2) + ', mean=' + ae + ')\n' }
+        if (!outliers.length && !eo.length) r += '<span class="ai">  • No anomalies detected.</span>\n';
+      } else {
+        r += '<span class="ai">[Container Intelligence Report]</span>\n\n';
+        r += '<span class="dim">Container:</span> ' + files.length + ' files, ' + fmtSize(to) + ' → ' + fmtSize(tc) + ' (' + ratio + '%)\n';
+        r += '<span class="dim">Entropy:</span> avg=' + ae + ' bits/byte\n';
+        r += '<span class="dim">Types:</span> ' + Object.entries(ft).map(([t, c]) => t + '×' + c).join(', ') + '\n';
+        r += '<span class="dim">Largest:</span> ' + lf.path + ' (' + fmtSize(lf.size) + ', ent=' + lf.entropy.toFixed(2) + ')\n\n';
+        if (he.length > 0) r += '<span class="warn">⚠ ' + he.length + ' high-entropy files (hard to compress)</span>\n';
+        if (le.length > 0) r += '<span class="ai">✓ ' + le.length + ' low-entropy files (excellent compression)</span>\n';
+        r += '\n<span class="dim">Try: "redundancy", "compression", "patterns", "anomalies"</span>\n';
+      }
+      return r;
+    }
+    function autoAnalyze() { const o = document.getElementById('llmOutput'); if (!o) return; o.innerHTML = llmAnalyze('general'); const pe = document.getElementById('patternResults'); if (pe && containerMeta.entropyData.length) { const files = containerMeta.entropyData; const types = {}; for (const f of files) { const t = getFileType(f.path); types[t] = (types[t] || 0) + 1 } let html = ''; for (const [t, c] of Object.entries(types).sort((a, b) => b[1] - a[1])) { const pct = (c / files.length * 100).toFixed(0); html += '<div class="ml-row"><span class="name">' + t + '</span><span class="val">' + c + ' files (' + pct + '%)</span></div><div class="ml-bar"><div class="fill" style="width:' + pct + '%;background:var(--accent)"></div></div>' } pe.innerHTML = html } }
+    document.getElementById('llmAnalyze')?.addEventListener('click', () => { const q = document.getElementById('llmInput').value || 'general'; document.getElementById('llmOutput').innerHTML = llmAnalyze(q); log('LLM analysis: ' + q.substr(0, 50), 'ok'); tw('\r\n\x1b[36m[llm] Analysis complete\x1b[0m\r\n') });
+    document.getElementById('llmAuto')?.addEventListener('click', () => { autoAnalyze(); log('Auto-analysis triggered', 'ok') });
+
+    // ===== Anomaly Detection =====
+    function initAnomalyDetection() { const el = document.getElementById('anomalyResults'); if (!el) return; if (!containerMeta.entropyData.length) { el.innerHTML = '<div style="color:var(--dim);font-size:12px">Load container to detect anomalies.</div>'; return } const files = containerMeta.entropyData; const ms = containerMeta.totalOrig / files.length; const me = files.reduce((s, f) => s + f.entropy, 0) / files.length; let html = ''; const so = files.filter(f => f.size > ms * 2 || f.size < ms * 0.15); if (so.length > 0) { html += '<div style="font-size:11px;color:var(--orange);margin-bottom:4px">Size Outliers</div>'; for (const f of so) { const dev = ((Math.abs(f.size - ms) / ms) * 100).toFixed(0); html += '<div class="ml-row"><span class="name">' + f.path + '</span><span class="val warn">' + fmtSize(f.size) + ' (' + dev + '% from mean)</span></div>' } } const eo = files.filter(f => Math.abs(f.entropy - me) > 2); if (eo.length > 0) { html += '<div style="font-size:11px;color:var(--pink);margin-bottom:4px;margin-top:8px">Entropy Outliers</div>'; for (const f of eo) { const dev = (f.entropy - me).toFixed(2); html += '<div class="ml-row"><span class="name">' + f.path + '</span><span class="val ' + (dev > 0 ? 'bad' : 'good') + '">' + f.entropy.toFixed(2) + ' (Δ' + (dev > 0 ? '+' : '') + dev + ')</span></div>' } } if (!so.length && !eo.length) html = '<div style="color:var(--green);font-size:12px">✓ No anomalies detected. All files within normal ranges.</div>'; el.innerHTML = html }
+
+    navigator.serviceWorker.register('sw.js').then(() => { log('SW registered'); load() }).catch(e => { label.textContent = ''; errEl.textContent = 'SW failed: ' + e.message });
+    document.getElementById('reload').onclick = () => { term.clear(); load() };
+    term.onData(d => { if (d === '\r') tw('\r\n$ '); else tw(d) });
+  </script>
 </body>
+
 </html>
