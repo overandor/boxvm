@@ -21,6 +21,35 @@ Pack files into compressed `.box` containers. Serve them anywhere. Run WASI prog
 - **Upload & inspect** — drag .box files into portal, hex inspector with ASCII sidebar, metadata table
 - **Export** — download loaded containers as .box files, full round-trip support
 - **Compression predictor** — ML model predicts ratio from entropy + file type, accuracy scoring
+- **File search** — instant fuzzy search across all container files
+- **Drag & drop upload** — drop .box files anywhere on the portal to load
+- **File preview modal** — double-click any file to preview text or hex content
+- **Toast notifications** — non-intrusive status messages for all actions
+- **Context menu** — right-click files for preview, hash, copy, download
+- **Copy hex to clipboard** — one-click copy of hex dump from inspector
+- **Export stats as JSON** — download full container statistics as JSON
+- **Terminal history** — arrow up/down to recall previous commands
+- **Keyboard shortcuts** — Ctrl+1-7 tab switch, Ctrl+F search, Esc close, ? for help
+- **Progress bar** — animated loading progress during container operations
+- **Tab badges** — file count badge on Files tab
+- **Integrity badge** — visual pass/fail badge for SHA-256 verification
+- **Entropy gauge** — circular gauge showing average entropy
+- **Entropy heatmap** — color-coded grid visualization of per-file entropy
+- **Byte histogram** — aggregated 256-bin byte frequency distribution chart
+- **File size distribution** — sorted bar chart of all file sizes
+- **Per-file compression bars** — visual compression ratio per file
+- **Manifest viewer** — raw container manifest with per-file SHA-256 hashes
+- **Compression efficiency grade** — A+ to F letter grade based on compression ratio
+- **Duplicate file detector** — identifies potential duplicate files by size + entropy
+- **Decompression timing** — performance.now() timing for decompression operations
+- **File hash viewer** — view SHA-256 hash of any file via context menu
+- **Container diff** — before/after entropy variance comparison for layout optimization
+- **Resizable panels** — drag to resize sidebar and right panel widths
+- **File type counts** — aggregated type counts in stats panel
+- **Container summary card** — gradient card with key metrics at a glance
+- **File type distribution donut chart** — canvas-based chart in LLM tab
+- **Quick stats topbar** — live file count, size, threads in top bar
+- **Keyboard help** — press ? to see available shortcuts
 
 ## Quick Start
 

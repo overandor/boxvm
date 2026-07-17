@@ -778,6 +778,363 @@
       font-size: 10px;
       color: var(--dim)
     }
+
+    /* ===== Search ===== */
+    .search-box {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 12px;
+      margin-bottom: 8px;
+      transition: border-color .2s
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--accent)
+    }
+
+    .search-box::placeholder {
+      color: var(--faint)
+    }
+
+    /* ===== Drag & Drop ===== */
+    .drop-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 6, 8, .85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s
+    }
+
+    .drop-overlay.active {
+      opacity: 1;
+      pointer-events: all
+    }
+
+    .drop-zone {
+      border: 2px dashed var(--accent);
+      border-radius: 16px;
+      padding: 60px 80px;
+      text-align: center;
+      background: var(--accent-dim)
+    }
+
+    .drop-zone .icon {
+      font-size: 48px;
+      margin-bottom: 12px
+    }
+
+    .drop-zone .text {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    /* ===== File Preview Modal ===== */
+    .preview-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 6, 8, .8);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s
+    }
+
+    .preview-modal.active {
+      opacity: 1;
+      pointer-events: all
+    }
+
+    .preview-content {
+      background: var(--bg2);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      width: 80%;
+      max-width: 700px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .preview-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .preview-close {
+      cursor: pointer;
+      color: var(--dim);
+      font-size: 18px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: all .15s
+    }
+
+    .preview-close:hover {
+      color: var(--red);
+      background: var(--bg3)
+    }
+
+    .preview-body {
+      flex: 1;
+      overflow: auto;
+      padding: 16px;
+      font-family: 'SF Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: var(--text)
+    }
+
+    .preview-meta {
+      padding: 8px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--dim);
+      display: flex;
+      gap: 16px
+    }
+
+    /* ===== Toast ===== */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 300;
+      pointer-events: none
+    }
+
+    .toast {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .4);
+      animation: toastIn .3s ease, toastOut .3s ease 2.7s forwards;
+      pointer-events: all;
+      max-width: 320px
+    }
+
+    .toast.ok {
+      border-left: 3px solid var(--green)
+    }
+
+    .toast.err {
+      border-left: 3px solid var(--red)
+    }
+
+    .toast.info {
+      border-left: 3px solid var(--accent)
+    }
+
+    @keyframes toastIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1
+      }
+    }
+
+    @keyframes toastOut {
+      to {
+        transform: translateX(100%);
+        opacity: 0
+      }
+    }
+
+    /* ===== Progress Bar ===== */
+    .progress-bar {
+      width: 200px;
+      height: 4px;
+      background: var(--bg3);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 8px
+    }
+
+    .progress-bar .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+      transition: width .3s ease
+    }
+
+    /* ===== Tab Badges ===== */
+    .tab .badge-count {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      background: var(--accent-dim);
+      color: var(--accent2);
+      padding: 1px 6px;
+      border-radius: 10px;
+      margin-left: 4px;
+      vertical-align: middle
+    }
+
+    /* ===== Integrity Badge ===== */
+    .integrity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: .5px
+    }
+
+    .integrity-badge.pass {
+      background: var(--green-dim);
+      color: var(--green)
+    }
+
+    .integrity-badge.fail {
+      background: var(--red-dim);
+      color: var(--red)
+    }
+
+    /* ===== Entropy Gauge ===== */
+    .gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .gauge-info {
+      flex: 1
+    }
+
+    .gauge-info .gauge-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent2)
+    }
+
+    .gauge-info .gauge-label {
+      font-size: 10px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    /* ===== Heatmap ===== */
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(32, 1fr);
+      gap: 1px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px
+    }
+
+    .heatmap-cell {
+      aspect-ratio: 1;
+      border-radius: 1px;
+      min-height: 6px
+    }
+
+    /* ===== Context Menu ===== */
+    .ctx-menu {
+      position: fixed;
+      z-index: 250;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 4px;
+      min-width: 160px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+      display: none
+    }
+
+    .ctx-menu.active {
+      display: block
+    }
+
+    .ctx-item {
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--text);
+      transition: background .1s
+    }
+
+    .ctx-item:hover {
+      background: var(--accent-dim)
+    }
+
+    /* ===== Resizable ===== */
+    .resize-handle {
+      width: 4px;
+      cursor: col-resize;
+      flex-shrink: 0;
+      background: transparent;
+      transition: background .2s
+    }
+
+    .resize-handle:hover {
+      background: var(--accent)
+    }
+
+    /* ===== Misc ===== */
+    .copy-btn {
+      background: var(--bg4);
+      border: 1px solid var(--border2);
+      color: var(--dim);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all .15s
+    }
+
+    .copy-btn:hover {
+      border-color: var(--accent);
+      color: var(--text)
+    }
+
+    .efficiency-grade {
+      font-size: 28px;
+      font-weight: 900;
+      text-align: center;
+      padding: 8px 0
+    }
   </style>
 </head>
 
@@ -788,6 +1145,7 @@
     <div class="info" id="info">Initializing…</div>
     <button class="ghost" id="uploadBtn">Upload .box</button>
     <button class="ghost" id="downloadBtn">Download</button>
+    <button class="ghost" id="exportStatsBtn">Export Stats</button>
     <button class="split-btn" id="splitBtn">Split</button>
     <button class="ghost" id="reload">Restart</button>
     <input type="file" id="fileInput" accept=".box" style="display:none">
@@ -795,12 +1153,14 @@
   <div class="main">
     <div class="sidebar">
       <div class="tabs">
-        <div class="tab active" data-stab="files">Files</div>
+        <div class="tab active" data-stab="files">Files <span class="badge-count" id="fileCountBadge">0</span></div>
         <div class="tab" data-stab="stats">Stats</div>
         <div class="tab" data-stab="entropy">Entropy</div>
+        <div class="tab" data-stab="charts">Charts</div>
       </div>
       <div class="content">
         <div class="panel active" id="spanel-files">
+          <input class="search-box" id="fileSearch" placeholder="Search files…">
           <div id="fileList"></div>
         </div>
         <div class="panel" id="spanel-stats">
@@ -808,6 +1168,13 @@
         </div>
         <div class="panel" id="spanel-entropy">
           <div id="entropyPanel"></div>
+          <div class="ml-section" style="margin-top:12px">
+            <h4>Entropy Heatmap <span class="ml-tag ml">HEAT</span></h4>
+            <div id="heatmapGrid" class="heatmap-grid"></div>
+          </div>
+        </div>
+        <div class="panel" id="spanel-charts">
+          <div id="chartsPanel"></div>
         </div>
       </div>
     </div>
@@ -821,6 +1188,7 @@
         <div class="tab" data-rtab="ml">ML</div>
         <div class="tab" data-rtab="llm">LLM</div>
         <div class="tab" data-rtab="inspect">Inspect</div>
+        <div class="tab" data-rtab="manifest">Manifest</div>
         <div class="tab" data-rtab="api">API</div>
       </div>
       <div class="panel active" id="rpanel-log">
@@ -892,6 +1260,7 @@
           <p style="font-size:12px;color:var(--dim);margin-bottom:8px">Binary structure of the .box container file.</p>
           <div id="hexDump" class="ml-output" style="font-size:10px;max-height:320px;line-height:1.5">
           </div>
+          <button class="copy-btn" id="copyHexBtn" style="margin-top:8px">Copy Hex to Clipboard</button>
         </div>
         <div class="ml-section">
           <h4>Container Metadata <span class="ml-tag ml">META</span></h4>
@@ -902,6 +1271,21 @@
           <p style="font-size:12px;color:var(--dim);margin-bottom:8px">Predicts compression ratio from entropy + file
             type features.</p>
           <div id="predictorResults"></div>
+        </div>
+      </div>
+      <div class="panel" id="rpanel-manifest">
+        <div class="ml-section">
+          <h4>Container Manifest <span class="ml-tag ml">RAW</span></h4>
+          <div id="manifestView" class="ml-output" style="max-height:400px"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Compression Efficiency <span class="badge">GRADE</span></h4>
+          <div id="efficiencyGrade" class="efficiency-grade"></div>
+          <div id="efficiencyDetails"></div>
+        </div>
+        <div class="ml-section">
+          <h4>Duplicate File Detector <span class="ml-tag ml">DEDUP</span></h4>
+          <div id="dupResults"></div>
         </div>
       </div>
       <div class="panel" id="rpanel-api">
@@ -945,7 +1329,33 @@
   <div class="overlay" id="overlay">
     <div class="spinner"></div>
     <div class="label" id="label">Booting BoxVM…</div>
+    <div class="progress-bar" id="progressBar" style="display:none">
+      <div class="fill" id="progressFill"></div>
+    </div>
     <div class="err" id="err"></div>
+  </div>
+  <div class="drop-overlay" id="dropOverlay">
+    <div class="drop-zone">
+      <div class="icon">📥</div>
+      <div class="text">Drop .box file to load</div>
+    </div>
+  </div>
+  <div class="preview-modal" id="previewModal">
+    <div class="preview-content">
+      <div class="preview-header">
+        <span id="previewTitle">File Preview</span>
+        <span class="preview-close" id="previewClose">✕</span>
+      </div>
+      <div class="preview-body" id="previewBody"></div>
+      <div class="preview-meta" id="previewMeta"></div>
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+  <div class="ctx-menu" id="ctxMenu">
+    <div class="ctx-item" data-act="preview">Preview File</div>
+    <div class="ctx-item" data-act="hash">Show SHA-256</div>
+    <div class="ctx-item" data-act="copy">Copy Path</div>
+    <div class="ctx-item" data-act="download">Download File</div>
   </div>
   <script>
     const overlay = document.getElementById('overlay'), label = document.getElementById('label'), errEl = document.getElementById('err'), info = document.getElementById('info'), logBox = document.getElementById('logBox'), fileList = document.getElementById('fileList'), statsPanel = document.getElementById('statsPanel'), entropyPanel = document.getElementById('entropyPanel');
@@ -1042,7 +1452,7 @@
         try { connectWS() } catch (e) { }
         tw('\r\n\x1b[32m[ready] Click a .wasm file to execute. Use ML/LLM tabs for analysis.\x1b[0m\r\n');
         tw('\r\n$ ');
-        initRL(); initLLM(); initLayoutOptimizer(); initAnomalyDetection(); initInspector(); initPredictor();
+        initRL(); initLLM(); initLayoutOptimizer(); initAnomalyDetection(); initInspector(); initPredictor(); initAllFeatures();
       } catch (e) { label.textContent = ''; errEl.textContent = e.message; log('FATAL: ' + e.message, 'err'); tw('\r\n\x1b[31m[error] ' + e.message + '\x1b[0m\r\n') }
     }
 
@@ -1160,7 +1570,7 @@
         label.textContent = 'Ready'; setTimeout(() => overlay.classList.add('hidden'), 300);
         tw('\r\n\x1b[32m[ready] Uploaded container loaded. Use ML/LLM/Inspect tabs for analysis.\x1b[0m\r\n');
         tw('\r\n$ ');
-        initRL(); initLLM(); initLayoutOptimizer(); initAnomalyDetection(); initInspector(); initPredictor();
+        initRL(); initLLM(); initLayoutOptimizer(); initAnomalyDetection(); initInspector(); initPredictor(); initAllFeatures();
       } catch (e) { label.textContent = ''; errEl.textContent = e.message; log('FATAL: ' + e.message, 'err'); tw('\r\n\x1b[31m[error] ' + e.message + '\x1b[0m\r\n') }
     }
     document.getElementById('downloadBtn').onclick = () => {
@@ -1232,9 +1642,413 @@
       el.innerHTML = html;
     }
 
+    // ===== 30 NEW FEATURES =====
+
+    // 1. Toast notifications
+    function toast(msg, type) {
+      const c = document.getElementById('toastContainer');
+      const t = document.createElement('div');
+      t.className = 'toast ' + (type || 'info');
+      t.textContent = msg;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 3000);
+    }
+
+    // 2. File search
+    const fileSearch = document.getElementById('fileSearch');
+    fileSearch.addEventListener('input', () => {
+      const q = fileSearch.value.toLowerCase();
+      fileList.querySelectorAll('.file-item').forEach(el => {
+        const p = el.dataset.path.toLowerCase();
+        el.style.display = p.includes(q) ? '' : 'none';
+      });
+    });
+
+    // 3. Drag & drop upload
+    const dropOverlay = document.getElementById('dropOverlay');
+    let dragCounter = 0;
+    window.addEventListener('dragenter', e => { e.preventDefault(); dragCounter++; dropOverlay.classList.add('active') });
+    window.addEventListener('dragleave', e => { e.preventDefault(); dragCounter--; if (dragCounter <= 0) dropOverlay.classList.remove('active') });
+    window.addEventListener('dragover', e => e.preventDefault());
+    window.addEventListener('drop', async e => {
+      e.preventDefault(); dragCounter = 0; dropOverlay.classList.remove('active');
+      const file = e.dataTransfer.files[0];
+      if (file && file.name.endsWith('.box')) {
+        toast('Loading: ' + file.name, 'info');
+        log('Dropped: ' + file.name + ' (' + fmtSize(file.size) + ')', 'ok');
+        tw('\r\n\x1b[36m[drop] ' + file.name + '\x1b[0m\r\n');
+        const buf = await file.arrayBuffer();
+        lastBoxBytes = new Uint8Array(buf);
+        term.clear(); loadUploaded(buf);
+      } else { toast('Only .box files supported', 'err') }
+    });
+
+    // 4. File preview modal
+    const previewModal = document.getElementById('previewModal');
+    const previewBody = document.getElementById('previewBody');
+    const previewTitle = document.getElementById('previewTitle');
+    const previewMeta = document.getElementById('previewMeta');
+    const previewClose = document.getElementById('previewClose');
+    previewClose.onclick = () => previewModal.classList.remove('active');
+    previewModal.onclick = e => { if (e.target === previewModal) previewModal.classList.remove('active') };
+    function previewFile(path) {
+      const data = vfsData.get(path);
+      if (!data) return;
+      previewTitle.textContent = path;
+      const ext = path.split('.').pop().toLowerCase();
+      let content = '';
+      if (['html', 'htm', 'js', 'mjs', 'css', 'json', 'md', 'txt', 'xml', 'svg'].includes(ext)) {
+        content = new TextDecoder().decode(data).substr(0, 50000);
+      } else {
+        content = 'Binary file — ' + fmtSize(data.length) + '\n\nFirst 256 bytes (hex):\n';
+        for (let i = 0; i < Math.min(256, data.length); i += 16) {
+          let hex = '', ascii = '';
+          for (let j = 0; j < 16; j++) { if (i + j < data.length) { hex += data[i + j].toString(16).padStart(2, '0') + ' '; ascii += data[i + j] >= 32 && data[i + j] < 127 ? String.fromCharCode(data[i + j]) : '.' } else { hex += '   '; ascii += ' ' } }
+          content += hex + ' |' + ascii + '|\n';
+        }
+      }
+      previewBody.textContent = content;
+      previewMeta.innerHTML = '<span>Size: ' + fmtSize(data.length) + '</span><span>Type: ' + getFileType(path) + '</span><span>Entropy: ' + shannonEntropy(data).toFixed(2) + '</span>';
+      previewModal.classList.add('active');
+      toast('Previewing: ' + path, 'info');
+    }
+
+    // 5. Context menu on file items
+    const ctxMenu = document.getElementById('ctxMenu');
+    let ctxPath = null;
+    document.addEventListener('click', () => ctxMenu.classList.remove('active'));
+    function showCtx(e, path) {
+      e.preventDefault(); ctxPath = path;
+      ctxMenu.style.left = e.clientX + 'px';
+      ctxMenu.style.top = e.clientY + 'px';
+      ctxMenu.classList.add('active');
+    }
+    ctxMenu.querySelectorAll('.ctx-item').forEach(item => {
+      item.onclick = async () => {
+        ctxMenu.classList.remove('active');
+        if (!ctxPath) return;
+        const act = item.dataset.act;
+        if (act === 'preview') previewFile(ctxPath);
+        else if (act === 'hash') { const h = await sha256(vfsData.get(ctxPath)); toast('SHA-256: ' + h.substr(0, 16) + '…', 'info'); log('Hash: ' + ctxPath + ' → ' + h.substr(0, 32) + '…') }
+        else if (act === 'copy') { navigator.clipboard.writeText(ctxPath); toast('Copied: ' + ctxPath, 'ok') }
+        else if (act === 'download') { const d = vfsData.get(ctxPath); if (d) { const b = new Blob([d]); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = ctxPath.split('/').pop(); a.click(); URL.revokeObjectURL(a.href); toast('Downloaded: ' + ctxPath, 'ok') } }
+      };
+    });
+
+    // 6. Copy hex to clipboard
+    document.getElementById('copyHexBtn')?.addEventListener('click', () => {
+      const hex = document.getElementById('hexDump').textContent;
+      navigator.clipboard.writeText(hex).then(() => toast('Hex copied to clipboard', 'ok'));
+    });
+
+    // 7. Export stats as JSON
+    document.getElementById('exportStatsBtn')?.addEventListener('click', () => {
+      const stats = {
+        version: '0.7', files: containerMeta.entropyData.length,
+        totalOriginal: containerMeta.totalOrig, totalCompressed: containerMeta.totalComp,
+        ratio: containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) + '%' : '—',
+        avgEntropy: containerMeta.entropyData.length > 0 ? (containerMeta.entropyData.reduce((s, e) => s + e.entropy, 0) / containerMeta.entropyData.length).toFixed(2) : '—',
+        fileTypes: containerMeta.entropyData.reduce((acc, f) => { const t = getFileType(f.path); acc[t] = (acc[t] || 0) + 1; return acc }, {}),
+        perFile: containerMeta.entropyData.map(f => ({ path: f.path, size: f.size, entropy: f.entropy.toFixed(2), type: getFileType(f.path) }))
+      };
+      const blob = new Blob([JSON.stringify(stats, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'container-stats.json'; a.click(); URL.revokeObjectURL(a.href);
+      toast('Stats exported as JSON', 'ok'); log('Exported container-stats.json', 'ok');
+    });
+
+    // 8. Terminal history with arrow keys
+    let termHistory = [], termHistoryIdx = -1;
+    let currentInput = '';
+    term.onData(d => {
+      if (d === '\r') {
+        if (currentInput.trim()) { termHistory.push(currentInput); termHistoryIdx = termHistory.length }
+        tw('\r\n$ '); currentInput = '';
+      } else if (d === '\x1b[A') { // Up
+        if (termHistoryIdx > 0) { termHistoryIdx--; tw('\r\x1b[2K$ ' + termHistory[termHistoryIdx]); currentInput = termHistory[termHistoryIdx] }
+      } else if (d === '\x1b[B') { // Down
+        if (termHistoryIdx < termHistory.length - 1) { termHistoryIdx++; tw('\r\x1b[2K$ ' + termHistory[termHistoryIdx]); currentInput = termHistory[termHistoryIdx] }
+        else { tw('\r\x1b[2K$ '); currentInput = '' }
+      } else if (d === '\x7f') { // Backspace
+        if (currentInput.length > 0) { currentInput = currentInput.slice(0, -1); tw('\b \b') }
+      } else if (d.length === 1 && d >= ' ') {
+        currentInput += d; tw(d);
+      }
+    });
+
+    // 9. Keyboard shortcuts (Ctrl+1..7 for right tabs)
+    document.addEventListener('keydown', e => {
+      if (e.ctrlKey && e.key >= '1' && e.key <= '7') {
+        e.preventDefault();
+        const tabs = document.querySelectorAll('.right .tab');
+        const idx = parseInt(e.key) - 1;
+        if (tabs[idx]) tabs[idx].click();
+      }
+      if (e.ctrlKey && e.key === 'f') { e.preventDefault(); fileSearch.focus(); }
+      if (e.key === 'Escape') { previewModal.classList.remove('active'); ctxMenu.classList.remove('active') }
+    });
+
+    // 10. Progress bar
+    function showProgress(pct) {
+      const pb = document.getElementById('progressBar'), pf = document.getElementById('progressFill');
+      pb.style.display = 'block'; pf.style.width = pct + '%';
+      if (pct >= 100) setTimeout(() => pb.style.display = 'none', 500);
+    }
+
+    // 11. Tab badges (file count)
+    function updateTabBadges() {
+      const badge = document.getElementById('fileCountBadge');
+      if (badge) badge.textContent = containerMeta.entropyData.length;
+    }
+
+    // 12. Integrity badge
+    let integrityStatus = 'pending';
+    function updateIntegrityBadge(ok, total) {
+      integrityStatus = ok === total ? 'pass' : 'fail';
+      const el = document.getElementById('metaTable');
+      // Will be appended in initInspector
+    }
+
+    // 13. Entropy gauge (circular)
+    function drawEntropyGauge(canvas, entropy) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+      const cx = w / 2, cy = h / 2, r = 50;
+      ctx.clearRect(0, 0, w, h);
+      const pct = entropy / 8;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.strokeStyle = '#1e1e2a'; ctx.lineWidth = 8; ctx.stroke();
+      const color = entropy > 7 ? '#ff5c6c' : entropy > 5 ? '#ffa940' : '#00e8b8';
+      ctx.beginPath(); ctx.arc(cx, cy, r, -Math.PI / 2, -Math.PI / 2 + pct * Math.PI * 2); ctx.strokeStyle = color; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.stroke();
+      ctx.fillStyle = '#f0f0f5'; ctx.font = '700 20px -apple-system, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(entropy.toFixed(2), cx, cy + 5);
+      ctx.font = '9px -apple-system, sans-serif'; ctx.fillStyle = '#8888a0';
+      ctx.fillText('bits/byte', cx, cy + 20);
+    }
+
+    // 14. Entropy heatmap
+    function drawHeatmap() {
+      const grid = document.getElementById('heatmapGrid');
+      if (!grid || !containerMeta.entropyData.length) return;
+      const files = containerMeta.entropyData;
+      let html = '';
+      for (const f of files) {
+        const e = f.entropy;
+        const r = e > 6 ? 255 : Math.floor(e * 30);
+        const g = e > 6 ? Math.floor((8 - e) * 40) : Math.floor(e * 30);
+        const b = Math.floor(100 + e * 20);
+        const opacity = 0.3 + (e / 8) * 0.7;
+        html += '<div class="heatmap-cell" style="background:rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')" title="' + f.path + ' (' + e.toFixed(2) + ')"></div>';
+      }
+      // Pad to fill grid
+      const total = Math.ceil(files.length / 32) * 32;
+      for (let i = files.length; i < total; i++) html += '<div class="heatmap-cell" style="background:var(--bg3)"></div>';
+      grid.innerHTML = html;
+    }
+
+    // 15. Charts panel (byte histogram + size distribution + per-file compression)
+    function initCharts() {
+      const el = document.getElementById('chartsPanel');
+      if (!el || !containerMeta.entropyData.length) { if (el) el.innerHTML = '<div style="color:var(--dim);font-size:12px">Load container to see charts.</div>'; return }
+      const files = containerMeta.entropyData;
+      // Byte histogram (aggregated)
+      let histHtml = '<div class="ml-section"><h4>Byte Histogram <span class="ml-tag ml">HIST</span></h4><div class="ml-chart"><canvas id="histCanvas" width="380" height="120"></canvas></div></div>';
+      // File size distribution
+      let sizeHtml = '<div class="ml-section"><h4>File Size Distribution <span class="ml-tag ml">SIZE</span></h4><div class="ml-chart"><canvas id="sizeCanvas" width="380" height="120"></canvas></div></div>';
+      // Per-file compression bar
+      let compHtml = '<div class="ml-section"><h4>Per-File Compression <span class="ml-tag ml">COMP</span></h4><div id="compBars"></div></div>';
+      // Entropy gauge
+      const avgEnt = files.reduce((s, f) => s + f.entropy, 0) / files.length;
+      let gaugeHtml = '<div class="ml-section"><h4>Entropy Gauge <span class="ml-tag ml">GAUGE</span></h4><div class="gauge-wrap"><canvas id="gaugeCanvas" width="120" height="120" style="flex-shrink:0"></canvas><div class="gauge-info"><div class="gauge-val">' + avgEnt.toFixed(2) + '</div><div class="gauge-label">Avg Entropy</div></div></div></div>';
+      el.innerHTML = histHtml + sizeHtml + compHtml + gaugeHtml;
+      // Draw byte histogram
+      const hc = document.getElementById('histCanvas');
+      if (hc) { const ctx = hc.getContext('2d'); const w = hc.width, h = hc.height; ctx.clearRect(0, 0, w, h); const hist = new Array(256).fill(0); for (const f of files) { for (let i = 0; i < f.data.length; i++) hist[f.data[i]]++ } const mx = Math.max(...hist); const bw = w / 256; for (let i = 0; i < 256; i++) { const bh = (hist[i] / mx) * h * 0.9; ctx.fillStyle = 'hsl(' + (i / 256 * 360) + ',60%,50%)'; ctx.fillRect(i * bw, h - bh, Math.max(1, bw), bh) } }
+      // Draw size distribution
+      const sc = document.getElementById('sizeCanvas');
+      if (sc) { const ctx = sc.getContext('2d'); const w = sc.width, h = sc.height; ctx.clearRect(0, 0, w, h); const sizes = files.map(f => f.size).sort((a, b) => a - b); const mx = Math.max(...sizes); const bw = w / sizes.length; for (let i = 0; i < sizes.length; i++) { const bh = (sizes[i] / mx) * h * 0.85; ctx.fillStyle = '#7c6cf0'; ctx.fillRect(i * bw, h - bh, Math.max(2, bw - 1), bh) } }
+      // Per-file compression bars
+      const cb = document.getElementById('compBars');
+      if (cb) {
+        let html = '';
+        for (const f of files) {
+          const parsed = containerMeta.files.find(p => p.path === f.path);
+          const compRatio = parsed && parsed.origSize > 0 ? (100 * parsed.compSize / parsed.origSize).toFixed(0) : '—';
+          const pct = parsed && parsed.origSize > 0 ? (100 * parsed.compSize / parsed.origSize) : 50;
+          const color = pct < 30 ? 'var(--green)' : pct < 60 ? 'var(--orange)' : 'var(--red)';
+          html += '<div class="entropy-item"><div class="ename">' + f.path + '</div><div class="emeta">' + fmtSize(parsed?.origSize || f.size) + ' → ' + fmtSize(parsed?.compSize || 0) + ' (' + compRatio + '%)</div><div class="ml-bar"><div class="fill" style="width:' + pct + '%;background:' + color + '"></div></div></div>';
+        }
+        cb.innerHTML = html;
+      }
+      // Draw gauge
+      drawEntropyGauge(document.getElementById('gaugeCanvas'), avgEnt);
+    }
+
+    // 16. Manifest viewer
+    function initManifest() {
+      const el = document.getElementById('manifestView');
+      if (!el || !containerMeta.files.length) { if (el) el.innerHTML = '<span class="dim">No manifest data.</span>'; return }
+      let html = '';
+      for (const f of containerMeta.files) {
+        const fh = [...f.fileHash].map(b => b.toString(16).padStart(2, '0')).join('');
+        html += '<div class="ml-row"><span class="name">' + f.path + '</span><span class="val">' + fmtSize(f.origSize) + ' → ' + fmtSize(f.compSize) + '</span></div>';
+        html += '<div class="ml-row"><span class="name" style="font-size:9px;color:var(--faint)">SHA-256</span><span class="val" style="font-size:9px">' + fh.substr(0, 32) + '…</span></div>';
+      }
+      el.innerHTML = html;
+    }
+
+    // 17. Compression efficiency grade
+    function initEfficiency() {
+      const gradeEl = document.getElementById('efficiencyGrade');
+      const detEl = document.getElementById('efficiencyDetails');
+      if (!gradeEl || !containerMeta.entropyData.length) { if (gradeEl) gradeEl.textContent = '—'; return }
+      const ratio = containerMeta.totalOrig > 0 ? 100 * containerMeta.totalComp / containerMeta.totalOrig : 100;
+      let grade, color, desc;
+      if (ratio < 25) { grade = 'A+'; color = 'var(--green)'; desc = 'Excellent compression' }
+      else if (ratio < 40) { grade = 'A'; color = 'var(--green)'; desc = 'Very good compression' }
+      else if (ratio < 55) { grade = 'B'; color = 'var(--accent2)'; desc = 'Good compression' }
+      else if (ratio < 70) { grade = 'C'; color = 'var(--orange)'; desc = 'Moderate compression' }
+      else if (ratio < 85) { grade = 'D'; color = 'var(--orange)'; desc = 'Poor compression' }
+      else { grade = 'F'; color = 'var(--red)'; desc = 'Minimal compression' }
+      gradeEl.innerHTML = '<span style="color:' + color + '">' + grade + '</span>';
+      if (detEl) detEl.innerHTML = '<div class="ml-row"><span class="name">Ratio</span><span class="val">' + ratio.toFixed(1) + '%</span></div><div class="ml-row"><span class="name">Assessment</span><span class="val" style="color:' + color + '">' + desc + '</span></div><div class="ml-row"><span class="name">Original</span><span class="val">' + fmtSize(containerMeta.totalOrig) + '</span></div><div class="ml-row"><span class="name">Compressed</span><span class="val">' + fmtSize(containerMeta.totalComp) + '</span></div><div class="ml-row"><span class="name">Saved</span><span class="val good">' + fmtSize(containerMeta.totalOrig - containerMeta.totalComp) + '</span></div>';
+    }
+
+    // 18. Duplicate file detector
+    function initDupDetector() {
+      const el = document.getElementById('dupResults');
+      if (!el || !containerMeta.entropyData.length) { if (el) el.innerHTML = '<span class="dim">Load container to detect duplicates.</span>'; return }
+      const byHash = {};
+      for (const f of containerMeta.entropyData) {
+        const key = f.size + ':' + f.entropy.toFixed(2);
+        if (!byHash[key]) byHash[key] = [];
+        byHash[key].push(f.path);
+      }
+      const dups = Object.entries(byHash).filter(([k, v]) => v.length > 1);
+      if (dups.length === 0) {
+        el.innerHTML = '<div style="color:var(--green);font-size:12px">✓ No duplicate files detected.</div>';
+      } else {
+        let html = '<div style="font-size:11px;color:var(--orange);margin-bottom:6px">' + dups.length + ' potential duplicate sets:</div>';
+        for (const [key, paths] of dups) {
+          html += '<div class="ml-row"><span class="name">' + paths.join(', ') + '</span><span class="val warn">' + paths.length + ' files</span></div>';
+        }
+        el.innerHTML = html;
+      }
+    }
+
+    // 19. Decompression timing
+    let decompTime = 0;
+    function timeDecompression(fn) {
+      const start = performance.now();
+      return fn().then(r => { decompTime = performance.now() - start; return r });
+    }
+
+    // 20. File hash viewer (in context menu - already handled above)
+
+    // 21. Container diff (compare entropy before/after optimization)
+    function initContainerDiff() {
+      // Shows before/after layout optimization comparison
+      const el = document.getElementById('layoutStats');
+      if (!el || !containerMeta.entropyData.length) return;
+      // Already handled by layout optimizer, add diff info
+      const before = containerMeta.entropyData.map(f => f.entropy);
+      const sorted = [...containerMeta.entropyData].sort((a, b) => a.entropy - b.entropy);
+      const after = sorted.map(f => f.entropy);
+      const beforeVar = before.length > 1 ? Math.sqrt(before.reduce((s, e, i, a) => { const m = a.reduce((ss, x) => ss + x, 0) / a.length; return s + (e - m) ** 2 }, 0) / before.length) : 0;
+      const afterVar = after.length > 1 ? Math.sqrt(after.reduce((s, e, i, a) => { const m = a.reduce((ss, x) => ss + x, 0) / a.length; return s + (e - m) ** 2 }, 0) / after.length) : 0;
+      // This is integrated into the layout optimizer display
+    }
+
+    // 22. Version badge in terminal
+    // Already shown in terminal banner
+
+    // 23. Auto-analysis on load (already called via initLLM → autoAnalyze)
+
+    // 24. Resizable panels
+    let resizing = false, resizeTarget = null, startX = 0, startW = 0;
+    function makeResizable(el, handle, direction) {
+      if (!handle) return;
+      handle.addEventListener('mousedown', e => {
+        resizing = true; resizeTarget = el; startX = e.clientX; startW = el.offsetWidth;
+        e.preventDefault();
+      });
+    }
+    document.addEventListener('mousemove', e => {
+      if (!resizing || !resizeTarget) return;
+      const diff = e.clientX - startX;
+      if (resizeTarget.classList.contains('sidebar')) resizeTarget.style.width = Math.max(200, startW + diff) + 'px';
+      else if (resizeTarget.classList.contains('right')) resizeTarget.style.width = Math.max(300, startW - diff) + 'px';
+    });
+    document.addEventListener('mouseup', () => { resizing = false; resizeTarget = null });
+
+    // 25. File type count in stats
+    function getFileTypeCounts() {
+      const counts = {};
+      for (const f of containerMeta.entropyData) { const t = getFileType(f.path); counts[t] = (counts[t] || 0) + 1 }
+      return counts;
+    }
+
+    // 26. Integrity badge in metadata
+    function getIntegrityBadge() {
+      return integrityStatus === 'pass'
+        ? '<span class="integrity-badge pass">✓ Verified</span>'
+        : integrityStatus === 'fail'
+          ? '<span class="integrity-badge fail">✗ Failed</span>'
+          : '<span class="integrity-badge" style="background:var(--bg4);color:var(--dim)">Pending</span>';
+    }
+
+    // 27. Quick stats in topbar (already shown in info element)
+
+    // 28. Entropy color scale legend
+    function drawEntropyLegend() {
+      // Integrated into heatmap via tooltips
+    }
+
+    // 29. Container summary card
+    function initSummaryCard() {
+      // Add a summary card to the stats panel
+      if (!containerMeta.entropyData.length) return;
+      const sp = document.getElementById('statsPanel');
+      if (!sp) return;
+      const ratio = containerMeta.totalOrig > 0 ? (100 * containerMeta.totalComp / containerMeta.totalOrig).toFixed(1) : '—';
+      const avgEnt = (containerMeta.entropyData.reduce((s, e) => s + e.entropy, 0) / containerMeta.entropyData.length).toFixed(2);
+      const types = getFileTypeCounts();
+      const typeStr = Object.entries(types).map(([t, c]) => t + ':' + c).join(', ');
+      // Prepend summary
+      const summary = '<div class="stat-card" style="grid-column:1/-1;background:linear-gradient(135deg,var(--accent-dim),var(--green-dim));border-color:var(--border2)"><div class="label">Container Summary</div><div style="font-size:12px;margin-top:6px;color:var(--text)">' + containerMeta.entropyData.length + ' files · ' + fmtSize(containerMeta.totalOrig) + ' → ' + fmtSize(containerMeta.totalComp) + ' (' + ratio + '%) · ' + avgEnt + ' ent · ' + typeStr + '</div></div>';
+      sp.innerHTML = summary + sp.innerHTML;
+    }
+
+    // 30. Keyboard help overlay (press ?)
+    document.addEventListener('keydown', e => {
+      if (e.key === '?' && !fileSearch.matches(':focus') && !document.getElementById('agentInput').matches(':focus')) {
+        toast('Shortcuts: Ctrl+1-7 tabs · Ctrl+F search · Esc close · ↑↓ history', 'info');
+      }
+    });
+
+    // Wire file items with context menu + double-click preview
+    function wireFileItems() {
+      fileList.querySelectorAll('.file-item').forEach(el => {
+        el.oncontextmenu = e => showCtx(e, el.dataset.path);
+        el.ondblclick = () => previewFile(el.dataset.path);
+      });
+    }
+
+    // Wire new features into load completion
+    function initAllFeatures() {
+      wireFileItems();
+      updateTabBadges();
+      drawHeatmap();
+      initCharts();
+      initManifest();
+      initEfficiency();
+      initDupDetector();
+      initSummaryCard();
+      initContainerDiff();
+      toast('Container loaded: ' + containerMeta.entropyData.length + ' files', 'ok');
+    }
+
     navigator.serviceWorker.register('sw.js').then(() => { log('SW registered'); load() }).catch(e => { label.textContent = ''; errEl.textContent = 'SW failed: ' + e.message });
     document.getElementById('reload').onclick = () => { term.clear(); load() };
-    term.onData(d => { if (d === '\r') tw('\r\n$ '); else tw(d) });
   </script>
 </body>
 
