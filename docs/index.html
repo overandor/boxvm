@@ -849,7 +849,7 @@
       <div class="hero-grid"></div>
     </div>
     <div class="hero-content">
-      <div class="hero-badge"><span class="dot"></span> v0.6 — ML-optimized containers now live</div>
+      <div class="hero-badge"><span class="dot"></span> v0.7 — Upload, inspect, predict</div>
       <h1>Run containers <span class="grad">in the browser</span></h1>
       <p>BoxVM is a browser-native container runtime. Pack HTML, CSS, JS, and WASM into compressed <strong>.box</strong>
         files. Execute real binaries via WASI. No Docker daemon. No cloud. No install.</p>
@@ -996,6 +996,27 @@
         <p>Statistical outlier detection on file size and entropy distributions. Flags unusual files that deviate
           significantly from container norms for security and optimization.</p>
         <span class="tag">Statistical</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(84,160,255,.12)">📥</div>
+        <h3>Upload & Inspect</h3>
+        <p>Drag any .box file into the portal. Hex inspector shows raw binary structure. Metadata table displays
+          magic, version, flags, manifest hash, and trailer hash.</p>
+        <span class="tag">Binary</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(108,92,231,.12)">📤</div>
+        <h3>Export</h3>
+        <p>Download the loaded container as a .box file. Works with both server-fetched and demo-generated containers.
+          Full round-trip: pack → load → inspect → export.</p>
+        <span class="tag">Round-trip</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(0,212,160,.12)">📈</div>
+        <h3>Compression Predictor</h3>
+        <p>ML model predicts compression ratio from entropy + file type features. Per-file predictions with model
+          accuracy scoring against actual ratios.</p>
+        <span class="tag">Predictive</span>
       </div>
     </div>
   </section>
@@ -1178,14 +1199,15 @@
         <p>Live on GitHub Pages. Demo container generator for browser-only mode. Relative paths for subpath hosting.
           Public URL sharing via --public flag.</p>
       </div>
-      <div class="rm-item now">
-        <h3>v0.7 — Registry</h3>
-        <div class="when">In Progress</div>
-        <p>Push/pull .box containers to S3 or Hugging Face Datasets. Versioned, content-addressed storage.</p>
+      <div class="rm-item done">
+        <h3>v0.7 — Upload, Inspect, Predict</h3>
+        <div class="when">Completed</div>
+        <p>Upload .box files directly. Hex inspector with ASCII sidebar. Container metadata table. Compression ratio
+          predictor with model accuracy scoring. Export/download loaded containers.</p>
       </div>
-      <div class="rm-item">
+      <div class="rm-item now">
         <h3>v0.8 — WASI Threads</h3>
-        <div class="when">3 weeks</div>
+        <div class="when">In Progress</div>
         <p>wasm32-wasip1-threads, SharedArrayBuffer between Web Workers, real parallel execution inside containers</p>
       </div>
       <div class="rm-item">

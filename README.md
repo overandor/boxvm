@@ -18,6 +18,9 @@ Pack files into compressed `.box` containers. Serve them anywhere. Run WASI prog
 - **Anomaly detection** — statistical outlier detection on file size and entropy distributions
 - **Neural layout optimizer** — entropy-based clustering for optimal file ordering
 - **GitHub Pages ready** — demo container generator, relative paths, zero server required
+- **Upload & inspect** — drag .box files into portal, hex inspector with ASCII sidebar, metadata table
+- **Export** — download loaded containers as .box files, full round-trip support
+- **Compression predictor** — ML model predicts ratio from entropy + file type, accuracy scoring
 
 ## Quick Start
 
@@ -105,7 +108,7 @@ For each entry:
 - [x] v0.4 — Real WASI filesystem (path_open, fd_read, fd_readdir, preopens)
 - [x] v0.5 — Landing page + developer portal + ML/RL/LLM features
 - [x] v0.6 — GitHub Pages deployment + demo container generator
-- [ ] v0.7 — Registry (push/pull to S3/HF Datasets, content addressing)
+- [x] v0.7 — Upload/inspect/export + hex inspector + compression predictor
 - [ ] v0.8 — WASI threads (SharedArrayBuffer, parallel execution)
 - [ ] v0.9 — Agent framework (in-container SDK, IPC, sub-containers)
 - [ ] v1.0 — Production (TLS, auth, IndexedDB, checkpointing, benchmarks)
