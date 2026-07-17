@@ -1371,7 +1371,7 @@
     function byteHistogram(data) { const hist = new Array(256).fill(0); for (let i = 0; i < data.length; i++)hist[data[i]]++; return hist }
     function parseBox(buf) { const ab = buf instanceof ArrayBuffer ? buf : buf.buffer; const files = [], dv = new DataView(ab); let p = 4; const ver = dv.getUint16(p, true); p += 2; const flags = dv.getUint16(p, true); p += 2; const count = dv.getUint32(p, true); p += 4; p += 32; for (let i = 0; i < count; i++) { const plen = dv.getUint16(p, true); p += 2; let path = ''; for (let j = 0; j < plen; j++)path += String.fromCharCode(dv.getUint8(p + j)); p += plen; const os = dv.getUint32(p, true); p += 4; const cs = dv.getUint32(p, true); p += 4; const fh = new Uint8Array(ab, p, 32); p += 32; const cd = new Uint8Array(ab, p, cs); p += cs; files.push({ path, origSize: os, compSize: cs, compData: cd, fileHash: fh }) } return { ver, flags, count, files } }
     async function decompressParallel(files) { const nw = Math.min(navigator.hardwareConcurrency || 4, files.length), cs = Math.ceil(files.length / nw); const ps = []; for (let w = 0; w < nw; w++) { const worker = new Worker('worker.js'); const slice = files.slice(w * cs, (w + 1) * cs); const entries = slice.map(f => ({ path: f.path, compData: f.compData, origSize: f.origSize })); ps.push(new Promise((res, rej) => { worker.onmessage = e => { res(e.data.results); worker.terminate() }; worker.onerror = rej; worker.postMessage({ id: w, entries }) })) } return (await Promise.all(ps)).flat() }
-    async function verifyFiles(files) { let ok = 0, bad = 0; for (const f of files) { const h = await sha256(f.data); const exp = [...f.fileHash].map(b => b.toString(16).padStart(2, '0')).join(''); if (h === exp) ok++; else { bad++; log('SHA-256 mismatch: ' + f.path, 'err') } } log('Integrity: ' + ok + ' OK, ' + bad + ' failed', bad ? 'err' : 'ok'); return bad === 0 }
+    async function verifyFiles(files) { let ok = 0, bad = 0; for (const f of files) { const h = await sha256(f.data); const exp = [...f.fileHash].map(b => b.toString(16).padStart(2, '0')).join(''); if (h === exp) ok++; else { bad++; log('SHA-256 mismatch: ' + f.path, 'err') } } log('Integrity: ' + ok + ' OK, ' + bad + ' failed', bad ? 'err' : 'ok'); updateIntegrityBadge(ok, ok + bad); return bad === 0 }
     async function executeWasm(wasmBytes, vfs) { log('Executing WASM (' + wasmBytes.length + ' bytes)…'); tw('\r\n\x1b[36m[exec] WASM binary: ' + wasmBytes.length + ' bytes\x1b[0m\r\n'); try { const wasi = new WASI(); const result = await wasi.execute(wasmBytes, [], vfs); if (result.stdout) { tw('\x1b[32m' + result.stdout + '\x1b[0m'); log('stdout: ' + result.stdout.substr(0, 200), 'ok') } if (result.stderr) { tw('\x1b[31m' + result.stderr + '\x1b[0m'); log('stderr: ' + result.stderr.substr(0, 200), 'err') } log('Exit code: ' + result.exitCode, result.exitCode === 0 ? 'ok' : 'err'); tw('\r\n\x1b[36m[exec] exit code: ' + result.exitCode + '\x1b[0m\r\n') } catch (e) { log('WASM error: ' + e.message, 'err'); tw('\r\n\x1b[31m[error] ' + e.message + '\x1b[0m\r\n') } }
     let ws = null;
     function connectWS() { try { ws = new WebSocket('ws://' + location.host + '/ws') } catch (e) { log('WS not available on GitHub Pages', 'err'); return } const st = document.getElementById('wsStatus'); ws.onopen = () => { st.textContent = 'WebSocket: Connected'; st.className = 'status connected'; log('Agent WS connected', 'ok') }; ws.onclose = () => { st.textContent = 'WebSocket: Disconnected'; st.className = 'status disconnected' }; ws.onmessage = e => { const msg = JSON.parse(e.data); const d = document.createElement('div'); d.className = 'log-line'; d.textContent = JSON.stringify(msg); document.getElementById('agentLog').appendChild(d); if (msg.type === 'split') log('Container split event', 'ok') } }
@@ -1423,17 +1423,17 @@
           u8 = new Uint8Array(body.length + 32); u8.set(body); u8.set(trailer, body.length);
           tw('Demo container: ' + fmtSize(u8.byteLength) + ' bytes\r\n');
         }
-        const parsed = parseBox(u8.buffer); label.textContent = 'Decompressing ' + parsed.files.length + ' files…';
+        const parsed = parseBox(u8.buffer); label.textContent = 'Decompressing ' + parsed.files.length + ' files…'; showProgress(25);
         lastBoxBytes = u8;
         tw('Entries: ' + parsed.files.length + ' (v' + parsed.ver + ', flags=0x' + parsed.flags.toString(16) + ')\r\n');
         log('Parsed: ' + parsed.files.length + ' files');
-        const dec = await decompressParallel(parsed.files);
+        const dec = await timeDecompression(() => decompressParallel(parsed.files));
         tw('Decompressed via ' + Math.min(navigator.hardwareConcurrency || 4, parsed.files.length) + ' workers\r\n');
         log('Decompressed ' + dec.length + ' files');
         for (const f of dec) { const o = parsed.files.find(p => p.path === f.path); if (o) f.fileHash = o.fileHash; vfsData.set(f.path, f.data) }
-        label.textContent = 'Verifying…'; await verifyFiles(dec);
+        label.textContent = 'Verifying…'; showProgress(50); await verifyFiles(dec);
         const vfsFiles = dec.map(f => ({ path: f.path, data: f.data }));
-        label.textContent = 'Loading into VM…';
+        label.textContent = 'Loading into VM…'; showProgress(75);
         const reg = await navigator.serviceWorker.ready;
         const ch = new MessageChannel(), done = new Promise(r => { ch.port1.onmessage = e => r(e.data) });
         reg.active.postMessage({ type: 'LOAD', files: vfsFiles }, [ch.port2]);
@@ -1448,7 +1448,7 @@
         entropyPanel.innerHTML = entropyData.map(e => { const pct = (e.entropy / 8) * 100; const color = e.entropy > 7 ? 'var(--red)' : e.entropy > 5 ? 'var(--orange)' : 'var(--green)'; return '<div class="entropy-item"><div class="ename">' + e.path + '</div><div class="emeta">' + e.entropy.toFixed(2) + ' bits/byte · ' + fmtSize(e.size) + '</div><div class="ml-bar"><div class="fill" style="width:' + pct + '%;background:' + color + '"></div></div></div>' }).join('');
         if (wasmFiles.length > 0) { label.textContent = 'Executing WASM…'; log('Found ' + wasmFiles.length + ' WASM binaries'); for (const w of wasmFiles) await executeWasm(vfsData.get(w.path), vfsData) }
         info.textContent = vfsFiles.length + ' files · ' + fmtSize(u8.byteLength) + ' · ' + (navigator.hardwareConcurrency || 4) + ' threads';
-        label.textContent = 'Ready'; setTimeout(() => overlay.classList.add('hidden'), 300);
+        label.textContent = 'Ready'; showProgress(100); setTimeout(() => overlay.classList.add('hidden'), 300);
         try { connectWS() } catch (e) { }
         tw('\r\n\x1b[32m[ready] Click a .wasm file to execute. Use ML/LLM tabs for analysis.\x1b[0m\r\n');
         tw('\r\n$ ');
@@ -1544,16 +1544,16 @@
       overlay.classList.remove('hidden'); label.textContent = 'Parsing uploaded container…'; errEl.textContent = '';
       try {
         const u8 = new Uint8Array(buf); lastBoxBytes = u8;
-        const parsed = parseBox(buf); label.textContent = 'Decompressing ' + parsed.files.length + ' files…';
+        const parsed = parseBox(buf); label.textContent = 'Decompressing ' + parsed.files.length + ' files…'; showProgress(25);
         tw('Entries: ' + parsed.files.length + ' (v' + parsed.ver + ', flags=0x' + parsed.flags.toString(16) + ')\r\n');
         log('Parsed: ' + parsed.files.length + ' files');
-        const dec = await decompressParallel(parsed.files);
+        const dec = await timeDecompression(() => decompressParallel(parsed.files));
         tw('Decompressed via ' + Math.min(navigator.hardwareConcurrency || 4, parsed.files.length) + ' workers\r\n');
         log('Decompressed ' + dec.length + ' files');
         for (const f of dec) { const o = parsed.files.find(p => p.path === f.path); if (o) f.fileHash = o.fileHash; vfsData.set(f.path, f.data) }
-        label.textContent = 'Verifying…'; await verifyFiles(dec);
+        label.textContent = 'Verifying…'; showProgress(50); await verifyFiles(dec);
         const vfsFiles = dec.map(f => ({ path: f.path, data: f.data }));
-        label.textContent = 'Loading into VM…';
+        label.textContent = 'Loading into VM…'; showProgress(75);
         const reg = await navigator.serviceWorker.ready;
         const ch = new MessageChannel(), done = new Promise(r => { ch.port1.onmessage = e => r(e.data) });
         reg.active.postMessage({ type: 'LOAD', files: vfsFiles }, [ch.port2]);
@@ -1567,7 +1567,7 @@
         statsPanel.innerHTML = '<div class="stats-grid"><div class="stat-card"><div class="label">Files</div><div class="value purple">' + vfsFiles.length + '</div></div><div class="stat-card"><div class="label">Total Size</div><div class="value green">' + fmtSize(totalOrig) + '</div></div><div class="stat-card"><div class="label">Container Size</div><div class="value orange">' + fmtSize(u8.byteLength) + '</div></div><div class="stat-card"><div class="label">Compression</div><div class="value">' + (totalOrig > 0 ? (100 * u8.byteLength / totalOrig).toFixed(1) : 0) + '%</div></div><div class="stat-card"><div class="label">WASM Binaries</div><div class="value blue">' + wasmFiles.length + '</div></div><div class="stat-card"><div class="label">Threads</div><div class="value">' + (navigator.hardwareConcurrency || 4) + '</div></div><div class="stat-card"><div class="label">Avg Entropy</div><div class="value pink">' + (entropyData.reduce((s, e) => s + e.entropy, 0) / entropyData.length).toFixed(2) + '</div></div></div>';
         entropyPanel.innerHTML = entropyData.map(e => { const pct = (e.entropy / 8) * 100; const color = e.entropy > 7 ? 'var(--red)' : e.entropy > 5 ? 'var(--orange)' : 'var(--green)'; return '<div class="entropy-item"><div class="ename">' + e.path + '</div><div class="emeta">' + e.entropy.toFixed(2) + ' bits/byte · ' + fmtSize(e.size) + '</div><div class="ml-bar"><div class="fill" style="width:' + pct + '%;background:' + color + '"></div></div></div>' }).join('');
         info.textContent = vfsFiles.length + ' files · ' + fmtSize(u8.byteLength) + ' · ' + (navigator.hardwareConcurrency || 4) + ' threads';
-        label.textContent = 'Ready'; setTimeout(() => overlay.classList.add('hidden'), 300);
+        label.textContent = 'Ready'; showProgress(100); setTimeout(() => overlay.classList.add('hidden'), 300);
         tw('\r\n\x1b[32m[ready] Uploaded container loaded. Use ML/LLM/Inspect tabs for analysis.\x1b[0m\r\n');
         tw('\r\n$ ');
         initRL(); initLLM(); initLayoutOptimizer(); initAnomalyDetection(); initInspector(); initPredictor(); initAllFeatures();
@@ -1613,7 +1613,8 @@
         '<div class="ml-row"><span class="name">Entry count</span><span class="val">' + count + '</span></div>' +
         '<div class="ml-row"><span class="name">Manifest SHA-256</span><span class="val" style="font-size:9px">' + manHash.substr(0, 32) + '…</span></div>' +
         '<div class="ml-row"><span class="name">Total size</span><span class="val">' + fmtSize(lastBoxBytes.length) + '</span></div>' +
-        '<div class="ml-row"><span class="name">Trailer SHA-256</span><span class="val" style="font-size:9px">' + [...new Uint8Array(ab, lastBoxBytes.length - 32, 32)].map(b => b.toString(16).padStart(2, '0')).join('').substr(0, 32) + '…</span></div>';
+        '<div class="ml-row"><span class="name">Trailer SHA-256</span><span class="val" style="font-size:9px">' + [...new Uint8Array(ab, lastBoxBytes.length - 32, 32)].map(b => b.toString(16).padStart(2, '0')).join('').substr(0, 32) + '…</span></div>' +
+        '<div class="ml-row"><span class="name">Integrity</span><span class="val">' + getIntegrityBadge() + '</span></div>';
     }
 
     // ===== Compression Predictor =====
@@ -1939,23 +1940,25 @@
     let decompTime = 0;
     function timeDecompression(fn) {
       const start = performance.now();
-      return fn().then(r => { decompTime = performance.now() - start; return r });
+      return fn().then(r => { decompTime = performance.now() - start; log('Decompression: ' + decompTime.toFixed(1) + 'ms', 'ok'); tw('\r\n\x1b[36m[decomp] ' + decompTime.toFixed(1) + 'ms\x1b[0m\r\n'); return r });
     }
 
     // 20. File hash viewer (in context menu - already handled above)
 
     // 21. Container diff (compare entropy before/after optimization)
     function initContainerDiff() {
-      // Shows before/after layout optimization comparison
       const el = document.getElementById('layoutStats');
       if (!el || !containerMeta.entropyData.length) return;
-      // Already handled by layout optimizer, add diff info
       const before = containerMeta.entropyData.map(f => f.entropy);
       const sorted = [...containerMeta.entropyData].sort((a, b) => a.entropy - b.entropy);
       const after = sorted.map(f => f.entropy);
-      const beforeVar = before.length > 1 ? Math.sqrt(before.reduce((s, e, i, a) => { const m = a.reduce((ss, x) => ss + x, 0) / a.length; return s + (e - m) ** 2 }, 0) / before.length) : 0;
-      const afterVar = after.length > 1 ? Math.sqrt(after.reduce((s, e, i, a) => { const m = a.reduce((ss, x) => ss + x, 0) / a.length; return s + (e - m) ** 2 }, 0) / after.length) : 0;
-      // This is integrated into the layout optimizer display
+      const mean = before.reduce((s, e) => s + e, 0) / before.length;
+      const beforeVar = before.length > 1 ? Math.sqrt(before.reduce((s, e) => s + (e - mean) ** 2, 0) / before.length) : 0;
+      const afterVar = after.length > 1 ? Math.sqrt(after.reduce((s, e) => s + (e - mean) ** 2, 0) / after.length) : 0;
+      const gain = beforeVar > 0 ? ((beforeVar - afterVar) / beforeVar * 100).toFixed(1) : '0.0';
+      el.innerHTML += '<div class="ml-row" style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px"><span class="name">Before variance</span><span class="val">' + beforeVar.toFixed(2) + '</span></div>' +
+        '<div class="ml-row"><span class="name">After variance</span><span class="val">' + afterVar.toFixed(2) + '</span></div>' +
+        '<div class="ml-row"><span class="name">Variance reduction</span><span class="val good">' + gain + '%</span></div>';
     }
 
     // 22. Version badge in terminal
@@ -1965,12 +1968,11 @@
 
     // 24. Resizable panels
     let resizing = false, resizeTarget = null, startX = 0, startW = 0;
-    function makeResizable(el, handle, direction) {
-      if (!handle) return;
-      handle.addEventListener('mousedown', e => {
-        resizing = true; resizeTarget = el; startX = e.clientX; startW = el.offsetWidth;
-        e.preventDefault();
-      });
+    function initResizable() {
+      const sidebar = document.querySelector('.sidebar');
+      const right = document.querySelector('.right');
+      if (sidebar) { const h = document.createElement('div'); h.className = 'resize-handle'; h.style.height = '100%'; sidebar.parentNode.insertBefore(h, sidebar.nextSibling); h.addEventListener('mousedown', e => { resizing = true; resizeTarget = sidebar; startX = e.clientX; startW = sidebar.offsetWidth; e.preventDefault() }) }
+      if (right) { const h = document.createElement('div'); h.className = 'resize-handle'; h.style.height = '100%'; right.parentNode.insertBefore(h, right); h.addEventListener('mousedown', e => { resizing = true; resizeTarget = right; startX = e.clientX; startW = right.offsetWidth; e.preventDefault() }) }
     }
     document.addEventListener('mousemove', e => {
       if (!resizing || !resizeTarget) return;
@@ -2000,7 +2002,14 @@
 
     // 28. Entropy color scale legend
     function drawEntropyLegend() {
-      // Integrated into heatmap via tooltips
+      const grid = document.getElementById('heatmapGrid');
+      if (!grid) return;
+      const legend = document.createElement('div');
+      legend.style.cssText = 'display:flex;align-items:center;gap:4px;font-size:9px;color:var(--dim);margin-top:6px;justify-content:center';
+      legend.innerHTML = '<span>Low</span>' +
+        '<div style="width:80px;height:6px;border-radius:3px;background:linear-gradient(90deg,#1a4a30,#4a8a4a,#aa8a30,#cc4a3a)"></div>' +
+        '<span>High</span>';
+      grid.parentNode.appendChild(legend);
     }
 
     // 29. Container summary card
@@ -2044,6 +2053,8 @@
       initDupDetector();
       initSummaryCard();
       initContainerDiff();
+      initResizable();
+      drawEntropyLegend();
       toast('Container loaded: ' + containerMeta.entropyData.length + ' files', 'ok');
     }
 
