@@ -12,6 +12,12 @@ Pack files into compressed `.box` containers. Serve them anywhere. Run WASI prog
 - **WebSocket agent** — RFC 6455 compliant, real-time container control
 - **xterm.js terminal** — interactive terminal in the browser
 - **Service Worker VFS** — RAM-backed virtual filesystem at `/__box__/` paths
+- **RL compression optimizer** — Q-learning agent, 200-state Q-table, epsilon-greedy exploration, live reward curve
+- **LLM container intelligence** — natural language queries, pattern detection, redundancy analysis, anomaly flagging
+- **Entropy analysis** — per-file Shannon entropy, byte-level histograms, compression potential scoring
+- **Anomaly detection** — statistical outlier detection on file size and entropy distributions
+- **Neural layout optimizer** — entropy-based clustering for optimal file ordering
+- **GitHub Pages ready** — demo container generator, relative paths, zero server required
 
 ## Quick Start
 
@@ -97,12 +103,13 @@ For each entry:
 
 - [x] v0.3 — Core runtime (zlib, SHA-256, thread pool, WASM, WebSocket, xterm)
 - [x] v0.4 — Real WASI filesystem (path_open, fd_read, fd_readdir, preopens)
-- [x] v0.5 — Landing page + developer portal
-- [ ] v0.6 — Public URL tunneling (Cloudflare Tunnel, token auth, QR)
+- [x] v0.5 — Landing page + developer portal + ML/RL/LLM features
+- [x] v0.6 — GitHub Pages deployment + demo container generator
 - [ ] v0.7 — Registry (push/pull to S3/HF Datasets, content addressing)
 - [ ] v0.8 — WASI threads (SharedArrayBuffer, parallel execution)
 - [ ] v0.9 — Agent framework (in-container SDK, IPC, sub-containers)
 - [ ] v1.0 — Production (TLS, auth, IndexedDB, checkpointing, benchmarks)
+- [ ] v2.0 — ML optimization (ONNX Runtime, KV cache, gradient compression)
 
 ## License
 

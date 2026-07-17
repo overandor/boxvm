@@ -849,7 +849,7 @@
       <div class="hero-grid"></div>
     </div>
     <div class="hero-content">
-      <div class="hero-badge"><span class="dot"></span> v0.5 — Real WASI execution now live</div>
+      <div class="hero-badge"><span class="dot"></span> v0.6 — ML-optimized containers now live</div>
       <h1>Run containers <span class="grad">in the browser</span></h1>
       <p>BoxVM is a browser-native container runtime. Pack HTML, CSS, JS, and WASM into compressed <strong>.box</strong>
         files. Execute real binaries via WASI. No Docker daemon. No cloud. No install.</p>
@@ -959,6 +959,35 @@
         <p>Expose local containers with --public flag. Random or custom subdomain. Share with anyone — no install, no
           Docker, no cloud account required.</p>
         <span class="tag">Zero-config</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(108,92,231,.12)">🧠</div>
+        <h3>RL Optimizer</h3>
+        <p>Q-learning agent learns optimal compression strategies per file type. 200-state Q-table, epsilon-greedy
+          exploration, live reward curve visualization.</p>
+        <span class="tag">Q-Learning</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(0,212,160,.12)">💬</div>
+        <h3>LLM Intelligence</h3>
+        <p>Abstract LLM analysis layer. Natural language queries about container contents. Pattern detection,
+          redundancy analysis, anomaly flagging, compression suggestions.</p>
+        <span class="tag">Container AI</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(255,159,67,.12)">📊</div>
+        <h3>Entropy Analysis</h3>
+        <p>Per-file Shannon entropy measurement. Byte-level histogram analysis. Identifies high-entropy files that
+          resist
+          compression and low-entropy files with maximum compression potential.</p>
+        <span class="tag">Shannon</span>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(255,92,138,.12)">🔍</div>
+        <h3>Anomaly Detection</h3>
+        <p>Statistical outlier detection on file size and entropy distributions. Flags unusual files that deviate
+          significantly from container norms for security and optimization.</p>
+        <span class="tag">Statistical</span>
       </div>
     </div>
   </section>
@@ -1112,16 +1141,18 @@
       <div class="rm-item done">
         <h3>v0.5 — Landing Page + Developer Portal</h3>
         <div class="when">Completed</div>
-        <p>Investor-grade landing page, interactive developer portal with xterm.js, API documentation, file browser</p>
+        <p>Investor-grade landing page, interactive developer portal with xterm.js, API documentation, file browser,
+          entropy analysis, RL compression optimizer, LLM container intelligence, anomaly detection</p>
+      </div>
+      <div class="rm-item done">
+        <h3>v0.6 — GitHub Pages + Public URL</h3>
+        <div class="when">Completed</div>
+        <p>Live on GitHub Pages. Demo container generator for browser-only mode. Relative paths for subpath hosting.
+          Public URL sharing via --public flag.</p>
       </div>
       <div class="rm-item now">
-        <h3>v0.6 — Public URL Tunneling</h3>
-        <div class="when">In Progress</div>
-        <p>Cloudflare Tunnel integration, token-based access with expiration, QR code sharing</p>
-      </div>
-      <div class="rm-item">
         <h3>v0.7 — Registry</h3>
-        <div class="when">2 weeks</div>
+        <div class="when">In Progress</div>
         <p>Push/pull .box containers to S3 or Hugging Face Datasets. Versioned, content-addressed storage.</p>
       </div>
       <div class="rm-item">
