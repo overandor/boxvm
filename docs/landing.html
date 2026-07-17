@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BoxVM — Browser-Native Container Runtime</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#08080a;--bg2:#0f0f14;--bg3:#16161e;--border:#222230;--text:#e8e8ec;--dim:#7a7a88;--accent:#6c5ce7;--accent2:#8b7ff0;--green:#00d4a0;--orange:#ff9f43;--red:#ee5253;--blue:#54a0ff}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+a{color:var(--accent2);text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,8,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+nav .container{display:flex;align-items:center;height:60px;gap:24px}
+nav .logo{font-weight:800;font-size:20px;letter-spacing:-.5px}
+nav .logo span{color:var(--accent)}
+nav .links{display:flex;gap:20px;margin-left:auto}
+nav .links a{color:var(--dim);font-size:14px;transition:color .2s}
+nav .links a:hover{color:var(--text)}
+nav .cta{background:var(--accent);color:#fff;padding:8px 20px;border-radius:8px;font-size:14px;font-weight:600}
+nav .cta:hover{background:var(--accent2)}
+/* Hero */
+.hero{padding:140px 0 80px;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(108,92,231,.15),transparent 70%);pointer-events:none}
+.hero h1{font-size:56px;font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:20px}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:20px;color:var(--dim);max-width:600px;margin:0 auto 40px;line-height:1.5}
+.hero .buttons{display:flex;gap:16px;justify-content:center}
+.hero .btn{padding:14px 32px;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;border:none;transition:transform .2s}
+.hero .btn:hover{transform:translateY(-2px)}
+.hero .btn-primary{background:var(--accent);color:#fff}
+.hero .btn-secondary{background:var(--bg3);color:var(--text);border:1px solid var(--border)}
+/* Stats */
+.stats{padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats .container{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.stat{text-align:center}
+.stat .num{font-size:40px;font-weight:800;letter-spacing:-1px}
+.stat .num.green{color:var(--green)}
+.stat .num.purple{color:var(--accent)}
+.stat .num.orange{color:var(--orange)}
+.stat .num.blue{color:var(--blue)}
+.stat .label{font-size:13px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+/* Features */
+.features{padding:80px 0}
+.features h2{font-size:36px;font-weight:800;text-align:center;margin-bottom:60px;letter-spacing:-1px}
+.features .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color .2s}
+.feature:hover{border-color:var(--accent)}
+.feature .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px}
+.feature h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.feature p{font-size:14px;color:var(--dim);line-height:1.6}
+/* Architecture */
+.arch{padding:80px 0;border-top:1px solid var(--border)}
+.arch h2{font-size:36px;font-weight:800;text-align:center;margin-bottom:40px}
+.arch .diagram{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px;font-family:'SF Mono',monospace;font-size:13px;color:var(--dim);line-height:1.8;overflow-x:auto}
+.arch .diagram .hl{color:var(--accent2)}
+.arch .diagram .green{color:var(--green)}
+.arch .diagram .orange{color:var(--orange)}
+/* Code */
+.code-section{padding:80px 0;border-top:1px solid var(--border)}
+.code-section h2{font-size:36px;font-weight:800;text-align:center;margin-bottom:40px}
+.code-block{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;font-family:'SF Mono',monospace;font-size:13px;line-height:1.7;overflow-x:auto;color:var(--text)}
+.code-block .comment{color:var(--dim)}
+.code-block .cmd{color:var(--green)}
+.code-block .flag{color:var(--orange)}
+/* Roadmap */
+.roadmap{padding:80px 0;border-top:1px solid var(--border)}
+.roadmap h2{font-size:36px;font-weight:800;text-align:center;margin-bottom:40px}
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+.timeline .item{position:relative;padding-bottom:32px}
+.timeline .item::before{content:'';position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.timeline .item.done::before{background:var(--green)}
+.timeline .item h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.timeline .item .when{font-size:12px;color:var(--accent2);margin-bottom:6px}
+.timeline .item p{font-size:14px;color:var(--dim);line-height:1.5}
+/* Footer */
+footer{padding:40px 0;border-top:1px solid var(--border);text-align:center;color:var(--dim);font-size:13px}
+@media(max-width:768px){.stats .container{grid-template-columns:repeat(2,1fr)}.features .grid{grid-template-columns:1fr}.hero h1{font-size:36px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <div class="logo">Box<span>VM</span></div>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#architecture">Architecture</a>
+      <a href="/portal.html">Developer Portal</a>
+      <a href="#roadmap">Roadmap</a>
+    </div>
+    <a href="/portal.html" class="cta">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <h1>Run containers <span>in the browser</span></h1>
+    <p>BoxVM is a browser-native container runtime. Pack HTML, CSS, JS, and WASM into compressed .box files. Execute real binaries via WASI. No Docker daemon. No cloud. No install.</p>
+    <div class="buttons">
+      <a href="/portal.html" class="btn btn-primary">Try it now</a>
+      <a href="#architecture" class="btn btn-secondary">How it works</a>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container">
+    <div class="stat"><div class="num green">23%</div><div class="label">Compression ratio</div></div>
+    <div class="stat"><div class="num purple">SHA-256</div><div class="label">Integrity verified</div></div>
+    <div class="stat"><div class="num orange">WASI</div><div class="label">Real WASM execution</div></div>
+    <div class="stat"><div class="num blue">18</div><div class="label">Parallel threads</div></div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <h2>What BoxVM does</h2>
+    <div class="grid">
+      <div class="feature">
+        <div class="icon" style="background:rgba(108,92,231,.15)">📦</div>
+        <h3>Pack</h3>
+        <p>Compress any directory of HTML, CSS, JS, WASM into a single .box file with real zlib compression and SHA-256 integrity hashing.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" style="background:rgba(0,212,160,.15)">▶️</div>
+        <h3>Run</h3>
+        <p>Serve .box containers via C++ HTTP server. Browser loads files into a Service Worker VFS. WASM binaries execute via real WASI.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" style="background:rgba(255,159,67,.15)">🔀</div>
+        <h3>Split</h3>
+        <p>Agents running inside containers can split them into sub-containers with isolated VFS state. Hot-reload files without restart.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" style="background:rgba(84,160,255,.15)">⚡</div>
+        <h3>Parallel</h3>
+        <p>C++ work-stealing thread pool for packing. Web Workers for parallel browser decompression. SharedArrayBuffer for WASM threads.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" style="background:rgba(238,82,83,.15)">🔌</div>
+        <h3>Agent API</h3>
+        <p>WebSocket protocol for live container control. Add, remove, or patch files at runtime. Broadcast events to connected clients.</p>
+      </div>
+      <div class="feature">
+        <div class="icon" style="background:rgba(108,92,231,.15)">🌐</div>
+        <h3>Public URL</h3>
+        <p>Expose local containers with --public flag. Random or custom subdomain. Share with anyone, no install required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="arch" id="architecture">
+  <div class="container">
+    <h2>Architecture</h2>
+    <div class="diagram">
+<span class="hl">┌─────────────────────────────────────────────────────────┐</span>
+<span class="hl">│  Developer Machine                                      │</span>
+<span class="hl">│                                                         │</span>
+<span class="hl">│  $ boxpack ./myapp output.box --parallel               │</span>
+<span class="hl">│       │                                                 │</span>
+<span class="hl">│       ▼                                                 │</span>
+<span class="hl">│  ┌──────────────┐    ┌──────────────┐                   │</span>
+<span class="hl">│  │  boxpack.cpp │    │  boxrun.cpp  │                   │</span>
+<span class="hl">│  │  (C++ + zlib │───▶│  (C++ HTTP + │                   │</span>
+<span class="hl">│  │   + SHA-256) │    │   WebSocket) │                   │</span>
+<span class="hl">│  └──────────────┘    └──────┬───────┘                   │</span>
+<span class="hl">│                             │  HTTP + WS                 │</span>
+<span class="hl">└─────────────────────────────┼───────────────────────────┘</span>
+                              │
+<span class="green">┌─────────────────────────────┼───────────────────────────┐</span>
+<span class="green">│  Browser                    ▼                           │</span>
+<span class="green">│  ┌──────────────────────────────────────────────────┐   │</span>
+<span class="green">│  │  boxvm.html (VM UI + xterm.js terminal)          │   │</span>
+<span class="green">│  │                                                   │   │</span>
+<span class="green">│  │  ┌─────────────┐  ┌──────────┐  ┌────────────┐  │   │</span>
+<span class="green">│  │  │ Service     │  │ Web      │  │ WASI       │  │   │</span>
+<span class="green">│  │  │ Worker      │  │ Workers  │  │ Runtime    │  │   │</span>
+<span class="green">│  │  │ (RAM VFS)   │  │ (decomp) │  │ (WASM exec)│  │   │</span>
+<span class="green">│  │  └─────────────┘  └──────────┘  └────────────┘  │   │</span>
+<span class="green">│  └──────────────────────────────────────────────────┘   │</span>
+<span class="green">└─────────────────────────────────────────────────────────┘</span>
+    </div>
+  </div>
+</section>
+
+<section class="code-section">
+  <div class="container">
+    <h2>Quick Start</h2>
+    <div class="code-block">
+<span class="comment"># Build BoxVM from source</span>
+<span class="cmd">make</span>
+
+<span class="comment"># Pack a directory into a .box container</span>
+<span class="cmd">./boxpack</span> ./my-website output.box <span class="flag">--parallel</span>
+
+<span class="comment"># Run it locally</span>
+<span class="cmd">./boxrun</span> output.box 7860
+
+<span class="comment"># Run with a public URL</span>
+<span class="cmd">./boxrun</span> output.box 7860 <span class="flag">--public</span> myapp
+
+<span class="comment"># Open in browser → xterm.js terminal + file browser + agent panel</span>
+<span class="comment"># Click .wasm files to execute real binaries via WASI</span>
+    </div>
+  </div>
+</section>
+
+<section class="roadmap" id="roadmap">
+  <div class="container">
+    <h2>Roadmap</h2>
+    <div class="timeline">
+      <div class="item done">
+        <h3>v0.3 — Real Core</h3>
+        <div class="when">Completed</div>
+        <p>zlib compression, SHA-256 integrity, work-stealing thread pool, Rust→WASM compilation, WebSocket agent, xterm.js terminal</p>
+      </div>
+      <div class="item done">
+        <h3>v0.4 — WASI Filesystem</h3>
+        <div class="when">Completed</div>
+        <p>Full WASI with path_open, fd_read, fd_seek, fd_readdir. WASM programs can read files from container VFS.</p>
+      </div>
+      <div class="item done">
+        <h3>v0.5 — Landing Page + Developer Portal</h3>
+        <div class="when">Completed</div>
+        <p>Investor-grade landing page, interactive developer portal, API documentation</p>
+      </div>
+      <div class="item">
+        <h3>v0.6 — Public URL Tunneling</h3>
+        <div class="when">1 week</div>
+        <p>Cloudflare Tunnel integration, token-based access with expiration, QR code sharing</p>
+      </div>
+      <div class="item">
+        <h3>v0.7 — Registry</h3>
+        <div class="when">2 weeks</div>
+        <p>Push/pull .box containers to S3 or Hugging Face Datasets. Versioned, content-addressed.</p>
+      </div>
+      <div class="item">
+        <h3>v0.8 — WASI Threads</h3>
+        <div class="when">3 weeks</div>
+        <p>wasm32-wasip1-threads, SharedArrayBuffer between Web Workers, real parallel execution</p>
+      </div>
+      <div class="item">
+        <h3>v0.9 — Agent Framework</h3>
+        <div class="when">4 weeks</div>
+        <p>Agent SDK for in-container programs. Read/write VFS, split containers, inter-container IPC</p>
+      </div>
+      <div class="item">
+        <h3>v1.0 — Production</h3>
+        <div class="when">6 weeks</div>
+        <p>TLS, auth, IndexedDB persistence, checkpointing, CI/CD, benchmark vs Docker</p>
+      </div>
+      <div class="item">
+        <h3>v2.0 — ML Optimization</h3>
+        <div class="when">3 months</div>
+        <p>ONNX Runtime for real model inference, KV cache for layout decisions, gradient-based compression</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    BoxVM — Browser-Native Container Runtime · MIT License · <a href="/portal.html">Developer Portal</a>
+  </div>
+</footer>
+</body>
+</html>
