@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="BoxVM — Browser-native container runtime. Pack HTML, CSS, JS, and WASM into compressed containers. Execute real binaries via WASI. No Docker daemon. No cloud.">
+<meta property="og:title" content="BoxVM — Browser-Native Container Runtime">
+<meta property="og:description" content="Pack, run, and split containers entirely in the browser. Real zlib compression, SHA-256 integrity, WASI execution, WebSocket agents.">
+<meta property="og:type" content="website">
+<title>BoxVM — Browser-Native Container Runtime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060608;--bg2:#0c0c12;--bg3:#14141c;--bg4:#1c1c28;
+  --border:#1e1e2a;--border2:#2a2a3a;
+  --text:#f0f0f5;--dim:#6b6b7b;--dim2:#4a4a5a;
+  --accent:#7c5cfc;--accent2:#9b85ff;--accent-dim:rgba(124,92,252,.15);
+  --green:#00e8a0;--green-dim:rgba(0,232,160,.12);
+  --orange:#ffa940;--orange-dim:rgba(255,169,64,.12);
+  --blue:#5cb8ff;--blue-dim:rgba(92,184,255,.12);
+  --red:#ff5c5c;
+  --gradient:linear-gradient(135deg,#7c5cfc,#00e8a0);
+  --gradient2:linear-gradient(135deg,#7c5cfc,#ff5c8a);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+code,pre,.mono{font-family:'JetBrains Mono',monospace}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}
+a:hover{color:var(--text)}
+
+/* ===== Nav ===== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,8,.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:64px;gap:32px}
+.nav-logo{font-weight:900;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}
+.nav-logo .mark{width:28px;height:28px;border-radius:8px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:900}
+.nav-logo span{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--accent)}
+.nav-links{display:flex;gap:28px;margin-left:auto;align-items:center}
+.nav-links a{color:var(--dim);font-size:14px;font-weight:500}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;padding:9px 22px;border-radius:10px;font-size:14px;font-weight:600;transition:all .2s}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px);color:#fff}
+
+/* ===== Hero ===== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-bg::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:900px;height:700px;background:radial-gradient(ellipse,rgba(124,92,252,.18),transparent 60%);filter:blur(40px)}
+.hero-bg::after{content:'';position:absolute;bottom:-10%;right:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,232,160,.12),transparent 60%);filter:blur(40px)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(124,92,252,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%)}
+.hero-content{position:relative;z-index:1;max-width:800px;padding:0 24px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border2);border-radius:100px;padding:6px 16px;font-size:13px;color:var(--dim);margin-bottom:28px}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(40px,7vw,72px);font-weight:900;letter-spacing:-2.5px;line-height:1.05;margin-bottom:24px}
+.hero h1 .grad{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:clamp(16px,2.5vw,22px);color:var(--dim);max-width:600px;margin:0 auto 40px;line-height:1.6}
+.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{padding:16px 36px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;border:none;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,92,252,.3)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2);color:#fff}
+.btn-secondary{background:var(--bg3);color:var(--text);border:1px solid var(--border2)}
+.btn-secondary:hover{border-color:var(--accent);color:#fff}
+
+/* ===== Marquee ===== */
+.marquee{padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);overflow:hidden}
+.marquee-track{display:flex;gap:48px;animation:scroll 30s linear infinite;white-space:nowrap}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.marquee-item{font-size:14px;color:var(--dim2);font-weight:600;display:flex;align-items:center;gap:8px}
+.marquee-item .check{color:var(--green)}
+
+/* ===== Stats ===== */
+.stats{padding:80px 0;max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat-card{text-align:center;padding:32px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;transition:all .3s}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.stat-num{font-size:44px;font-weight:900;letter-spacing:-1.5px;line-height:1}
+.stat-num.green{color:var(--green)}
+.stat-num.purple{color:var(--accent)}
+.stat-num.orange{color:var(--orange)}
+.stat-num.blue{color:var(--blue)}
+.stat-label{font-size:13px;color:var(--dim);margin-top:8px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+
+/* ===== Sections ===== */
+section{padding:100px 0;max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px}
+.section-tag{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.section-title{font-size:clamp(32px,5vw,48px);font-weight:900;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+.section-sub{font-size:18px;color:var(--dim);max-width:600px;margin-bottom:60px}
+
+/* ===== Features ===== */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:32px;transition:all .3s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient);opacity:0;transition:opacity .3s}
+.feature-card:hover{border-color:var(--border2);transform:translateY(-4px)}
+.feature-card:hover::before{opacity:1}
+.feature-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px}
+.feature-card h3{font-size:20px;font-weight:700;margin-bottom:10px}
+.feature-card p{font-size:14px;color:var(--dim);line-height:1.7}
+.feature-card .tag{display:inline-block;margin-top:12px;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-dim);padding:4px 10px;border-radius:6px}
+
+/* ===== Architecture ===== */
+.arch-diagram{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:48px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;overflow-x:auto;color:var(--dim)}
+.arch-diagram .hl{color:var(--accent2)}
+.arch-diagram .gn{color:var(--green)}
+.arch-diagram .og{color:var(--orange)}
+.arch-diagram .bl{color:var(--blue)}
+
+/* ===== Code Block ===== */
+.code-block{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.code-header{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.code-header .dot{width:12px;height:12px;border-radius:50%}
+.code-header .dot.r{background:var(--red)}.code-header .dot.y{background:var(--orange)}.code-header .dot.g{background:var(--green)}
+.code-header .title{font-size:12px;color:var(--dim);margin-left:8px}
+.code-body{padding:24px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.8;overflow-x:auto}
+.code-body .c{color:var(--dim2)}
+.code-body .cmd{color:var(--green)}
+.code-body .flag{color:var(--orange)}
+.code-body .str{color:var(--blue)}
+.code-body .kw{color:var(--accent2)}
+
+/* ===== Comparison ===== */
+.compare-table{width:100%;border-collapse:collapse;margin-top:24px}
+.compare-table th,.compare-table td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--border)}
+.compare-table th{font-size:13px;text-transform:uppercase;color:var(--dim);letter-spacing:1px;font-weight:700}
+.compare-table td{font-size:14px}
+.compare-table .yes{color:var(--green);font-weight:700}
+.compare-table .no{color:var(--dim2)}
+.compare-table .feature-name{font-weight:600}
+
+/* ===== Roadmap ===== */
+.roadmap{position:relative;padding-left:40px}
+.roadmap::before{content:'';position:absolute;left:12px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--accent),var(--green),var(--border))}
+.rm-item{position:relative;padding-bottom:40px}
+.rm-item:last-child{padding-bottom:0}
+.rm-item::before{content:'';position:absolute;left:-34px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);transition:all .3s}
+.rm-item.done::before{background:var(--green);border-color:var(--green)}
+.rm-item.now::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-dim)}
+.rm-item h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.rm-item .when{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.rm-item.done .when{color:var(--green)}
+.rm-item p{font-size:14px;color:var(--dim);line-height:1.6}
+
+/* ===== CTA ===== */
+.cta-section{text-align:center;padding:120px 24px;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(124,92,252,.15),transparent 70%);filter:blur(40px)}
+.cta-content{position:relative;z-index:1;max-width:600px;margin:0 auto}
+.cta-content h2{font-size:clamp(32px,5vw,48px);font-weight:900;letter-spacing:-1.5px;margin-bottom:16px}
+.cta-content p{font-size:18px;color:var(--dim);margin-bottom:32px}
+
+/* ===== Footer ===== */
+footer{border-top:1px solid var(--border);padding:48px 24px;text-align:center}
+footer p{color:var(--dim2);font-size:13px}
+footer .links{display:flex;gap:24px;justify-content:center;margin-bottom:16px}
+footer .links a{color:var(--dim);font-size:13px}
+
+/* ===== Animations ===== */
+.fade-up{opacity:0;transform:translateY(30px);transition:all .6s ease-out}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .features-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><div class="mark">B</div>Box<span>VM</span></div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#compare">vs Docker</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="https://github.com/overandor/boxvm" target="_blank">GitHub</a>
+      <a href="#get-started" class="nav-cta">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><div class="hero-grid"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> v0.5 — Real WASI execution now live</div>
+    <h1>Run containers <span class="grad">in the browser</span></h1>
+    <p>BoxVM is a browser-native container runtime. Pack HTML, CSS, JS, and WASM into compressed <strong>.box</strong> files. Execute real binaries via WASI. No Docker daemon. No cloud. No install.</p>
+    <div class="hero-buttons">
+      <a href="#get-started" class="btn btn-primary">Get Started →</a>
+      <a href="#architecture" class="btn btn-secondary">How it works</a>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="check">✓</span> Real zlib compression</div>
+    <div class="marquee-item"><span class="check">✓</span> SHA-256 integrity</div>
+    <div class="marquee-item"><span class="check">✓</span> WASI filesystem</div>
+    <div class="marquee-item"><span class="check">✓</span> Work-stealing thread pool</div>
+    <div class="marquee-item"><span class="check">✓</span> WebSocket agent API</div>
+    <div class="marquee-item"><span class="check">✓</span> xterm.js terminal</div>
+    <div class="marquee-item"><span class="check">✓</span> Container splitting</div>
+    <div class="marquee-item"><span class="check">✓</span> Web Worker decompression</div>
+    <div class="marquee-item"><span class="check">✓</span> Rust → WASM compilation</div>
+    <div class="marquee-item"><span class="check">✓</span> Real zlib compression</div>
+    <div class="marquee-item"><span class="check">✓</span> SHA-256 integrity</div>
+    <div class="marquee-item"><span class="check">✓</span> WASI filesystem</div>
+    <div class="marquee-item"><span class="check">✓</span> Work-stealing thread pool</div>
+    <div class="marquee-item"><span class="check">✓</span> WebSocket agent API</div>
+    <div class="marquee-item"><span class="check">✓</span> xterm.js terminal</div>
+    <div class="marquee-item"><span class="check">✓</span> Container splitting</div>
+    <div class="marquee-item"><span class="check">✓</span> Web Worker decompression</div>
+    <div class="marquee-item"><span class="check">✓</span> Rust → WASM compilation</div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat-card fade-up"><div class="stat-num green">23%</div><div class="stat-label">Compression ratio</div></div>
+    <div class="stat-card fade-up"><div class="stat-num purple">SHA-256</div><div class="stat-label">Integrity verified</div></div>
+    <div class="stat-card fade-up"><div class="stat-num orange">WASI</div><div class="stat-label">Real WASM exec</div></div>
+    <div class="stat-card fade-up"><div class="stat-num blue">18</div><div class="stat-label">Parallel threads</div></div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="section-tag fade-up">Features</div>
+  <h2 class="section-title fade-up">Everything Docker does,<br>in the browser</h2>
+  <p class="section-sub fade-up">Pack, run, split, and orchestrate containers without a single daemon or cloud dependency.</p>
+  <div class="features-grid">
+    <div class="feature-card fade-up">
+      <div class="feature-icon" style="background:var(--accent-dim)">📦</div>
+      <h3>Pack</h3>
+      <p>Compress any directory of HTML, CSS, JS, WASM into a single .box file with real zlib compression and SHA-256 integrity hashing per file, manifest, and trailer.</p>
+      <span class="tag">zlib + OpenSSL</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon" style="background:var(--green-dim)">▶️</div>
+      <h3>Run</h3>
+      <p>Serve .box containers via C++ HTTP server. Browser loads files into a Service Worker VFS. WASM binaries execute via real WASI with filesystem access.</p>
+      <span class="tag">WASI + SW VFS</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon" style="background:var(--orange-dim)">🔀</div>
+      <h3>Split</h3>
+      <p>Agents running inside containers can split them into sub-containers with isolated VFS state. Hot-reload files without restart. Inter-container IPC via SharedArrayBuffer.</p>
+      <span class="tag">Agent-driven</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon" style="background:var(--blue-dim)">⚡</div>
+      <h3>Parallel</h3>
+      <p>C++ work-stealing thread pool for packing. Web Workers for parallel browser decompression across all CPU cores. SharedArrayBuffer for WASM threads.</p>
+      <span class="tag">Work-stealing</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon" style="background:rgba(255,92,92,.12)">🔌</div>
+      <h3>Agent API</h3>
+      <p>WebSocket protocol (RFC 6455) for live container control. Add, remove, or patch files at runtime. Broadcast events to all connected clients.</p>
+      <span class="tag">RFC 6455</span>
+    </div>
+    <div class="feature-card fade-up">
+      <div class="feature-icon" style="background:var(--accent-dim)">🌐</div>
+      <h3>Public URL</h3>
+      <p>Expose local containers with --public flag. Random or custom subdomain. Share with anyone — no install, no Docker, no cloud account required.</p>
+      <span class="tag">Zero-config</span>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="section-tag fade-up">Architecture</div>
+  <h2 class="section-title fade-up">How it works</h2>
+  <p class="section-sub fade-up">Two C++ binaries. One browser. Zero daemons.</p>
+  <div class="arch-diagram fade-up">
+<span class="hl">┌──────────────────────────────────────────────────────────────┐</span>
+<span class="hl">│  Developer Machine                                          │</span>
+<span class="hl">│                                                              │</span>
+<span class="hl">│  $ boxpack ./myapp output.box --parallel                    │</span>
+<span class="hl">│       │                                                      │</span>
+<span class="hl">│       ▼                                                      │</span>
+<span class="hl">│  ┌───────────────┐     ┌───────────────┐                     │</span>
+<span class="hl">│  │  boxpack.cpp  │     │  boxrun.cpp   │                     │</span>
+<span class="hl">│  │  C++ + zlib   │────▶│  C++ HTTP +   │                     │</span>
+<span class="hl">│  │  + SHA-256    │     │  WebSocket    │                     │</span>
+<span class="hl">│  │  + threadpool │     │  + threadpool │                     │</span>
+<span class="hl">│  └───────────────┘     └──────┬────────┘                     │</span>
+<span class="hl">│                               │  HTTP :7860 + WS /ws          │</span>
+<span class="hl">└───────────────────────────────┼──────────────────────────────┘</span>
+                                │
+<span class="gn">┌───────────────────────────────┼──────────────────────────────┐</span>
+<span class="gn">│  Browser                      ▼                              │</span>
+<span class="gn">│  ┌────────────────────────────────────────────────────────┐  │</span>
+<span class="gn">│  │  boxvm.html — VM UI + xterm.js terminal                │  │</span>
+<span class="gn">│  │                                                        │  │</span>
+<span class="gn">│  │  ┌──────────────┐  ┌─────────────┐  ┌──────────────┐  │  │</span>
+<span class="gn">│  │  │ Service      │  │ Web Workers │  │ WASI Runtime │  │  │</span>
+<span class="gn">│  │  │ Worker       │  │ (parallel   │  │ (real WASM   │  │  │</span>
+<span class="gn">│  │  │ (RAM VFS)    │  │  decompress)│  │  execution)  │  │  │</span>
+<span class="gn">│  │  └──────────────┘  └─────────────┘  └──────────────┘  │  │</span>
+<span class="gn">│  │                                                        │  │</span>
+<span class="gn">│  │  ┌──────────────────────────────────────────────────┐  │  │</span>
+<span class="gn">│  │  │  /__box__/index.html → served from SW VFS (RAM)  │  │  │</span>
+<span class="gn">│  │  │  container_inspector.wasm → WASI → reads VFS     │  │  │</span>
+<span class="gn">│  │  └──────────────────────────────────────────────────┘  │  │</span>
+<span class="gn">│  └────────────────────────────────────────────────────────┘  │</span>
+<span class="gn">└──────────────────────────────────────────────────────────────┘</span>
+  </div>
+</section>
+
+<section id="get-started">
+  <div class="section-tag fade-up">Quick Start</div>
+  <h2 class="section-title fade-up">Three commands to run</h2>
+  <p class="section-sub fade-up">No install. No daemon. No cloud account.</p>
+  <div class="code-block fade-up">
+    <div class="code-header">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="title">terminal</span>
+    </div>
+    <div class="code-body">
+<span class="c"># Clone and build</span>
+<span class="cmd">git</span> clone https://github.com/overandor/boxvm.git
+<span class="cmd">cd</span> boxvm && <span class="cmd">make</span>
+
+<span class="c"># Pack a directory into a .box container</span>
+<span class="cmd">./boxpack</span> ./my-website output.box <span class="flag">--parallel</span>
+
+<span class="c"># Run it — opens in any browser</span>
+<span class="cmd">./boxrun</span> output.box <span class="flag">--public</span> myapp
+
+<span class="c"># Browser opens → xterm.js terminal + file browser + agent panel</span>
+<span class="c"># Click .wasm files to execute real binaries via WASI</span>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="section-tag fade-up">Comparison</div>
+  <h2 class="section-title fade-up">BoxVM vs Docker</h2>
+  <p class="section-sub fade-up">Different problems, different solutions. Here's the honest comparison.</p>
+  <table class="compare-table fade-up">
+    <thead>
+      <tr><th>Feature</th><th>BoxVM</th><th>Docker</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="feature-name">Runs in browser</td><td class="yes">✓ Yes</td><td class="no">✗ No</td></tr>
+      <tr><td class="feature-name">No daemon required</td><td class="yes">✓ Yes</td><td class="no">✗ dockerd</td></tr>
+      <tr><td class="feature-name">WASM execution</td><td class="yes">✓ WASI</td><td class="no">✗ Native only</td></tr>
+      <tr><td class="feature-name">Container size</td><td class="yes">~KB-MB</td><td class="no">~MB-GB</td></tr>
+      <tr><td class="feature-name">Cold start</td><td class="yes">&lt;1s</td><td class="no">1-10s</td></tr>
+      <tr><td class="feature-name">Process isolation</td><td class="no">VFS only</td><td class="yes">✓ Namespaces</td></tr>
+      <tr><td class="feature-name">Network namespacing</td><td class="no">✗</td><td class="yes">✓ Yes</td></tr>
+      <tr><td class="feature-name">Agent-driven splitting</td><td class="yes">✓ Yes</td><td class="no">✗ Manual</td></tr>
+      <tr><td class="feature-name">Zero install for users</td><td class="yes">✓ Browser</td><td class="no">✗ Docker Desktop</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="roadmap">
+  <div class="section-tag fade-up">Roadmap</div>
+  <h2 class="section-title fade-up">From here to production</h2>
+  <p class="section-sub fade-up">Six weeks to v1.0. Three months to ML-optimized v2.0.</p>
+  <div class="roadmap fade-up">
+    <div class="rm-item done">
+      <h3>v0.3 — Real Core</h3>
+      <div class="when">Completed</div>
+      <p>zlib compression, SHA-256 integrity, work-stealing thread pool, Rust→WASM compilation, WebSocket agent, xterm.js terminal</p>
+    </div>
+    <div class="rm-item done">
+      <h3>v0.4 — WASI Filesystem</h3>
+      <div class="when">Completed</div>
+      <p>Full WASI with path_open, fd_read, fd_seek, fd_readdir. WASM programs can read files from container VFS.</p>
+    </div>
+    <div class="rm-item done">
+      <h3>v0.5 — Landing Page + Developer Portal</h3>
+      <div class="when">Completed</div>
+      <p>Investor-grade landing page, interactive developer portal with xterm.js, API documentation, file browser</p>
+    </div>
+    <div class="rm-item now">
+      <h3>v0.6 — Public URL Tunneling</h3>
+      <div class="when">In Progress</div>
+      <p>Cloudflare Tunnel integration, token-based access with expiration, QR code sharing</p>
+    </div>
+    <div class="rm-item">
+      <h3>v0.7 — Registry</h3>
+      <div class="when">2 weeks</div>
+      <p>Push/pull .box containers to S3 or Hugging Face Datasets. Versioned, content-addressed storage.</p>
+    </div>
+    <div class="rm-item">
+      <h3>v0.8 — WASI Threads</h3>
+      <div class="when">3 weeks</div>
+      <p>wasm32-wasip1-threads, SharedArrayBuffer between Web Workers, real parallel execution inside containers</p>
+    </div>
+    <div class="rm-item">
+      <h3>v0.9 — Agent Framework</h3>
+      <div class="when">4 weeks</div>
+      <p>Agent SDK for in-container programs. Read/write VFS, split containers, inter-container IPC</p>
+    </div>
+    <div class="rm-item">
+      <h3>v1.0 — Production</h3>
+      <div class="when">6 weeks</div>
+      <p>TLS, auth, IndexedDB persistence, checkpointing, CI/CD, benchmark vs Docker cold start</p>
+    </div>
+    <div class="rm-item">
+      <h3>v2.0 — ML Optimization</h3>
+      <div class="when">3 months</div>
+      <p>ONNX Runtime for real model inference, KV cache for layout decisions, gradient-based compression, cross-validation</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-content">
+    <h2>Ship containers,<br>not daemons</h2>
+    <p>BoxVM runs real WASM binaries in the browser with filesystem access, parallel decompression, and agent-driven splitting. No Docker. No cloud. No install.</p>
+    <div class="hero-buttons">
+      <a href="https://github.com/overandor/boxvm" target="_blank" class="btn btn-primary">Star on GitHub →</a>
+      <a href="#get-started" class="btn btn-secondary">Read the docs</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="links">
+    <a href="#features">Features</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#compare">vs Docker</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="https://github.com/overandor/boxvm" target="_blank">GitHub</a>
+  </div>
+  <p>BoxVM — Browser-Native Container Runtime · MIT License · Built with C++, Rust, WASI, and Web Standards</p>
+</footer>
+
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Smooth nav highlight
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      const target = document.querySelector(href);
+      if (target) {
+        const top = target.offsetTop - 100;
+        const bottom = top + target.offsetHeight;
+        if (scrollY >= top && scrollY < bottom) {
+          navLinks.forEach(l => l.style.color = '');
+          link.style.color = 'var(--text)';
+        }
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Binaries
+boxpack
+boxrun
+boxdefrag
+*.box
+
+# Build artifacts
+*.o
+*.obj
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
