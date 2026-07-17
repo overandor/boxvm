@@ -636,7 +636,7 @@
         if (wasmFiles.length > 0) { label.textContent = 'Executing WASM…'; log('Found ' + wasmFiles.length + ' WASM binaries'); for (const w of wasmFiles) await executeWasm(vfsData.get(w.path), vfsData) }
         // Open HTML in new tab
         const html = vfsFiles.find(f => f.path === 'index.html' || f.path.endsWith('/index.html'));
-        if (html) { log('Launching: ' + html.path); window.open('/__box__/' + html.path, '_blank') }
+        if (html) { log('Launching: ' + html.path); window.open('__box__/' + html.path, '_blank') }
         info.textContent = vfsFiles.length + ' files · ' + fmtSize(buf.byteLength) + ' · ' + (navigator.hardwareConcurrency || 4) + ' threads';
         label.textContent = 'Ready'; setTimeout(() => overlay.classList.add('hidden'), 300);
         connectWS();
@@ -645,7 +645,7 @@
       } catch (e) { label.textContent = ''; errEl.textContent = e.message; log('FATAL: ' + e.message, 'err'); tw('\r\n\x1b[31m[error] ' + e.message + '\x1b[0m\r\n') }
     }
 
-    navigator.serviceWorker.register('/sw.js').then(() => { log('SW registered'); load() }).catch(e => { label.textContent = ''; errEl.textContent = 'SW failed: ' + e.message });
+    navigator.serviceWorker.register('sw.js').then(() => { log('SW registered'); load() }).catch(e => { label.textContent = ''; errEl.textContent = 'SW failed: ' + e.message });
     document.getElementById('reload').onclick = () => { term.clear(); load() };
     term.onData(d => { if (d === '\r') tw('\r\n$ '); else tw(d) });
   </script>
