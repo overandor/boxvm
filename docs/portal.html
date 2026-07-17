@@ -797,11 +797,11 @@
           }
           let totalLen = 0; for (const p of parts) totalLen += p.length;
           const body = new Uint8Array(totalLen); let pos = 0; for (const p of parts) { body.set(p, pos); pos += p.length }
-          const trailer = new Uint8Array(await crypto.subtle.digest('SHA-256', body.subarray(4)));
+          const trailer = new Uint8Array(await crypto.subtle.digest('SHA-256', body.slice(4).buffer));
           u8 = new Uint8Array(body.length + 32); u8.set(body); u8.set(trailer, body.length);
           tw('Demo container: ' + fmtSize(u8.byteLength) + ' bytes\r\n');
         }
-        const parsed = parseBox(u8); label.textContent = 'Decompressing ' + parsed.files.length + ' files…';
+        const parsed = parseBox(u8.buffer); label.textContent = 'Decompressing ' + parsed.files.length + ' files…';
         tw('Entries: ' + parsed.files.length + ' (v' + parsed.ver + ', flags=0x' + parsed.flags.toString(16) + ')\r\n');
         log('Parsed: ' + parsed.files.length + ' files');
         const dec = await decompressParallel(parsed.files);
